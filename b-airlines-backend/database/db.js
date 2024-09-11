@@ -1,6 +1,5 @@
 import mysql from 'mysql2' // Using mysql2 for promise support
 import dotenv from 'dotenv'
-import bcrypt from 'bcrypt'
 
 dotenv.config()
 
@@ -10,7 +9,9 @@ const pool = mysql.createPool({
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE
-}).promise()
+})
+
+module.exports = pool.promise()
 
 
 

@@ -1,0 +1,19 @@
+{
+  "name": "airline-reservation-system",
+  "version": "1.0.0",
+  "description": "Test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "cd b-airlines-backend && npm start",
+    "frontend": "cd b-airlines-frontend && npm start",
+    "start": "concurrently \"npm run backend\"  \"npm run frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.0.0",
+    "nodemon": "^3.1.4"
+  }
+}

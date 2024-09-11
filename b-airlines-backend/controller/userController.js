@@ -39,3 +39,5 @@ async function hashPassword(password) {
       console.error('Error inserting user:', error);
     }
   }
+
+  export default userContoller;
