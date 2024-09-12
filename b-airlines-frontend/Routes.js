@@ -47,9 +47,6 @@ export default function AppRoutes() {
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/profile" element={<Profile />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/products" element={<Product />} />
-                <Route path="/viewproduct" element={<ViewProduct />} />
                 <Route path="/notfound" element={<NotFound />} />
                 <Route path="/access-denied" element={<AccessDenied />} />
                 <Route path="*" element={<NotFound />} />  {/* Catch-all route */}
