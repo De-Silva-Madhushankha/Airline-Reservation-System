@@ -1,4 +1,6 @@
-import db from '../db.js';
+import db from '../database/db.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const User = {
   getAll: async () => {
@@ -17,7 +19,7 @@ const User = {
          VALUES (?,?,?,?,?,?)`,
         [2,username, password, user_phone_number, user_email, 0]
       );
-      return result.insertId;
+      return result.user_id;
     } catch (error) {
       throw error;
     }
@@ -52,4 +54,12 @@ const User = {
   },
 };
 
-export default Employee;
+export default User;
+
+// Example usage
+console.log("Getting user by name...");
+User.getByUsername('madhushankha').then((user) => {
+  console.log(user);
+}).catch((error) => {
+  console.log(error);
+});

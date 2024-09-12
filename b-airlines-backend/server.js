@@ -1,9 +1,10 @@
 import express from 'express'
-import expressLayouts from 'express-ejs-layouts'
+//import expressLayouts from 'express-ejs-layouts'
 import { fileURLToPath } from 'url'
 import path from 'path'
-import indexRouter from './routes/index.js'
+//import indexRouter from './routes/index.js'
 import cors from 'cors'
+import dotenv from 'dotenv'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -22,9 +23,13 @@ console.log("Middleware setup complete");
 // app.use(expressLayouts);
 // app.use(express.static('public'));
 
+// Load environment variables
+dotenv.config();
+console.log("Environment variables loaded");
 
-//Routes
-//app.use('/', indexRouter);
+
+//import routes
+
 
 
 
