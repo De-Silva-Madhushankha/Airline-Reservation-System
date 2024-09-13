@@ -1,6 +1,6 @@
 import db from '../db.js';
 
-const Passenger = {
+const Guest = {
     getAll: async () => {
         try {
             const [rows] = await db.query('SELECT * FROM passenger');
@@ -58,4 +58,4 @@ const Passenger = {
     },
 };
 
-export default Passenger;
+export default Guest;

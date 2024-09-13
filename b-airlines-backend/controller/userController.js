@@ -12,7 +12,7 @@ async function hashPassword(password) {
 }
 
 // Function to insert a new user into the database
-exports.insertUser = async (username, password, phoneNumber, email) => {
+exports.createUser = async (username, password, phoneNumber, email) => {
   try {
     // Hash the password
     const hashedPassword = await hashPassword(password);
@@ -28,51 +28,51 @@ exports.insertUser = async (username, password, phoneNumber, email) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const employees = await Employee.getAll();
-    res.json(employees);
+    const user = await User.getAll();
+    res.json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-exports.getEmployeeById = async (req, res) => {
+exports.getUserById = async (req, res) => {
   const { id } = req.params;
-  console.log("Requesting employee with id: ", id);
+  console.log("Requesting user with id: ", id);
   try {
-    const employee = await Employee.getById(id);
-    if (employee) {
-      res.json(employee);
+    const user = await User.getById(id);
+    if (user) {
+      res.json(user);
     } else {
-      res.status(404).json({ message: 'Employee not found' });
+      res.status(404).json({ message: 'user not found' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-exports.updateEmployee = async (req, res) => {
+exports.updateUser = async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
   try {
-    const affectedRows = await Employee.update(id, updates);
+    const affectedRows = await User.update(id, updates);
     if (affectedRows) {
-      res.json({ message: 'Employee updated successfully' });
+      res.json({ message: 'user updated successfully' });
     } else {
-      res.status(404).json({ message: 'Employee not found' });
+      res.status(404).json({ message: 'user not found' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-exports.deleteEmployee = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const affectedRows = await Employee.delete(id);
+    const affectedRows = await User.delete(id);
     if (affectedRows) {
-      res.json({ message: 'Employee deleted successfully' });
+      res.json({ message: 'user deleted successfully' });
     } else {
-      res.status(404).json({ message: 'Employee not found' });
+      res.status(404).json({ message: 'user not found' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
