@@ -1,15 +1,78 @@
-import pool from "../database/db"
+import db from '../db.js'
 
 
-export async function getRevenue(aircraft_id){
-    const [rows] = await pool.query(`
-        SELECT SUM(total_amount) as Total Revenue
-        FROM booking
-        WHERE  flight_id in (
-            SELECT *
-            FROM flight
-            WHERE aircraft_id = ?
+const Booking = {  
+
+    getBooking: async (booking_id) =>{
+        const [rows] = await db.query(`SELECT * FROM booking WHERE booking_id = ?`, [booking_id])
+        return rows
+    },  
+
+    createBooking: async (flight_id, passenger_id, total_amount, booking_date) => {
+        const [result] = await db.query(
+            `INSERT INTO booking (flight_id, passenger_id, total_amount, booking_date) 
+            VALUES(?,?,?,?)`,
+            [flight_id, passenger_id, total_amount, booking_date]
         );
-        `, (aircraft_id))
-    return rows
+        return result.insertId;
+    },
+
+    updateBooking: async (booking_id, flight_id, passenger_id, total_amount, booking_date) =>{
+        const [result] = await db.query(`UPDATE booking 
+            SET flight_id = ?, passenger_id = ?, total_amount = ?, booking_date = ?
+            WHERE booking_id = ?`, [flight_id, passenger_id, total_amount, booking_date, booking_id]);
+        return result.affectedRows;
+    },
+
+    deleteBooking: async (booking_id) => {
+        const [result] = await db.query('DELETE FROM booking WHERE booking_id = ?', [booking_id]);
+        return result.affectedRows;
+    },
+
+    getRevenue: async (aircraft_id) =>{
+        const [rows] = await db.query(`
+            SELECT SUM(total_amount) as Total Revenue
+            FROM booking
+            WHERE  flight_id in (
+                SELECT *
+                FROM flight
+                WHERE aircraft_id = ?
+            );
+            `, (aircraft_id))
+        return rows
+    },
+
+    getBookingByPassengerId: async (passenger_id) => {
+        const [rows] = await db.query(`SELECT * FROM booking WHERE passenger_id = ?`, [passenger_id])
+        return rows
+    },  
+
+    getBookingByFlightId: async (flight_id) =>{
+        const [rows] = await db.query(`SELECT * FROM booking WHERE flight_id = ?`, [flight_id])
+        return rows
+    },  
+
+    getBookingByDate: async (booking_date) => {
+        const [rows] = await db.query(`SELECT * FROM booking WHERE booking_date = ?`, [booking_date])
+        return rows
+    },
+
+    getBookingByTotalAmount: async (total_amount) =>{
+        const [rows] = await db.query(`SELECT * FROM booking WHERE total_amount = ?`, [total_amount])
+        return rows
+    },
+
+    getBookingByDateRange: async (booking_date1, booking_date2) => {
+        const [rows] = await db.query(`SELECT * FROM booking WHERE booking_date BETWEEN ? AND ?`, [booking_date1, booking_date2])
+        return rows
+    }, 
+
+    getBookingByTotalAmountRange: async (total_amount1, total_amount2) => {
+        const [rows] = await db.query(`SELECT * FROM booking WHERE total_amount BETWEEN ? AND ?`, [total_amount1, total_amount2])
+        return rows
+    }
+
+
 }
+
+export default Booking;

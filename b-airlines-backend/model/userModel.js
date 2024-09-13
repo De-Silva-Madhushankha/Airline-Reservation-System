@@ -25,15 +25,16 @@ const User = {
     }
   },
 
-  // update: async (ID, updates) => {
-  //   const { Branch_ID } = updates;
-  //   try {
-  //     const [result] = await db.query('UPDATE Employee SET Branch_ID = ? WHERE ID = ?', [Branch_ID, ID]);
-  //     return result.affectedRows;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // },
+  updateUser: async (user_id, username, password, user_phone_number, user_email, loyalty_points) => {
+    try {
+      const [result] = await db.query(`UPDATE user 
+          SET username = ?, password = ?, user_phone_number = ?, user_email = ?, loyalty_points = ?
+          WHERE user_id = ?`, [username, password, user_phone_number, user_email, loyalty_points, user_id]);
+      return result.affectedRows;
+    } catch (error) {
+      throw error;
+    }
+  },
 
   delete: async (ID) => {
     try {
