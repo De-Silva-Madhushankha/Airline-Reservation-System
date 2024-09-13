@@ -1,7 +1,7 @@
-import LoyaltyProgram from '../model/loyaltyProgramModel.js';
+import LoyaltyProgram from '../models/loyaltyProgramModel.js';
 
 // Function to get min points required for a specific loyalty program
-exports.getMinPoints = async (req, res) => {
+export const getMinPoints = async (req, res) => {
     const { id } = req.params;
     try {
         const minPoints = await LoyaltyProgram.getMinPoints(id);
@@ -12,7 +12,7 @@ exports.getMinPoints = async (req, res) => {
 };
 
 // Function to get max points required for a specific loyalty program
-exports.getMaxPoints = async (req, res) => {
+export const getMaxPoints = async (req, res) => {
     const { id } = req.params;
     try {
         const maxPoints = await LoyaltyProgram.getMaxPoints(id);
@@ -24,7 +24,7 @@ exports.getMaxPoints = async (req, res) => {
 
 
 // Function to get all loyalty programs
-exports.getAllLoyaltyPrograms = async (req, res) => {
+export const getAllLoyaltyPrograms = async (req, res) => {
     try {
         const loyaltyPrograms = await LoyaltyProgram.getAll();
         res.json(loyaltyPrograms);

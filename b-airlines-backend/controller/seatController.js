@@ -1,7 +1,7 @@
 import Seat from '../models/seatModel.js';
 
 // Function to get all seats
-exports.getAllSeats = async (req, res) => {
+export const getAllSeats = async (req, res) => {
     try {
         const seats = await Seat.getAll();
         res.json(seats);
@@ -11,7 +11,7 @@ exports.getAllSeats = async (req, res) => {
 };
 
 // Function to get seat by id
-exports.getSeatById = async (req, res) => {
+export const getSeatById = async (req, res) => {
     const { id } = req.params;
     try {
         const seat = await Seat.getById(id);
@@ -26,7 +26,7 @@ exports.getSeatById = async (req, res) => {
 };
 
 // Function to update seat
-exports.updateSeat = async (req, res) => {
+export const updateSeat = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
     try {
@@ -42,7 +42,7 @@ exports.updateSeat = async (req, res) => {
 };
 
 // Function to get seat class by id
-exports.getSeatClassById = async (req, res) => {
+export const getSeatClassById = async (req, res) => {
     const { id } = req.params;
     try {
         const seatClass = await Seat.getSeatClassById(id);
@@ -57,7 +57,7 @@ exports.getSeatClassById = async (req, res) => {
 };
 
 // Function to get seat price by id
-exports.getSeatPriceById = async (req, res) => {
+export const getSeatPriceById = async (req, res) => {
     const { id } = req.params;
     try {
         const seatPrice = await Seat.getSeatPriceById(id);

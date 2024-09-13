@@ -1,7 +1,7 @@
 import Route from '../models/routeModel.js';
 
 //  Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18 
-exports.getPassengerByRouteId = async (req, res) => {
+export const getPassengerByRouteId = async (req, res) => {
     const { id } = req.params;
     try {
         const passengers = await Route.getPassengerByRouteId(id);

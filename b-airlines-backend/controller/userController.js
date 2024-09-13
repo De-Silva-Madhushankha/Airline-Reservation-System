@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import User from '../models/userModel';
+import User from '../models/userModel.js';
 
 // Function to hash the password using bcrypt
 async function hashPassword(password) {
@@ -12,7 +12,7 @@ async function hashPassword(password) {
 }
 
 // Function to insert a new user into the database
-exports.createUser = async (username, password, phoneNumber, email) => {
+export const createUser = async (username, password, phoneNumber, email) => {
   try {
     // Hash the password
     const hashedPassword = await hashPassword(password);
@@ -26,7 +26,7 @@ exports.createUser = async (username, password, phoneNumber, email) => {
   }
 }
 
-exports.getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const user = await User.getAll();
     res.json(user);
@@ -35,7 +35,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
   const { id } = req.params;
   console.log("Requesting user with id: ", id);
   try {
@@ -50,7 +50,7 @@ exports.getUserById = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
   try {
@@ -65,7 +65,7 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     const affectedRows = await User.delete(id);
@@ -79,7 +79,7 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -100,3 +100,10 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+console.log("Getting user by name...");
+User.getByUsername('madhushankha').then((user) => {
+  console.log(user);
+}).catch((error) => {
+  console.log(error);
+});

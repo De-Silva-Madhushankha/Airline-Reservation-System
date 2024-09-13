@@ -1,7 +1,7 @@
 import Location from '../models/locationModel.js';
 
 // Function to get all locations
-exports.getAllLocations = async (req, res) => {
+export const getAllLocations = async (req, res) => {
     try {
         const locations = await Location.getAll();
         res.json(locations);
@@ -11,7 +11,7 @@ exports.getAllLocations = async (req, res) => {
 };
 
 // Function to get location by id
-exports.getLocationById = async (req, res) => {
+export const getLocationById = async (req, res) => {
     const { id } = req.params;
     try {
         const location = await Location.getById(id);
@@ -26,7 +26,7 @@ exports.getLocationById = async (req, res) => {
 };
 
 // Function to update location
-exports.updateLocation = async (req, res) => {
+export const updateLocation = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
     try {
@@ -42,7 +42,7 @@ exports.updateLocation = async (req, res) => {
 };
 
 // Function to get location by country
-exports.getLocationByCountry = async (req, res) => {
+export const getLocationByCountry = async (req, res) => {
     const { country } = req.params;
     try {
         const location = await Location.getByCountry(country);
@@ -57,7 +57,7 @@ exports.getLocationByCountry = async (req, res) => {
 };
 
 // Function to get location by city
-exports.getLocationByCity = async (req, res) => {
+export const getLocationByCity = async (req, res) => {
     const { city } = req.params;
     try {
         const location = await Location.getByCity(city);
@@ -72,7 +72,7 @@ exports.getLocationByCity = async (req, res) => {
 };
 
 // Function to get location by airport code
-exports.getLocationByAirportCode = async (req, res) => {
+export const getLocationByAirportCode = async (req, res) => {
     const { airportCode } = req.params;
     try {
         const location = await Location.getByAirportCode(airportCode);

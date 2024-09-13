@@ -1,7 +1,7 @@
 import Booking from '../models/bookingModel.js';
 
 // Function to insert a new booking into the database
-exports.createBooking = async (req, res) => {
+export const createBooking = async (req, res) => {
     try {
         const booking = await Booking.create(req.body);
         res.status(201).json(booking);
@@ -10,7 +10,7 @@ exports.createBooking = async (req, res) => {
     }
 };
 
-exports.getAllBookings = async (req, res) => {
+export const getAllBookings = async (req, res) => {
     try {
         const booking = await Booking.getAll();
         res.json(booking);
@@ -19,7 +19,7 @@ exports.getAllBookings = async (req, res) => {
     }
 };
 
-exports.getBookingById = async (req, res) => {
+export const getBookingById = async (req, res) => {
     const { id } = req.params;
     console.log("Requesting booking with id: ", id);
     try {
@@ -34,7 +34,7 @@ exports.getBookingById = async (req, res) => {
     }
 };
 
-exports.updateBooking = async (req, res) => {
+export const updateBooking = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
     try {
@@ -49,7 +49,7 @@ exports.updateBooking = async (req, res) => {
     }
 };
 
-exports.deleteBooking = async (req, res) => {
+export const deleteBooking = async (req, res) => {
     const { id } = req.params;
     try {
         const affectedRows = await Booking.delete(id);
@@ -64,7 +64,7 @@ exports.deleteBooking = async (req, res) => {
 };
 
 // Function to get all bookings for a specific user
-exports.getBookingsByUserId = async (req, res) => {
+export const getBookingsByUserId = async (req, res) => {
     const { id } = req.params;
     try {
         const booking = await Booking.getByUserId(id);
@@ -75,7 +75,7 @@ exports.getBookingsByUserId = async (req, res) => {
 };
 
 // Function to get all bookings for a specific flight
-exports.getBookingsByFlightId = async (req, res) => {
+export const getBookingsByFlightId = async (req, res) => {
     const { id } = req.params;
     try {
         const booking = await Booking.getByFlightId(id);
@@ -86,7 +86,7 @@ exports.getBookingsByFlightId = async (req, res) => {
 };
 
 // Function to get the total revenue for a specific flight
-exports.getFlightRevenue = async (req, res) => {
+export const getFlightRevenue = async (req, res) => {
     const { id } = req.params;
     try {
         const revenue = await Booking.getFlightRevenue(id);
@@ -97,7 +97,7 @@ exports.getFlightRevenue = async (req, res) => {
 };
 
 // Function to get the total revenue for date range
-exports.getRevenueByDateRange = async (req, res) => {
+export const getRevenueByDateRange = async (req, res) => {
     const { startDate, endDate } = req.params;
     try {
         const revenue = await Booking.getRevenueByDateRange(startDate, endDate);
@@ -108,7 +108,7 @@ exports.getRevenueByDateRange = async (req, res) => {
 };
 
 // Functon to get number of bookings by each passenger type given date range
-exports.getPassengerTypeCount = async (req, res) => {
+export const getPassengerTypeCount = async (req, res) => {
     const { startDate, endDate } = req.params;
     try {
         const count = await Booking.getPassengerTypeCount(startDate, endDate);
