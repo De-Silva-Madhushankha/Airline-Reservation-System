@@ -1,12 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SignIn from '../../pages/SignIn';
-import SignUp from '../../pages/SignUp';
-import Home from '../../pages/Home';
-import NotFound from '../../pages/NotFound';
-import AccessDenied from '../../pages/AccessDenied';
-import { useState, useEffect } from 'react';
-import login from '../../Login';
-import Profile from './pages/Profile';
+import Home from '../pages/Home';
 
 export default function AppRoutes() {
     const [loginInfo, setLoginInfo] = useState(null);
