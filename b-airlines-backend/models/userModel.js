@@ -12,14 +12,14 @@ const User = {
     }
   },
 
-  create: async (username, password, user_phone_number, user_email) => {
+  create: async (title, first_name, last_name, email, password, date_of_birth, country, mobile_number ) => {
     try {
       const [result] = await db.query(
-        `INSERT INTO user (role_id, username, password, user_phone_number, user_email, loyalty_points) 
-         VALUES (?,?,?,?,?,?)`,
-        [2,username, password, user_phone_number, user_email, 0]
+        `INSERT INTO user (title, first_name, last_name, email, password, date_of_birth, country, mobile_number) 
+         VALUES (?,?,?,?,?,?,?,?)`, 
+         [title, first_name, last_name, email, password, date_of_birth, country, mobile_number]
       );
-      return result.user_id;
+      return result.insertId;
     } catch (error) {
       throw error;
     }
@@ -45,22 +45,14 @@ const User = {
     }
   },
 
-  getByUsername: async (username) => {
-    try {
-      const [rows] = await db.query('SELECT * FROM user WHERE username = ?', [username]);
-      return rows[0];
-    } catch (error) {
-      throw error;
-    }
+  findByEmail: async (email) => {
+    const [rows] = await db.query('SELECT * FROM user WHERE email = ?', [email]);
+    return rows;
   },
+
+  
 };
 
 export default User;
 
-// Example usage
-console.log("Getting user by name...");
-User.getByUsername('madhushankha').then((user) => {
-  console.log(user);
-}).catch((error) => {
-  console.log(error);
-});
+

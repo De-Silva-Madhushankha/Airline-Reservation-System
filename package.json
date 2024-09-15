@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "backend": "cd b-airlines-backend && npm start",
+    "backend": "cd b-airlines-backend && npm run devStart",
     "frontend": "cd b-airlines-frontend && npm start",
     "start": "concurrently \"npm run backend\"  \"npm run frontend\""
   },

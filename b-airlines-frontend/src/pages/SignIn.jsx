@@ -1,82 +1,92 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Form, Input, Button, Checkbox, Alert, Row, Col } from 'antd';
 import axios from 'axios';
-import Alert from '../components/Alert';
+import { useNavigate } from 'react-router-dom'; // Updated import
 
-function SignIn() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('');
-  const [success, setSuccess] = useState('');
+const SignIn = () => {
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate(); // Replacing useHistory with useNavigate
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  const onFinish = async (values) => {
+    setLoading(true);
+    setErrorMessage(null);
 
-    if (!username || !password) {
-        setStatus('Please fill in both fields.');
-        setSuccess(false);
-        return;
+    try {
+      const response = await axios.post('http://localhost:3001/api/user/sign-in', {
+        username: values.username,
+        password: values.password,
+      });
+
+      const { success, token, message } = response.data;
+
+      if (success) {
+        localStorage.setItem('token', token);
+        navigate('/home'); // Updated navigation
+      } else {
+        setErrorMessage(message || 'Login failed');
+      }
+    } catch (error) {
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.message || 'An error occurred during login.');
+      } else {
+        setErrorMessage('Server not reachable. Please try again later.');
+      }
     }
 
-    axios.post(`/signin`, { username, password })
-        .then(res => {
-            console.log(res.data.status); 
-            setStatus(res.data.status);
-            setSuccess(res.data.success);
-            if (res.data.success) {
-                localStorage.setItem('token', res.data.token);
-                window.location.href = '/home';
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            setStatus('An error occurred. Please try again.');
-            setSuccess(false);
-        });
-  }
+    setLoading(false);
+  };
 
   return (
-    <div className="container d-flex align-items-center justify-content-center vh-100">
-      <div className="card p-4" style={{ width: '100%', maxWidth: '400px' }}>
-        <h3 className="text-center mb-4">Sign In</h3>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <Alert message={status} success={success} />
-            <label htmlFor="username" className="form-label">
-              Username
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              placeholder="Enter your username"
-              onChange = {(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Enter your password"
-              onChange = {(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
-              Sign In
-            </button>
-          </div>
-        </form>
-        <div className="text-center mt-3">
-          <a href="/signup">Forgot your password?</a>
+    <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>
+      <Col xs={22} sm={16} md={12} lg={8} xl={6}>
+        <div style={{ textAlign: 'center' }}>
+          <h2>Log in to Your Account</h2>
         </div>
-      </div>
-    </div>
+        {errorMessage && <Alert message={errorMessage} type="error" showIcon />}
+
+        <Form
+          name="loginForm"
+          layout="vertical"
+          onFinish={onFinish}
+          style={{ marginTop: '20px' }}
+        >
+          <Form.Item
+            name="username"
+            label="Email or Account Number"
+            rules={[{ required: true, message: 'Please enter your username or account number!' }]}
+          >
+            <Input placeholder="Enter email or account number" />
+          </Form.Item>
+
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[{ required: true, message: 'Please enter your password!' }]}
+          >
+            <Input.Password placeholder="Enter password" />
+          </Form.Item>
+
+          <Form.Item>
+            <Form.Item name="remember" valuePropName="checked" noStyle>
+              <Checkbox>Keep me logged in</Checkbox>
+            </Form.Item>
+            <a href="/forgot-password" style={{ float: 'right' }}>Forgot password?</a>
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block loading={loading}>
+              Log in
+            </Button>
+          </Form.Item>
+        </Form>
+
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          Not a member yet? <a href="/signup">Join now</a>
+        </div>
+      </Col>
+    </Row>
   );
-}
+};
 
 export default SignIn;

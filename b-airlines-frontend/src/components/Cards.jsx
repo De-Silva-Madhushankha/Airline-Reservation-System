@@ -2,6 +2,7 @@ import React from 'react';
 import './Cards.css';
 import CardItem from './CardItem';
 
+
 function Cards() {
   return (
     <div className='cards'>
@@ -13,13 +14,20 @@ function Cards() {
               src='images/galle.jpeg'
               text='Explore Sri Lanka: Endless Beaches, Timeless Ruins, Welcoming Hearts'
               label='Adventure'
-              path='/services'
+              path='/sign-up'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
+
             />
             <CardItem
               src='images/BALI.jpg'
               text='Travel through the Islands of Bali'
               label='Luxury'
-              path='/services'
+              path='/sign-up'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
             />
           </ul>
           <ul className='cards__items'>
@@ -27,19 +35,28 @@ function Cards() {
               src='images/thailand.jpeg'
               text='Now even more amazing Thailand has it all'
               label='Adventure'
-              path='/services'
+              path='/sign-up'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
             />
             <CardItem
               src='images/india.jpg'
               text='Discover the Hidden Gems of India - A Place of Endless Splendor!'
               label='Culture'
-              path='/products'
+              path='/sign-up'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
             />
             <CardItem
               src='images/singapore-01.jpg'
               text='Experience the Future in Singapore'
               label='Luxury'
               path='/sign-up'
+              onClick={() => {
+                window.scrollTo(0, 0);
+              }}
             />
           </ul>
         </div>

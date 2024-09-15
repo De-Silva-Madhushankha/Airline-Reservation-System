@@ -2,7 +2,7 @@ import React from 'react';
 import './Footer.css';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
-import Icon from '../assets/airplane-mode.svg';
+import { PiAirplaneTiltLight } from "react-icons/pi";
 
 function Footer() {
   return (
@@ -67,7 +67,8 @@ function Footer() {
           <div className='footer-logo'>
             <Link to='/' className='social-logo'>
               B Airways
-              <img src = {Icon} alt='Icon' className='custom-icon' />
+              <i className='fab fa-typo3' />
+              <PiAirplaneTiltLight />
             </Link>
           </div>
           <small className='website-rights'>B Airways © 2024</small>

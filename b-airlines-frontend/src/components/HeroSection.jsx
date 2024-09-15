@@ -14,7 +14,7 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
-          linkTo={'/signin'}
+          linkTo={'/sign-in'}
         >
           GET STARTED
         </Button>
@@ -22,7 +22,7 @@ function HeroSection() {
           className='btns'
           buttonStyle='btn--primary'
           buttonSize='btn--large'
-          linkTo={'/signin'}
+          linkTo={'/sign-in'}
         >
           WATCH TRAILER <i className='far fa-play-circle' />
         </Button>

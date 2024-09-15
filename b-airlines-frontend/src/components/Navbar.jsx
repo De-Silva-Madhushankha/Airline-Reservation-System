@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { PiAirplaneTiltLight } from "react-icons/pi";
 
 const Navbar = () => {
   const [click, setClick] = useState(false);
@@ -29,8 +30,9 @@ const Navbar = () => {
       <nav className='navbar'>
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
-            B Airlines
-            <i class='fab fa-typo3' />
+            B Airways
+            <i className='fab fa-typo3' />
+            <PiAirplaneTiltLight />
           </Link>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -43,34 +45,44 @@ const Navbar = () => {
             </li>
             <li className='nav-item'>
               <Link
-                to='/services'
+                to='/schedule'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Services
+                Schedule
               </Link>
             </li>
             <li className='nav-item'>
               <Link
-                to='/products'
+                to='/book'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >
-                Products
+                Book
+              </Link>
+            </li>
+
+            <li className='nav-item'>
+              <Link
+                to='/help'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Help
               </Link>
             </li>
 
             <li>
               <Link
-                to='/sign-up'
+                to='/sign-in'
                 className='nav-links-mobile'
                 onClick={closeMobileMenu}
               >
-                Sign Up
+                Sign In
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>}
+          {button && <Button linkTo={'/sign-in'} buttonStyle='btn--outline'>SIGN IN</Button>}
         </div>
       </nav>
     </>

@@ -12,14 +12,25 @@ async function hashPassword(password) {
 }
 
 // Function to insert a new user into the database
-export const createUser = async (username, password, phoneNumber, email) => {
+export const registerUser = async (req, res) => {
+  const { title, firstName, lastName, email, password, dateOfBirth, country, mobileNumber } = req.body;
   try {
+
+    const existingUser = await User.findByEmail(email);
+    if (existingUser.length > 0) {
+      console.log('User already exists');
+      res.status(400).json({ success: false, message: 'User already exists' });
+      return;
+    }
+
+    console.log('User does not exist, proceeding...');
+
     // Hash the password
     const hashedPassword = await hashPassword(password);
 
     // Insert the user into the database
-    const user_id = await User.create(username, hashedPassword, phoneNumber, email, loyaltyPoints);
-    res.status(201).json({ User_ID: user_id, username });
+    const insert_id = await User.create(title,firstName,lastName,email,hashedPassword,dateOfBirth,country, mobileNumber);
+    res.status(201).json({ insert_id, success: true, message: 'User registered successfully' });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -35,20 +46,6 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-export const getUserById = async (req, res) => {
-  const { id } = req.params;
-  console.log("Requesting user with id: ", id);
-  try {
-    const user = await User.getById(id);
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ message: 'user not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
@@ -100,10 +97,3 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-console.log("Getting user by name...");
-User.getByUsername('madhushankha').then((user) => {
-  console.log(user);
-}).catch((error) => {
-  console.log(error);
-});
