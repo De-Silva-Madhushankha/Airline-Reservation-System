@@ -22,6 +22,7 @@ export const registerUser = async (req, res) => {
   try {
 
     const existingUser = await User.findByEmail(email);
+    console.log(existingUser);
     if (existingUser.length > 0) {
       res.status(400).json({ success: false, message: 'User already exists' });
       return;
@@ -31,6 +32,7 @@ export const registerUser = async (req, res) => {
 
     // Insert the user into the database
     const insert_id = await User.create(title, firstName, lastName, email, hashedPassword, dateOfBirth, country, mobileNumber);
+    console.log(insert_id);
     res.status(201).json({ insert_id, success: true, message: 'User registered successfully' });
 
   } catch (error) {
@@ -88,13 +90,13 @@ export const loginUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user[0].password);
 
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials!' });
     }
 
-    const token = jwt.sign({ id: user.user_id, email: user.email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user[0].user_id, email: user[0].email }, process.env.SECRET_KEY, { expiresIn: '1h' });
     res.status(200).json({ success: true, token, message: 'Login successful' });
     
   } catch (error) {
