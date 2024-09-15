@@ -1,5 +1,10 @@
 import bcrypt from 'bcrypt';
 import User from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 
 // Function to hash the password using bcrypt
 async function hashPassword(password) {
@@ -18,18 +23,14 @@ export const registerUser = async (req, res) => {
 
     const existingUser = await User.findByEmail(email);
     if (existingUser.length > 0) {
-      console.log('User already exists');
       res.status(400).json({ success: false, message: 'User already exists' });
       return;
     }
-
-    console.log('User does not exist, proceeding...');
-
     // Hash the password
     const hashedPassword = await hashPassword(password);
 
     // Insert the user into the database
-    const insert_id = await User.create(title,firstName,lastName,email,hashedPassword,dateOfBirth,country, mobileNumber);
+    const insert_id = await User.create(title, firstName, lastName, email, hashedPassword, dateOfBirth, country, mobileNumber);
     res.status(201).json({ insert_id, success: true, message: 'User registered successfully' });
 
   } catch (error) {
@@ -77,10 +78,11 @@ export const deleteUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.getByUsername(username);
+    const user = await User.findByEmail(email);
+    //console.log(user);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -89,11 +91,14 @@ export const loginUser = async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid username or password' });
+      return res.status(401).json({ message: 'Invalid credentials!' });
     }
 
-    res.status(200).json({ message: 'Login successful', User: user.username });
+    const token = jwt.sign({ id: user.user_id, email: user.email }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    res.status(200).json({ success: true, token, message: 'Login successful' });
+    
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: error.message });
   }
 };

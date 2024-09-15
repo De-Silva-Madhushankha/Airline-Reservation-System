@@ -47,7 +47,7 @@ const User = {
 
   findByEmail: async (email) => {
     const [rows] = await db.query('SELECT * FROM user WHERE email = ?', [email]);
-    return rows;
+    return rows[0];
   },
 
   

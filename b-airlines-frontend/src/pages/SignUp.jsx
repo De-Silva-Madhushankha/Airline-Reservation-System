@@ -46,7 +46,6 @@ const Join = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
 const onFinish = (values) => {
-  console.log('Received values:', values);
 
   axios.post('http://localhost:3001/api/user/sign-up', {
     title: values.title,
@@ -70,7 +69,7 @@ const onFinish = (values) => {
     if(error.response.status === 400) {
       alert('User already exists. Enter a different email address.');
       navigate('/sign-up');
-      window.location.reload();
+      // window.location.reload();
     }
     else{
       console.log(error);
