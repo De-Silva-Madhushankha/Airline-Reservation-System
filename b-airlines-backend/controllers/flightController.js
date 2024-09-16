@@ -1,4 +1,5 @@
 import Flight from '../models/flightModel.js';
+import moment from 'moment';
 
 // Function to  get, Given a flight no, all passengers travelling in it (next immediate flight) below age 18,above age 18 
 export const getPassengerByFlightId = async (req, res) => {
@@ -54,3 +55,17 @@ export const getDestinationPassengerCount = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const searchFlights = async (req, res) => {
+    const { origin, destination, dates } = req.body;
+    //console.log("Search values: ", req.body);
+    const departureDate = moment(dates[0]).format("YYYY-MM-DD");
+    const arrivalDate = moment(dates[1]).format("YYYY-MM-DD");
+    try {
+        const flights = await Flight.search(origin, destination, departureDate, arrivalDate);
+        console.log("Search results: ", flights);
+        res.json({ flights });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}

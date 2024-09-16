@@ -45,7 +45,7 @@ const Navbar = () => {
             </li>
             <li className='nav-item'>
               <Link
-                to='/schedule'
+                to='/schedule/flight-search'
                 className='nav-links'
                 onClick={closeMobileMenu}
               >

@@ -1,0 +1,34 @@
+.common-header {
+  background: #000; /* Black background */
+  position: fixed; /* Fixed position */
+  top: 0; /* At the top */
+  width: 100%; /* Full width */
+  z-index: 1000; /* Ensure it stays above other elements */
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 80px; /* Adjust height as needed */
+}
+
+.navbar-logo {
+  color: #fff; /* White text color */
+  text-decoration: none;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo i {
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 960px) {
+  .common-header {
+    padding: 0 16px;
+    height: 60px; /* Adjust height for smaller screens */
+  }
+
+  .navbar-logo {
+    font-size: 1.5rem;
+  }
+}

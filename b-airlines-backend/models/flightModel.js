@@ -1,4 +1,4 @@
-import db from '../db.js'
+import db from '../database/db.js';
 
 
 const Flight = { 
@@ -28,6 +28,21 @@ const Flight = {
             }
         });
     }, 
+
+    // Search for flights
+    search: async (origin, destination, departure, arrival, result) => {
+        //console.log(db.query("SELECT * FROM search_flights WHERE origin_code = ? AND destination_code = ? AND departure >= ? AND arrival <= ?", [origin, destination, departure, arrival]));
+        db.query("SELECT * FROM search_flights WHERE origin_code = ? AND destination_code = ? AND departure >= ? AND arrival <= ?", [origin, destination, departure, arrival], function(err, res) {
+            if (err) {
+                console.log("error: ", err);
+                return result(null, err);
+            } else {
+                console.log("flights: ", res);
+                return result(null, res);
+            }
+        });
+
+    },
 
     // Get flight by ID 
     getFlightById: async (flight_id, result) => {

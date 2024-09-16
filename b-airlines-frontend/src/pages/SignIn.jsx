@@ -23,7 +23,7 @@ const SignIn = () => {
 
       if (success) {
         localStorage.setItem('token', token);
-        navigate('/home');
+        navigate('/user/home');
       } else {
         setErrorMessage(message || 'Login failed');
       }
