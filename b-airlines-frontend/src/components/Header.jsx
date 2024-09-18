@@ -9,7 +9,7 @@ const { Header } = Layout;
 const CommonHeader = ({ closeMobileMenu }) => {
   return (
     <Header className="common-header">
-      <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+      <Link to='/' className='header-navbar-logo' onClick={closeMobileMenu}>
         B Airways
         <i className='fab fa-typo3' />
         <PiAirplaneTiltLight />

@@ -10,7 +10,7 @@
   height: 80px; /* Adjust height as needed */
 }
 
-.navbar-logo {
+.header-navbar-logo {
   color: #fff; /* White text color */
   text-decoration: none;
   font-size: 2rem;
@@ -18,7 +18,7 @@
   align-items: center;
 }
 
-.navbar-logo i {
+.header-navbar-logo i {
   margin-left: 8px;
 }
 

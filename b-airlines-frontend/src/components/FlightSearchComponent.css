@@ -1,0 +1,109 @@
+.flight-search-layout {
+    min-height: 100vh;
+  }
+  
+  .flight-search-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1a1a1a;
+    padding: 0 50px;
+  }
+  
+  .flight-search-menu {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  .logo img {
+    height: 50px;
+  }
+  
+  .flight-search-content {
+    background: #f0f2f5;
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .flight-search-background {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+  }
+  
+  .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 0 15px;
+  }
+  
+  
+  @media (max-width: 768px) {
+    .flight-search-header {
+      padding: 0 20px;
+    }
+  
+    .flight-search-background {
+      padding: 20px;
+    }
+  
+    .title {
+      font-size: 28px;
+    }
+  
+    .subtitle {
+      font-size: 16px;
+    }
+  }
+  
+  
+  .flight-search-form .ant-form-item-label > label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .search-btn {
+    background-color: black;
+    border-color: black;
+  }
+  
+  .search-btn:hover {
+    background-color: grey;
+    border-color: grey;
+  }
+  
+  @media (max-width: 768px) {
+    .flight-search-header {
+      padding: 0 20px;
+    }
+  
+    .flight-search-background {
+      padding: 20px;
+    }
+  
+    .title {
+      font-size: 28px;
+    }
+  
+    .subtitle {
+      font-size: 16px;
+    }
+  }
+  
+  
+  

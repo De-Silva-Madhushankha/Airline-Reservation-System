@@ -1,87 +1,78 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, DatePicker, Select, message } from 'antd';
-import 'antd/dist/antd.css';
+import { Layout, Steps, Button, Form, Input } from 'antd';
+import Header from '../components/Header';
+import FlightSearch from '../components/FlightSearchComponent';
 
-const { Option } = Select;
 
-function Book() {
-  const [form] = Form.useForm();
+const { Content, Footer } = Layout;
+const { Step } = Steps;
 
-  const onFinish = (values) => {
-    console.log('Success:', values);
-    message.success('Booking successful!');
-    // Here you can handle the form submission, e.g., send the data to the server
+const BookingPage = () => {
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const steps = [
+    { title: 'Flights' },
+    { title: 'Passengers' },
+    { title: 'Options' },
+    { title: 'Payment' },
+    { title: 'Confirm' }
+  ];
+
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1);
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-    message.error('Please check the form for errors.');
+  const prevStep = () => {
+    setCurrentStep(currentStep - 1);
   };
+
 
   return (
-    <div className="booking-container" style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
-      <h2 className="text-center">Book a Flight</h2>
-      <Form
-        form={form}
-        name="booking"
-        layout="vertical"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="Full Name"
-          name="fullName"
-          rules={[{ required: true, message: 'Please enter your full name!' }]}
-        >
-          <Input placeholder="Enter your full name" />
-        </Form.Item>
+    <Layout>
 
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ required: true, type: 'email', message: 'Please enter a valid email!' }]}
-        >
-          <Input placeholder="Enter your email" />
-        </Form.Item>
+      <Header />
+      <div style={{
+        position: 'fixed',
+        top: '80px', /* Place it under the header (adjust based on header height) */
+        width: '100%',
+        backgroundColor: '#fff',
+        zIndex: 999, /* Ensure it stays above the content */
+        padding: '10px 50px',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', /* Optional shadow for better visual separation */
+      }}>
+        <Steps current={currentStep}>
+          {steps.map((step, index) => (
+            <Step key={index} title={step.title} />
+          ))}
+        </Steps>
+      </div>
+      
+      <Content style={{ padding: '20px 50px', paddingTop: '100px' }}>
+        
+        <div style={{ marginTop: '40px' }}>
+          {currentStep === 0 && (
+            <FlightSearch />
+            
+          )}
+          {currentStep === 1 && (
+            <Form layout="vertical">
+              <Form.Item label="Number of Passengers">
+                <Input placeholder="1 Passenger" />
+              </Form.Item>
+            </Form>
+          )}
+          {/* Add similar forms for Options, Payment, and Confirmation */}
+        </div>
 
-        <Form.Item
-          label="Flight Number"
-          name="flightNumber"
-          rules={[{ required: true, message: 'Please enter your flight number!' }]}
-        >
-          <Input placeholder="Enter your flight number" />
-        </Form.Item>
-
-        <Form.Item
-          label="Date"
-          name="date"
-          rules={[{ required: true, message: 'Please select a date!' }]}
-        >
-          <DatePicker style={{ width: '100%' }} />
-        </Form.Item>
-
-        <Form.Item
-          label="Seat"
-          name="seat"
-          rules={[{ required: true, message: 'Please select a seat!' }]}
-        >
-          <Select placeholder="Select a seat">
-            <Option value="A1">A1</Option>
-            <Option value="A2">A2</Option>
-            <Option value="B1">B1</Option>
-            <Option value="B2">B2</Option>
-            {/* Add more seat options as needed */}
-          </Select>
-        </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit" block>
-            Book Now
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+        <div style={{ marginTop: '20px' }}>
+          {currentStep > 0 && <Button onClick={prevStep}>Previous</Button>}
+          {currentStep < steps.length - 1 && <Button type="primary" onClick={nextStep}>Next</Button>}
+          {currentStep === steps.length - 1 && <Button type="primary">Confirm Booking</Button>}
+        </div>
+      </Content>
+      <Footer style={{ textAlign: 'center' }}>B Airways ©2024 Created by Madhushankha De Silva</Footer>
+    </Layout>
   );
-}
+};
 
-export default Book;
+export default BookingPage;
