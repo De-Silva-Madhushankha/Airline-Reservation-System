@@ -5,7 +5,7 @@ import Header from '../components/Header.jsx';
 const FlightSchedules = () => {
     return (
         <>
-            <div ><Header /></div>
+            {/* <div ><Header /></div> */}
             <div><FlightSchedule /></div>
              
         </>);

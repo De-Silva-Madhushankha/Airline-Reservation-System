@@ -1,0 +1,138 @@
+/* Base styles */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Typography */
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+/* Flight card styles */
+.flight-list {
+  display: grid;
+  gap: 20px;
+}
+
+.flight-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.flight-card:hover {
+  transform: translateY(-5px);
+}
+
+.flight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #3498db;
+  color: #fff;
+}
+
+.flight-id {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.flight-content {
+  padding: 20px;
+}
+
+.flight-times {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.time-block {
+  text-align: center;
+}
+
+.time {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.time-label {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  text-transform: uppercase;
+}
+
+.flight-duration {
+  text-align: center;
+  font-size: 1rem;
+  color: #7f8c8d;
+  background-color: #ecf0f1;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .flight-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .flight-times {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .time-block {
+    margin-bottom: 15px;
+  }
+
+  .time {
+    font-size: 1.2rem;
+  }
+}
+
+/* Icons (you'll need to replace these with actual icons) */
+.icon-plane::before {
+  content: '✈️';
+  margin-right: 5px;
+}
+
+.icon-arrow::before {
+  content: '→';
+  margin: 0 10px;
+}
+
+@media (max-width: 480px) {
+  .icon-arrow::before {
+    content: '↓';
+    display: block;
+    margin: 10px 0;
+  }
+}

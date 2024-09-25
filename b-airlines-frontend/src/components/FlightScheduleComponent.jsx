@@ -1,10 +1,13 @@
 import React from 'react';
 import { ChevronDown, Plane } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import './FlightScheduleComponent.css';
 
 const FlightSchedule = () => {
   const location = useLocation();
   const flights = location.state?.flights || [];
+  let departure = flights.departure;
+  let duration = flights.arrival - flights.departure;
   console.log("Flights: ", flights);
   
   if (flights.length === 0) {
@@ -20,7 +23,7 @@ const FlightSchedule = () => {
           <div key={index} className={`flex flex-col md:flex-row justify-between items-center p-4 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
             <div className="flex items-center mb-2 md:mb-0">
               <Plane className="mr-2 text-blue-500" />
-              <span className="font-semibold">{flight.flightNo}</span>
+              <span className="font-semibold">{flight.aircraft_id}</span>
             </div>
             <div className="flex items-center">
               <div className="text-center mr-4">
@@ -34,7 +37,7 @@ const FlightSchedule = () => {
               </div>
             </div>
             <div className="text-sm text-gray-500 mt-2 md:mt-0">
-              Duration: {flight.duration}
+              Duration: {duration}
             </div>
           </div>
         ))}
