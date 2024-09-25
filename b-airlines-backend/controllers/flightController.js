@@ -61,9 +61,10 @@ export const searchFlights = async (req, res) => {
     //console.log("Search values: ", req.body);
     const departureDate = moment(dates[0]).format("YYYY-MM-DD");
     const arrivalDate = moment(dates[1]).format("YYYY-MM-DD");
+    //console.log(departureDate, arrivalDate);
     try {
         const flights = await Flight.search(origin, destination, departureDate, arrivalDate);
-        console.log("Search results: ", flights);
+        //console.log("Search results: ", flights);
         res.json({ flights });
     } catch (error) {
         res.status(500).json({ error: error.message });

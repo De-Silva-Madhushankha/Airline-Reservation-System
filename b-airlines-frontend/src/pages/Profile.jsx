@@ -1,28 +1,43 @@
-// pages/ProfilePage.js
-import React from 'react';
-import { Row, Col } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Spin, Alert } from 'antd';
+import axios from 'axios';
 import ProfileCard from '../components/profileComponents/ProfileCard';
 import FlightHistory from '../components/profileComponents/FlightHistory';
 import ProfileInfo from '../components/profileComponents/ProfileInfo';
 
 const UserProfile = () => {
-  const user = {
-    name: 'Madhu De Silva',
-    email: 'admin@gmail.com',
-    loyaltyPoints: 2000,
-    flights: [
-      { key: '1', flightNumber: 'FL123', from: 'New York (JFK)', to: 'London (LHR)', date: '2024-08-12', status: 'Completed' },
-      { key: '2', flightNumber: 'FL456', from: 'Dubai (DXB)', to: 'Colombo (CMB)', date: '2024-07-22', status: 'Completed' },
-    ],
-    profileInfo: [
-      { label: 'First Name', value: 'Madhu' },
-      { label: 'Last Name', value: 'De Silva' },
-      { label: 'Email', value: 'admin@gmail.com' },
-      { label: 'Mobile', value: '0704424913' },
-      { label: 'Country', value: 'Sri Lanka' },
-      { label: 'Role', value: 'Administrator' },
-    ],
-  };
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      try {
+        const response = await axios.get('/api/user/profile',{
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setUser(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (loading) {
+    return <Spin tip="Loading..." />;
+  }
+
+  if (error) {
+    return <Alert message="Error" description={error} type="error" showIcon />;
+  }
 
   return (
     <div className="profile-container" style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>

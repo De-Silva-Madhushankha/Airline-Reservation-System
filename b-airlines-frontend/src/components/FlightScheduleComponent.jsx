@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 const FlightSchedule = () => {
   const location = useLocation();
   const flights = location.state?.flights || [];
+  console.log("Flights: ", flights);
   
   if (flights.length === 0) {
     return <div>No flights available</div>;

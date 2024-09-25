@@ -26,6 +26,12 @@ const UserNavbar = () => {
     showButton();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
+    navigate('/sign-in');
+  };
+
   window.addEventListener('resize', showButton);
 
   return (
@@ -75,18 +81,18 @@ const UserNavbar = () => {
             </li>
             <li className='user-nav-item'>
               <div className='user-nav-links' onClick={toggleDropdown}>
-                <FaUserCircle size={24} />
+                <FaUserCircle size={26} />
               </div>
               {dropdown && (
                 <ul className='user-dropdown-menu'>
                   <li className='user-dropdown-item'>
-                    <Link to='/profile' onClick={closeDropdown}>Profile</Link>
+                    <Link to='/user/profile' onClick={closeDropdown}>Profile</Link>
                   </li>
                   <li className='user-dropdown-item'>
-                    <Link to='/settings' onClick={closeDropdown}>Settings</Link>
+                    <Link to='/user/settings' onClick={closeDropdown}>Settings</Link>
                   </li>
                   <li className='user-dropdown-item'>
-                    <Link to='/logout' onClick={closeDropdown}>Logout</Link>
+                    <Link to='/user/logout' onClick={handleLogout}>Logout</Link>
                   </li>
                 </ul>
               )}

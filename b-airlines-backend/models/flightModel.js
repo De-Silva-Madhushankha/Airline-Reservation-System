@@ -31,17 +31,17 @@ const Flight = {
 
     // Search for flights
     search: async (origin, destination, departure, arrival, result) => {
-        //console.log(db.query("SELECT * FROM search_flights WHERE origin_code = ? AND destination_code = ? AND departure >= ? AND arrival <= ?", [origin, destination, departure, arrival]));
-        db.query("SELECT * FROM search_flights WHERE origin_code = ? AND destination_code = ? AND departure >= ? AND arrival <= ?", [origin, destination, departure, arrival], function(err, res) {
-            if (err) {
-                console.log("error: ", err);
-                return result(null, err);
-            } else {
-                console.log("flights: ", res);
-                return result(null, res);
-            }
-        });
-
+        try {
+            const res = await db.query(
+                "SELECT * FROM search_flights WHERE origin_code = ? AND destination_code = ? AND DATE(departure) >= ? AND DATE(arrival) <= ?",
+                [origin, destination, departure, arrival]
+            );
+            //console.log("flights: ", res);
+            return res[0];
+        } catch (err) {
+            console.log("error: ", err);
+            return result(null, err);
+        }
     },
 
     // Get flight by ID 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Alert, Row, Col } from 'antd';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
   const [form] = Form.useForm();
@@ -22,7 +22,13 @@ const SignIn = () => {
       const { success, token, message } = response.data;
 
       if (success) {
-        localStorage.setItem('token', token);
+        // Store token based on "Keep me logged in" option
+        if (values.remember) {
+          localStorage.setItem('token', token);  // Store in localStorage for persistence
+        } else {
+          sessionStorage.setItem('token', token); // Store in sessionStorage for single session
+        }
+
         navigate('/user/home');
       } else {
         setErrorMessage(message || 'Login failed');

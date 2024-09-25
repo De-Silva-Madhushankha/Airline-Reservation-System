@@ -29,6 +29,7 @@ const FlightSearch = () => {
         try {
           const response = await axios.post('http://localhost:3001/api/flight/flight-search', values);
           console.log("Search results: ", response.data);
+        //   console.log("Search results: ", response.data.flights);
           message.success("Flights found!");
           navigate("/schedule/flight-schedules", { state: { flights: response.data.flights } });
         } catch (error) {
