@@ -33,12 +33,12 @@ const BookingPage = () => {
       <Header />
       <div style={{
         position: 'flex',
-        top: '80px', /* Place it under the header (adjust based on header height) */
+        top: '80px', 
         width: '100%',
         backgroundColor: '#fff',
-        zIndex: 999, /* Ensure it stays above the content */
+        zIndex: 999, 
         padding: '10px 50px',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', /* Optional shadow for better visual separation */
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       }}>
         <Steps current={currentStep}>
           {steps.map((step, index) => (
@@ -49,7 +49,7 @@ const BookingPage = () => {
       
       <Content style={{ padding: '20px 50px', paddingTop: '100px' }}>
         
-        <div style={{ marginTop: '40px' }}>
+        <div style={{ marginTop: '20px' }}>
           {currentStep === 0 && (
             <FlightSearch />
             
