@@ -54,7 +54,7 @@ const UserNavbar = () => {
             </li>
             <li className='user-nav-item'>
               <Link
-                to='/schedule/flight-search'
+                to='/schedule'
                 className='user-nav-links'
                 onClick={closeMobileMenu}
               >

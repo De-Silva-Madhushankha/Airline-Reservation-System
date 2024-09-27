@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Layout, Steps, Button, Form, Input } from 'antd';
 import Header from '../components/Header';
 import FlightSearch from '../components/FlightSearchComponent';
-
+import FlightSchedule from '../components/FlightScheduleComponent';
 
 const { Content, Footer } = Layout;
 const { Step } = Steps;
 
 const BookingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [flightResults, setFlightResults] = useState(null); 
 
   const steps = [
     { title: 'Flights' },
@@ -26,10 +27,13 @@ const BookingPage = () => {
     setCurrentStep(currentStep - 1);
   };
 
+  
+  const handleSearchResults = (results) => {
+    setFlightResults(results); 
+  };
 
   return (
     <Layout>
-
       <Header />
       <div style={{
         position: 'flex',
@@ -46,14 +50,21 @@ const BookingPage = () => {
           ))}
         </Steps>
       </div>
-      
+
       <Content style={{ padding: '20px 50px', paddingTop: '100px' }}>
-        
         <div style={{ marginTop: '20px' }}>
           {currentStep === 0 && (
-            <FlightSearch />
-            
+            <>
+              
+              <FlightSearch onSearch={handleSearchResults} />
+
+          
+              {flightResults && (
+                <FlightSchedule flights={flightResults} />
+              )}
+            </>
           )}
+
           {currentStep === 1 && (
             <Form layout="vertical">
               <Form.Item label="Number of Passengers">
