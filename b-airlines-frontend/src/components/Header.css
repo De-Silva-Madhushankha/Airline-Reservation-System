@@ -1,6 +1,6 @@
 .common-header {
   background: #000; /* Black background */
-  position: fixed; /* Fixed position */
+  position: flex; /* Fixed position */
   top: 0; /* At the top */
   width: 100%; /* Full width */
   z-index: 1000; /* Ensure it stays above other elements */

@@ -29,7 +29,7 @@ const SignIn = () => {
           sessionStorage.setItem('token', token); // Store in sessionStorage for single session
         }
 
-        navigate('/user/home');
+        navigate('/');
       } else {
         setErrorMessage(message || 'Login failed');
       }

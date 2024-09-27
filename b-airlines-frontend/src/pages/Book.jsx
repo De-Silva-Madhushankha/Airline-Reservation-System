@@ -32,7 +32,7 @@ const BookingPage = () => {
 
       <Header />
       <div style={{
-        position: 'fixed',
+        position: 'flex',
         top: '80px', /* Place it under the header (adjust based on header height) */
         width: '100%',
         backgroundColor: '#fff',
