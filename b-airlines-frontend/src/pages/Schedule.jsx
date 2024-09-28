@@ -1,4 +1,4 @@
-import Navbar from "../components/GuestNavbar";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FlightSchedule from "../components/FlightScheduleComponent";
 import FlightSearch from "../components/FlightSearchComponent";
