@@ -38,7 +38,7 @@ traveler class (Economy, Business or Platinum).
 
 
 
-![Logo]("b-airlines-frontend/public/images/B-Airways.png")
+![Logo](b-airlines-frontend/public/images/B-Airways.png)
 
 
 ## Screenshots
