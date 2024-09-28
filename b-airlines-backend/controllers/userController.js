@@ -106,17 +106,25 @@ export const loginUser = async (req, res) => {
 };
 
 export const getUserProfile = async (req, res) => {
-  const { email } = req.params;
   try {
-    const user = await User.findByEmail(email);
-    console.log(user);
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ message: 'User not found' });
+    const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  }
-  catch (error) {
+
+    res.json({
+      title: user.title,
+      firstName: user.fist_name,
+      lastName: user.last_name,
+      email: user.email,
+      dateOfBirth: user.date_of_birth,
+      country: user.country,
+      mobileNumber: user.mobile_number,
+      loyaltyPoints: user.loyaltyPoints,
+      flights: user.flights,
+      profileInfo: user.profileInfo,
+    });
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
-}
+};

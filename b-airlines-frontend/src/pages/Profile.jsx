@@ -13,21 +13,28 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token'); // Get the token from localStorage
+  
+      if (!token) {
+        setError('User is not authenticated');
+        setLoading(false);
+        return;
+      }
+  
       try {
-        const response = await axios.get('/api/user/profile',{
+        const response = await axios.get('/api/user/profile', {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`, // Pass token in the Authorization header
+          },
         });
-        setUser(response.data);
+        setUser(response.data); // Set user data
       } catch (err) {
-        setError(err.message);
+        setError(err.response?.data?.message || 'Error fetching profile');
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchUserData();
   }, []);
 

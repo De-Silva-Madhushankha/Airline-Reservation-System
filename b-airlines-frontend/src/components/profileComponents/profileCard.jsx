@@ -4,7 +4,7 @@ import { EditOutlined, UploadOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
-const ProfileCard = ({ name, email, loyaltyPoints }) => {
+const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints }) => {
   return (
     <Card
       bordered={false}

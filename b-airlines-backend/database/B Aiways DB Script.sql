@@ -131,4 +131,16 @@ ADD CONSTRAINT tem_fk FOREIGN KEY (template_id)
 REFERENCES seat_map(template_id);
 
 
+CREATE VIEW search_flights AS
+    SELECT  route.origin_code, route.destination_code, DATE(flight.departure) departure, TIME(flight.departure) dep_time, DATE(flight.arrival) arrival, TIME(flight.arrival) arr_time, flight.aircraft_id
+    FROM  flight INNER JOIN route USING(route_id);
 
+--SELECT * FROM search_flights WHERE origin_code = 'CGK' AND destination_code = 'BIA' AND departure >= '2024-09-01' AND arrival <= '2024-09-05';
+
+CREATE VIEW user_info AS
+    SELECT user.user_id, user.title ,user.first_name, user.last_name, user.email, user.mobile_number, user.country, user.date_of_birth, user.loyalty_points
+    FROM user;
+
+CREATE VIEW user_bookings AS
+    SELECT passenger.user_id, booking.booking_id, booking.flight_id, booking.seat_id, booking.booking_date, booking.total_amount, booking.payment_status
+    FROM booking INNER JOIN passenger USING (passenger_id);

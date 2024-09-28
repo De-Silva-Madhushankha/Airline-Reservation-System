@@ -1,4 +1,3 @@
-// components/ProfileInfo.js
 import React from 'react';
 import { Row, Col, Card, Typography } from 'antd';
 
