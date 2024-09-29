@@ -46,12 +46,17 @@ const User = {
   },
 
   findByEmail: async (email) => {
-    const [rows] = await db.query('SELECT * FROM user_info WHERE email = ?', [email]);
+    const [rows] = await db.query('SELECT * FROM user WHERE email = ?', [email]);
     return rows;
   },
 
   findById: async (id) => {
     const [rows] = await db.query('SELECT * FROM user_info WHERE user_id = ?', [id]);
+    return rows;
+  },
+
+  getUserFlights: async (id) => {
+    const [rows] = await db.query('SELECT * FROM user_bookings WHERE user_id = ?', [id]);
     return rows;
   },
 

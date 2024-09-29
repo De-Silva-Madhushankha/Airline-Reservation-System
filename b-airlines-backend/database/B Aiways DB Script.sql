@@ -144,3 +144,7 @@ CREATE VIEW user_info AS
 CREATE VIEW user_bookings AS
     SELECT passenger.user_id, booking.booking_id, booking.flight_id, booking.seat_id, booking.booking_date, booking.total_amount, booking.payment_status
     FROM booking INNER JOIN passenger USING (passenger_id);
+
+
+-- write a trigger to make every user a passenger too
+-- write a trigger to increment loyalty points for every booking

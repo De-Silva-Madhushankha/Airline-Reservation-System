@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Spin, Alert } from 'antd';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 import ProfileCard from '../components/profileComponents/ProfileCard';
 import FlightHistory from '../components/profileComponents/FlightHistory';
 import ProfileInfo from '../components/profileComponents/ProfileInfo';
@@ -14,27 +15,29 @@ const UserProfile = () => {
     const fetchUserData = async () => {
       setLoading(true);
       const token = localStorage.getItem('token') || sessionStorage.getItem('token'); // Get the token from localStorage
-  
+
       if (!token) {
         setError('User is not authenticated');
         setLoading(false);
         return;
       }
-  
+
       try {
-        const response = await axios.get('/api/user/profile', {
+        const response = await axios.get('http://localhost:3001/api/user/profile', {
           headers: {
             Authorization: `Bearer ${token}`, // Pass token in the Authorization header
           },
         });
+        console.log("Received Data: ", response.data); // Debugging log
         setUser(response.data); // Set user data
       } catch (err) {
+        console.error(err);
         setError(err.response?.data?.message || 'Error fetching profile');
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchUserData();
   }, []);
 
@@ -47,17 +50,25 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="profile-container" style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
-      <Row gutter={16}>
-        <Col xs={24} sm={24} md={8} lg={6}>
-          <ProfileCard name={user.name} email={user.email} loyaltyPoints={user.loyaltyPoints} />
-        </Col>
-        <Col xs={24} sm={24} md={16} lg={18}>
-          <FlightHistory flights={user.flights} />
-          <ProfileInfo userInfo={user.profileInfo} />
-        </Col>
-      </Row>
-    </div>
+    <>
+
+      <Navbar />
+
+      <div className="profile-container" style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
+        <Row gutter={16}>
+          <Col xs={24} sm={24} md={8} lg={6}>
+            <ProfileCard title={user.title} firstName={user.firstName} lastName={user.lastName} email={user.email} loyaltyPoints={user.loyaltyPoints} country={user.country} mobileNumber={user.mobileNumber} birthDay={user.dateOfBirth} />
+          </Col>
+          <Col xs={24} sm={24} md={16} lg={18}>
+            <FlightHistory flights={user.flights} />
+            {/* <ProfileInfo userInfo={user.profileInfo} /> */}
+          </Col>
+        </Row>
+      </div>
+
+
+    </>
+
   );
 };
 
