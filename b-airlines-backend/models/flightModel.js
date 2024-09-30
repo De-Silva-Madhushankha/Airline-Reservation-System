@@ -1,7 +1,7 @@
 import db from '../database/db.js';
-import dotenv from 'dotenv'
+//import dotenv from 'dotenv'
 
-dotenv.config()
+//dotenv.config()
 
 
 const Flight = { 
@@ -34,16 +34,16 @@ const Flight = {
 
     // Search for flights
     search: async (origin, destination, departure, arrival, result) => {
-        console.log("origin: ", origin);
-        console.log("destination: ", destination);
-        console.log("departure: ", departure);
-        console.log("arrival: ", arrival);
+        //console.log("origin: ", origin);
+        // console.log("destination: ", destination);
+        // console.log("departure: ", departure);
+        // console.log("arrival: ", arrival);
         try {
             const res = await db.query(
                 "SELECT * FROM search_flights WHERE origin_code = ? AND destination_code = ? AND departure >= ? AND arrival <= ?",
                 [origin, destination, departure, arrival]
             );
-            console.log("flights: ", res);
+            //console.log("flights: ", res);
             return res[0];
         } catch (err) {
             console.log("error: ", err);

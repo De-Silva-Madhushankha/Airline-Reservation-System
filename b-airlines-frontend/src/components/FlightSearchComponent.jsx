@@ -3,6 +3,7 @@ import { Layout, Button, message, DatePicker, Select, Row, Col, Form } from "ant
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import "./FlightSearchComponent.css";
+import dayjs from "dayjs";
 
 const { Content } = Layout;
 const { Option } = Select;
@@ -14,7 +15,13 @@ const FlightSearch = ({ onSearch }) => {
 
   const handleSearch = async (values) => {
     setLoading(true);
+    
+    //values.dates[0] = values.dates[0].format("YYYY-MM-DD");
+    //values.dates[1] = values.dates[1].format("YYYY-MM-DD");
+    //values.dates = moment(dates).format("YYYY-MM-DD");
+    values.dates = values.dates.map(date => dayjs(date).format("YYYY-MM-DD"));
     console.log("Search values: ", values);
+
     try {
       const response = await axios.post('http://localhost:3001/api/flight/flight-search', values);
       console.log("Search results: ", response.data);
@@ -96,6 +103,7 @@ const FlightSearch = ({ onSearch }) => {
                   name="dates"
                   label="Departing - Returning"
                   rules={[{ required: true, message: "Please select travel dates" }]}
+                  
                 >
                   <RangePicker size="large" style={{ width: "100%" }} />
                 </Form.Item>

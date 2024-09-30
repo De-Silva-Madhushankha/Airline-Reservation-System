@@ -4,6 +4,7 @@ import './FlightScheduleComponent.css';
 import moment from 'moment'; // Ensure moment.js is installed for date formatting
 
 const FlightSchedule = ({ flights }) => {
+  console.log({schedule: flights});
   if (!flights || flights.length === 0) {
     return <div className="no-flights text-center text-gray-500">No flights available</div>;
   }
