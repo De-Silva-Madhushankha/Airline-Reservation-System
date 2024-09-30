@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import ProfileCard from '../components/profileComponents/ProfileCard';
 import FlightHistory from '../components/profileComponents/FlightHistory';
 import ProfileInfo from '../components/profileComponents/ProfileInfo';
+import dayjs from 'dayjs';
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -57,7 +58,7 @@ const UserProfile = () => {
       <div className="profile-container" style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto' }}>
         <Row gutter={16}>
           <Col xs={24} sm={24} md={8} lg={6}>
-            <ProfileCard title={user.title} firstName={user.firstName} lastName={user.lastName} email={user.email} loyaltyPoints={user.loyaltyPoints} country={user.country} mobileNumber={user.mobileNumber} birthDay={user.dateOfBirth} />
+            <ProfileCard title={user.title} firstName={user.firstName} lastName={user.lastName} email={user.email} loyaltyPoints={user.loyaltyPoints} country={user.country} mobileNumber={user.mobileNumber} birthDay={dayjs(user.dateOfBirth).format('YYYY-MM-DD')} />
           </Col>
           <Col xs={24} sm={24} md={16} lg={18}>
             <FlightHistory flights={user.flights} />

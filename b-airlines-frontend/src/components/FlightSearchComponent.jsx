@@ -16,9 +16,6 @@ const FlightSearch = ({ onSearch }) => {
   const handleSearch = async (values) => {
     setLoading(true);
     
-    //values.dates[0] = values.dates[0].format("YYYY-MM-DD");
-    //values.dates[1] = values.dates[1].format("YYYY-MM-DD");
-    //values.dates = moment(dates).format("YYYY-MM-DD");
     values.dates = values.dates.map(date => dayjs(date).format("YYYY-MM-DD"));
     console.log("Search values: ", values);
 
