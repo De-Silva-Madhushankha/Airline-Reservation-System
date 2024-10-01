@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { Layout, Steps, Button, Form, Input } from 'antd';
+import { Layout, Steps, Button } from 'antd';
 import Header from '../components/Header';
 import FlightSearch from '../components/FlightSearchComponent';
 import FlightSchedule from '../components/FlightScheduleComponent';
+import PassengerDetailsComponent from '../components/PassengerDetailsComponent';
+import SeatSelectionComponent from '../components/SeatSelectionComponent';
+import PaymentComponent from '../components/PaymentComponent';
 
 const { Content, Footer } = Layout;
 const { Step } = Steps;
 
 const BookingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [flightResults, setFlightResults] = useState(null); 
+  const [flightResults, setFlightResults] = useState(null);
+  const [passengers, setPassengers] = useState([]); // State for storing passenger details
+  const [selectedSeats, setSelectedSeats] = useState([]); // State for storing selected seats
 
   const steps = [
     { title: 'Flights' },
@@ -27,9 +32,18 @@ const BookingPage = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  
   const handleSearchResults = (results) => {
-    setFlightResults(results); 
+    setFlightResults(results);
+  };
+
+  const handlePassengers = (passengerDetails) => {
+    setPassengers(passengerDetails);
+    nextStep(); // Move to the next step after saving passenger details
+  };
+
+  const handleSeatsSelected = (seats) => {
+    setSelectedSeats(seats);
+    nextStep(); // Move to the next step after selecting seats
   };
 
   return (
@@ -37,10 +51,10 @@ const BookingPage = () => {
       <Header />
       <div style={{
         position: 'flex',
-        top: '80px', 
+        top: '80px',
         width: '100%',
         backgroundColor: '#fff',
-        zIndex: 999, 
+        zIndex: 999,
         padding: '10px 50px',
         boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       }}>
@@ -55,24 +69,23 @@ const BookingPage = () => {
         <div style={{ marginTop: '20px' }}>
           {currentStep === 0 && (
             <>
-              
               <FlightSearch onSearch={handleSearchResults} />
-
-          
-              {flightResults && (
-                <FlightSchedule flights={flightResults} />
-              )}
+              {flightResults && <FlightSchedule flights={flightResults} />}
             </>
           )}
 
           {currentStep === 1 && (
-            <Form layout="vertical">
-              <Form.Item label="Number of Passengers">
-                <Input placeholder="1 Passenger" />
-              </Form.Item>
-            </Form>
+            <PassengerDetailsComponent onNextStep={handlePassengers} />
           )}
-          {/* Add similar forms for Options, Payment, and Confirmation */}
+
+          {currentStep === 2 && (
+            <SeatSelectionComponent passengers={passengers} onSeatsSelected={handleSeatsSelected} />
+          )}
+
+          {currentStep === 3 && (
+            <PaymentComponent/>
+          )}
+          
         </div>
 
         <div style={{ marginTop: '20px' }}>
