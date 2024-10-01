@@ -1,0 +1,42 @@
+.seat-selection-layout {
+    padding: 40px; /* Increased padding for larger overall size */
+    text-align: center;
+    max-width: 90%; /* Limit the max width to keep it centered */
+    margin: 0 auto; /* Center the component */
+  }
+  
+  .seat-map {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0; /* Add margin for spacing */
+  }
+  
+  .seat-row {
+    display: flex;
+    justify-content: center; /* Center seats within the row */
+    margin-bottom: 15px; /* Increased spacing between rows */
+  }
+  
+  .seat {
+    margin: 0 10px; /* Increase margin between seats */
+    width: 80px; /* Increased width of the seats */
+    height: 60px; /* Increased height of the seats */
+    font-size: 16px; /* Larger font size for seat labels */
+  }
+  
+  .seat.selected {
+    background-color: #4caf50; /* Green for selected seats */
+    color: white;
+  }
+  
+  .seat.occupied {
+    background-color: #f44336; /* Red for occupied seats */
+    color: white;
+    cursor: not-allowed; /* Show not-allowed cursor */
+  }
+  
+  button {
+    font-size: 18px; /* Increase button font size */
+  }
+  
