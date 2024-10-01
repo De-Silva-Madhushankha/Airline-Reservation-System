@@ -1,10 +1,16 @@
-// components/ProfileInfo.js
 import React from 'react';
 import { Row, Col, Card, Typography } from 'antd';
 
 const { Text } = Typography;
 
-const ProfileInfo = ({ userInfo }) => {
+const ProfileInfo = ({ profileInfo }) => {
+  // Transform profileInfo object into an array of { label, value } objects
+  const userInfo = [
+    { label: 'Date of Birth', value: new Date(profileInfo.dateOfBirth).toLocaleDateString() },
+    { label: 'Country', value: profileInfo.country },
+    { label: 'Mobile Number', value: profileInfo.mobileNumber },
+  ];
+
   return (
     <Card
       title="Profile Information"

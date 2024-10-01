@@ -6,7 +6,7 @@ import './ForgotPassword.css'; // For responsive styles (we'll add this below)
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordC = () => {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
@@ -66,6 +66,7 @@ const ForgotPasswordPage = () => {
               <Button
                 type="primary"
                 htmlType="submit"
+                style={{ backgroundColor: '#1d1e22', borderColor: '#d4d4dc' }}
                 loading={loading}
                 block
               >
@@ -79,4 +80,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default ForgotPasswordC;

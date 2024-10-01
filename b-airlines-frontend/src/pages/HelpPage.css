@@ -1,5 +1,5 @@
 .help-container {
-    position: relative;
+    position: flex;
     max-width: 64rem; /* 4xl in Tailwind */
     margin: 0 auto;
     padding-top: 200px;
