@@ -97,6 +97,7 @@ CREATE TABLE Passenger (
     user_id VARCHAR(36) DEFAULT 'guestuser',
     first_name VARCHAR(50),
     last_name VARCHAR(50),
+    passport_id VARCHAR(20) NOT NULL,
     age INT CHECK ( age > 0 ),
     phone_number VARCHAR(20) NOT NULL ,
     email VARCHAR(100) NOT NULL ,
