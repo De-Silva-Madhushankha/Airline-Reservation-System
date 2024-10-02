@@ -48,13 +48,13 @@ const UserNavbar = () => {
           </div>
           <ul className={click ? 'user-nav-menu active' : 'user-nav-menu'}>
             <li className='user-nav-item'>
-              <Link to='/user/home' className='user-nav-links' onClick={closeMobileMenu}>
+              <Link to='/home' className='user-nav-links' onClick={closeMobileMenu}>
                 Home
               </Link>
             </li>
             <li className='user-nav-item'>
               <Link
-                to='/schedule/flight-search'
+                to='/schedule'
                 className='user-nav-links'
                 onClick={closeMobileMenu}
               >
@@ -80,22 +80,31 @@ const UserNavbar = () => {
               </Link>
             </li>
             <li className='user-nav-item'>
-              <div className='user-nav-links' onClick={toggleDropdown}>
-                <FaUserCircle size={26} />
-              </div>
-              {dropdown && (
-                <ul className='user-dropdown-menu'>
-                  <li className='user-dropdown-item'>
-                    <Link to='/user/profile' onClick={closeDropdown}>Profile</Link>
-                  </li>
-                  <li className='user-dropdown-item'>
-                    <Link to='/user/settings' onClick={closeDropdown}>Settings</Link>
-                  </li>
-                  <li className='user-dropdown-item'>
-                    <Link to='/user/logout' onClick={handleLogout}>Logout</Link>
-                  </li>
-                </ul>
-              )}
+              <Link
+                to='/user-profile'
+                className='user-nav-links'
+                onClick={closeMobileMenu}
+              >
+                Profile
+              </Link>
+            </li>
+            <li className='user-nav-item'>
+              <Link
+                to='/user-settings'
+                className='user-nav-links'
+                onClick={closeMobileMenu}
+              >
+                Settings
+              </Link>
+            </li>
+            <li className='user-nav-item'>
+              <Link
+                to='/'
+                className='user-nav-links'
+                onClick={handleLogout}
+              >
+                Logout
+              </Link>
             </li>
           </ul>
         </div>

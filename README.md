@@ -38,12 +38,12 @@ traveler class (Economy, Business or Platinum).
 
 
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](b-airlines-frontend/public/images/B-Airways.png)
 
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](b-airlines-frontend/public/images/bairwayshome.jpeg)
 
 
 ## Appendix
@@ -53,7 +53,7 @@ Any additional information goes here
 
 ## Feedback
 
-If you have any feedback, please reach out to us at BAirways@BAirways.com
+If you have any feedback, please reach out to us at bawantha.22@cse.mrt.ac.lk
 
 
 ## Authors

@@ -3,6 +3,8 @@ import { Typography, Collapse, List } from 'antd';
 import { PhoneOutlined, MailOutlined, RightOutlined } from '@ant-design/icons';
 import './HelpPage.css';
 import Header from '../components/Header';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -29,7 +31,7 @@ const HelpPage = () => {
 
     return (
         <>
-            <Header />
+            <Navbar />
 
             <div className="help-container">
                 <Title level={2} className="help-title">Help Center</Title>
@@ -83,6 +85,7 @@ const HelpPage = () => {
                     />
                 </div>
             </div>
+            <Footer />
         </>
 
     );

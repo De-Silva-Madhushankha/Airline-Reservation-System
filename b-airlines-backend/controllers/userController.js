@@ -106,17 +106,37 @@ export const loginUser = async (req, res) => {
 };
 
 export const getUserProfile = async (req, res) => {
-  const { email } = req.params;
   try {
-    const user = await User.findByEmail(email);
-    console.log(user);
-    if (user) {
-      res.json(user);
-    } else {
-      res.status(404).json({ message: 'User not found' });
+    const user_info = await User.findById(req.user.id);
+    const user_flights = await User.getUserFlights(req.user.id);
+
+    // Log the fetched user info
+    //console.log('Fetched User Info:', user_info);
+    //console.log('Fetched User Flights:', user_flights);
+
+    if (!user_info) {
+      return res.status(404).json({ message: 'User not found' });
     }
+
+    const responseData = {
+      title: user_info[0].title || '',
+      firstName: user_info[0].first_name || '',
+      lastName: user_info[0].last_name || '',
+      email: user_info[0].email || '',
+      loyaltyPoints: user_info[0].loyalty_points || 0,
+      dateOfBirth: user_info[0].date_of_birth || 'N/A',
+      country: user_info[0].country || 'N/A',
+      mobileNumber: user_info[0].mobile_number || 'N/A',
+      flights: user_flights ? user_flights : [],
+    };
+
+    // Log the response data
+    console.log('Response Data:', JSON.stringify(responseData, null, 2));
+    
+    return res.json(responseData);
+
+  } catch (error) {
+    console.error('Error:', error.message);
+    return res.status(500).json({ error: error.message });
   }
-  catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
+};

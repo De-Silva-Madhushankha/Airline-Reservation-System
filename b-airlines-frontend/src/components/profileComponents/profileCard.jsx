@@ -4,7 +4,9 @@ import { EditOutlined, UploadOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
-const ProfileCard = ({ name, email, loyaltyPoints }) => {
+const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country, mobileNumber, birthDay }) => {
+
+  //console.log(title, firstName, lastName, email, loyaltyPoints);
   return (
     <Card
       bordered={false}
@@ -21,7 +23,14 @@ const ProfileCard = ({ name, email, loyaltyPoints }) => {
         <Button type="link" icon={<EditOutlined />}>Edit Profile</Button>,
       ]}
     >
-      <Title level={4}>{name}</Title>
+      <Title level={4}> {title} {firstName} {lastName}</Title>
+      <Divider />
+      <Text type="secondary">{country}</Text>
+      <Divider />
+      <Text type="secondary">{mobileNumber}</Text>
+      <Divider />
+      <Text type="secondary">{birthDay}</Text>
+      <Divider />
       <Text type="secondary">{email}</Text>
       <Divider />
       <Text>Loyalty Points: {loyaltyPoints}</Text>

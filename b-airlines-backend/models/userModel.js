@@ -50,6 +50,16 @@ const User = {
     return rows;
   },
 
+  findById: async (id) => {
+    const [rows] = await db.query('SELECT * FROM user_info WHERE user_id = ?', [id]);
+    return rows;
+  },
+
+  getUserFlights: async (id) => {
+    const [rows] = await db.query('SELECT * FROM user_bookings WHERE user_id = ?', [id]);
+    return rows;
+  },
+
   
 };
 

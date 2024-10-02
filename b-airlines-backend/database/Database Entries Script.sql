@@ -619,3 +619,39 @@ INSERT INTO Booking (booking_id, flight_id, passenger_id, seat_id, booking_date,
 
 
 -- Additional data to reach 50 entries could be added similarly.
+
+
+
+
+SET foreign_key_checks = 0;
+
+INSERT INTO Booking (flight_id, passenger_id, seat_id, booking_date, total_amount, payment_status)
+VALUES
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Paid'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Pending'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Paid'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Failed'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Pending'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Paid'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Failed'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Paid'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Pending'),
+    (FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Paid');
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+SET foreign_key_checks = 0;
+
+INSERT INTO Booking (flight_id, passenger_id, seat_id, booking_date, total_amount, payment_status)
+VALUES
+    (FLOOR(1 + RAND() * 10), 7, FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Paid'),
+    (FLOOR(1 + RAND() * 10), 7, FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Pending'),
+    (FLOOR(1 + RAND() * 10), 7, FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Paid'),
+    (FLOOR(1 + RAND() * 10), 7, FLOOR(1 + RAND() * 10), NOW() - INTERVAL FLOOR(RAND() * 365) DAY, ROUND(100 + (RAND() * 400), 2), 'Failed');
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+UPDATE user
+SET loyalty_points = 4
+WHERE user_id = 7;

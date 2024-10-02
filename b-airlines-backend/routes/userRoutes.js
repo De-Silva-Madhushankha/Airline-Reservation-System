@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/sign-up', registerUser);
 router.post('/sign-in', loginUser);
-router.get('/profile/:email', verifyToken, getUserProfile);
+router.get('/profile', verifyToken, getUserProfile);
 
 
 

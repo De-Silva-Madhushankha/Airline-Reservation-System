@@ -6,14 +6,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
-import FlightSearch from './pages/FlightSearch';
-import UserHome from './pages/UserHome';
 import Book from './pages/Book';
 import Help from './pages/Help';
-import ForgotPasswordPage from './components/ForgotPassword';
+import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import axiosSetup from './axiosSetup';
-import FlightSchedules from './pages/FlightSchedules';
+import Schedule from './pages/Schedule';
+import NotFound from './pages/NotFound';
 
 
 
@@ -25,16 +24,15 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home/>} />
+          <Route path="/not-found" element={<NotFound/>} />
           <Route path="/sign-up" element={<SignUp/>} />
           <Route path="/sign-in" element={<SignIn/>} />
           <Route path="/book" element={<Book/>} />
           <Route path="/help" element={<Help/>} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
-          <Route path="/schedule/flight-search" element={<FlightSearch/>} />
-          <Route path="/schedule/flight-schedules" element={<FlightSchedules/>} />
-          <Route path="/user/profile" element = {<Profile/>}/>
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/schedule" element={<Schedule/>} />
+          <Route path="/user-profile" element = {<Profile/>}/>
           <Route path="*" element={<Home/>} />
-          <Route path="/user/home" element={<UserHome/>} />
         </Routes>
       </Router>
   );
