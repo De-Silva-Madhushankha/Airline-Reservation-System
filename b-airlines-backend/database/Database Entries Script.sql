@@ -61,7 +61,7 @@ VALUES
 
 
 -- Insert data into Model table
-INSERT INTO Model (model, template_id, num_economy_seats, num_business_seats, num_platinum_seats) VALUES
+INSERT INTO Model (model, num_economy_seats, num_business_seats, num_platinum_seats) VALUES
 ('Boeing 757', 40, 5, 3),
 ('Airbus A380', 50, 10, 5),
 ('Boeing 737', 30, 6, 4);

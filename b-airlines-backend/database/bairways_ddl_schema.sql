@@ -17,7 +17,8 @@ CREATE TABLE Loyalty_Program (
     program_id INT PRIMARY KEY AUTO_INCREMENT,
     program_name VARCHAR(50),
     min_points INT NOT NULL CHECK ( min_points > 0 ),
-    max_points INT NOT NULL
+    max_points INT NOT NULL,
+    discount INT NOT NULL
 );
 
 
@@ -39,6 +40,7 @@ CREATE TABLE Airport (
 
 CREATE TABLE User (
     user_id CHAR(36) PRIMARY KEY,
+    program_id  INT NOT NULL DEFAULT 1,
     title VARCHAR(3) NOT NULL ,
     first_name VARCHAR(50) NOT NULL ,
     last_name VARCHAR(50) NOT NULL ,
@@ -49,7 +51,8 @@ CREATE TABLE User (
     mobile_number VARCHAR(20) NOT NULL ,
     role_id INT NOT NULL DEFAULT 2,
     loyalty_points INT DEFAULT 0,
-    FOREIGN KEY (role_id) REFERENCES Role(role_id) ON UPDATE CASCADE
+    FOREIGN KEY (role_id) REFERENCES Role(role_id) ON UPDATE CASCADE ,
+    FOREIGN KEY (program_id) REFERENCES loyalty_program(program_id) ON UPDATE CASCADE
 );
 
 
@@ -91,7 +94,7 @@ CREATE TABLE Flight (
 
 CREATE TABLE Passenger (
     passenger_id CHAR(36) PRIMARY KEY ,
-    user_id CHAR(9) DEFAULT 'guestuser',
+    user_id VARCHAR(36) DEFAULT 'guestuser',
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     age INT CHECK ( age > 0 ),
@@ -107,7 +110,12 @@ CREATE TABLE Seat (
     seat_code VARCHAR(10) NOT NULL ,
     seat_class VARCHAR(20) NOT NULL ,
     seat_price DOUBLE CHECK ( seat_price > 0 ),
-    is_reserved BOOLEAN
+    is_reserved BOOLEAN,
+    model VARCHAR(50),
+    flight_id CHAR(36) NOT NULL,
+    FOREIGN KEY (model) REFERENCES model(model) ON DELETE CASCADE ,
+    FOREIGN KEY (flight_id) REFERENCES flight(flight_id)
+
 );
 
 
@@ -315,5 +323,6 @@ BEGIN
     SET loyalty_points = loyalty_points + 1
     WHERE user_id = (SELECT user_id FROM Passenger WHERE passenger_id = NEW.passenger_id);
 END;
+
 
 
