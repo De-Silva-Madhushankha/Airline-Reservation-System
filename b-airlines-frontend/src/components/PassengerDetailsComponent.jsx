@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, message, Row, Col } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, message, Row, Col, List } from 'antd';
 import './PassengerDetailsComponent.css';
 
-const PassengerDetailsComponent = ({ onNextStep }) => {
-  const [passengers, setPassengers] = useState([{ firstName: '', lastName: '', passport: '' }]);
+const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isConfirmed }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewMode, setViewMode] = useState(isConfirmed);
+
+  useEffect(() => {
+    setViewMode(isConfirmed);
+  }, [isConfirmed]);
+
+  const validatePassport = (passport) => /^[a-zA-Z0-9]{6,9}$/.test(passport);
 
   const handlePassengerChange = (field, value) => {
     const updatedPassengers = [...passengers];
@@ -14,17 +20,23 @@ const PassengerDetailsComponent = ({ onNextStep }) => {
 
   const handleNext = () => {
     const { firstName, lastName, passport } = passengers[currentIndex];
+
     if (firstName === '' || lastName === '' || passport === '') {
-      message.error('Please fill out all passenger details.');
+      message.error('Please fill out all fields.');
+      return;
+    }
+
+    if (!validatePassport(passport)) {
+      message.error('Please enter a valid passport number (6-9 alphanumeric characters).');
       return;
     }
 
     if (currentIndex < passengers.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      // If at last passenger, handle the logic to finalize or go to the next step
       message.success('All passenger details saved!');
-      onNextStep(); // Trigger next step when finished
+      setViewMode(true);
+      onNextStep(passengers);
     }
   };
 
@@ -37,21 +49,51 @@ const PassengerDetailsComponent = ({ onNextStep }) => {
   const handleAddPassenger = () => {
     const updatedPassengers = [...passengers, { firstName: '', lastName: '', passport: '' }];
     setPassengers(updatedPassengers);
-    setCurrentIndex(updatedPassengers.length - 1); // Move to the new passenger
+    setCurrentIndex(updatedPassengers.length - 1);
+    setViewMode(false);
   };
 
+  const handleEditPassenger = (index) => {
+    setCurrentIndex(index);
+    setViewMode(false);
+  };
+
+  // Render view mode if passenger details have been confirmed
+  if (viewMode) {
+    return (
+      <div className="passenger-details-layout">
+        <div className="passenger-details-background">
+          <h1 className="title">Confirmed Passengers</h1>
+          <List
+            itemLayout="horizontal"
+            dataSource={passengers}
+            renderItem={(passenger, index) => (
+              <List.Item actions={[<Button onClick={() => handleEditPassenger(index)}>Edit</Button>]}>
+                <List.Item.Meta
+                  title={`Passenger ${index + 1}`}
+                  description={`Name: ${passenger.firstName} ${passenger.lastName}, Passport: ${passenger.passport}`}
+                />
+              </List.Item>
+            )}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Render form mode if passengers are not confirmed yet or in edit mode
   return (
     <div className="passenger-details-layout">
       <div className="passenger-details-background">
         <h1 className="title">Passenger Details</h1>
-        <p className="subtitle">Please enter the details of passenger {currentIndex + 1}.</p>
+        <p className="subtitle">Please enter or edit the details of passenger {currentIndex + 1}.</p>
         <Form layout="vertical" className="passenger-form">
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item label="First Name" required>
                 <Input
                   placeholder="Enter first name"
-                  value={passengers[currentIndex].firstName}
+                  value={passengers[currentIndex]?.firstName} // Use optional chaining
                   onChange={(e) => handlePassengerChange('firstName', e.target.value)}
                 />
               </Form.Item>
@@ -60,7 +102,7 @@ const PassengerDetailsComponent = ({ onNextStep }) => {
               <Form.Item label="Last Name" required>
                 <Input
                   placeholder="Enter last name"
-                  value={passengers[currentIndex].lastName}
+                  value={passengers[currentIndex]?.lastName} // Use optional chaining
                   onChange={(e) => handlePassengerChange('lastName', e.target.value)}
                 />
               </Form.Item>
@@ -69,7 +111,7 @@ const PassengerDetailsComponent = ({ onNextStep }) => {
           <Form.Item label="Passport Number" required>
             <Input
               placeholder="Enter passport number"
-              value={passengers[currentIndex].passport}
+              value={passengers[currentIndex]?.passport} // Use optional chaining
               onChange={(e) => handlePassengerChange('passport', e.target.value)}
             />
           </Form.Item>

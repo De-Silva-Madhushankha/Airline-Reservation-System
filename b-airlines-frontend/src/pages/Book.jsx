@@ -12,9 +12,11 @@ const { Step } = Steps;
 
 const BookingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [flightResults, setFlightResults] = useState(null);
-  const [passengers, setPassengers] = useState([]); // State for storing passenger details
-  const [selectedSeats, setSelectedSeats] = useState([]); // State for storing selected seats
+  const [flightResults, setFlightResults] = useState([]); // Initialize as empty array
+  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [passengers, setPassengers] = useState([{ firstName: '', lastName: '', passport: '' }]); // Initialize passengers state here
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [isPassengerConfirmed, setIsPassengerConfirmed] = useState(false); // Track if passengers are confirmed
 
   const steps = [
     { title: 'Flights' },
@@ -34,23 +36,31 @@ const BookingPage = () => {
 
   const handleSearchResults = (results) => {
     setFlightResults(results);
+    setFlightResults(results);
+  };
+
+  const handleFlightSelect = (flight) => {
+    setSelectedFlight(flight);
+    console.log(flight);
+    nextStep();
   };
 
   const handlePassengers = (passengerDetails) => {
     setPassengers(passengerDetails);
-    nextStep(); // Move to the next step after saving passenger details
+    setIsPassengerConfirmed(true); // Mark passengers as confirmed
+    nextStep();
   };
 
   const handleSeatsSelected = (seats) => {
     setSelectedSeats(seats);
-    nextStep(); // Move to the next step after selecting seats
+    nextStep();
   };
 
   return (
     <Layout>
       <Header />
       <div style={{
-        position: 'flex',
+        display: 'flex',
         top: '80px',
         width: '100%',
         backgroundColor: '#fff',
@@ -69,28 +79,34 @@ const BookingPage = () => {
         <div style={{ marginTop: '20px' }}>
           {currentStep === 0 && (
             <>
-              <FlightSearch onSearch={handleSearchResults} />
-              {flightResults && <FlightSchedule flights={flightResults} />}
+              <FlightSearch onSearch={handleSearchResults}/>
+              {flightResults.length > 0 && (
+                <FlightSchedule flights={flightResults} onFlightSelect={handleFlightSelect} />
+              )}
             </>
           )}
 
           {currentStep === 1 && (
-            <PassengerDetailsComponent onNextStep={handlePassengers} />
+            <PassengerDetailsComponent 
+              passengers={passengers} 
+              setPassengers={setPassengers} // Pass the function to update passengers
+              onNextStep={handlePassengers}
+              isConfirmed={isPassengerConfirmed}  // Pass confirmation status to PassengerDetailsComponent
+            />
           )}
 
           {currentStep === 2 && (
             <SeatSelectionComponent passengers={passengers} onSeatsSelected={handleSeatsSelected} />
           )}
 
-          {currentStep === 3 && (
-            <PaymentComponent/>
-          )}
-          
+          {currentStep === 3 && <PaymentComponent />}
         </div>
 
         <div style={{ marginTop: '20px' }}>
           {currentStep > 0 && <Button onClick={prevStep}>Previous</Button>}
-          {currentStep < steps.length - 1 && <Button type="primary" onClick={nextStep}>Next</Button>}
+          {currentStep < steps.length - 1 && (flightResults.length > 0 || passengers.length > 0 || selectedSeats.length > 0) && (
+            <Button type="primary" onClick={nextStep}>Next</Button>
+          )}
           {currentStep === steps.length - 1 && <Button type="primary">Confirm Booking</Button>}
         </div>
       </Content>
