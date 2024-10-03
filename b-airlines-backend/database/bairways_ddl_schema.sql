@@ -42,7 +42,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE User (
     user_id CHAR(36) PRIMARY KEY,
     program_id  INT NOT NULL DEFAULT 1,
-    passenger_id CHAR(36) UNIQUE NOT NULL ,
+    passenger_id CHAR(36) UNIQUE DEFAULT NULL,
     title VARCHAR(3) NOT NULL ,
     first_name VARCHAR(50) NOT NULL ,
     last_name VARCHAR(50) NOT NULL ,
