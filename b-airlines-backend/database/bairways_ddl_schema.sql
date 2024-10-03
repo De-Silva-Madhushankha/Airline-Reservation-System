@@ -62,7 +62,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 CREATE TABLE Model (
-    model VARCHAR(50) PRIMARY KEY,
+    model_name VARCHAR(50) PRIMARY KEY,
     num_columns INT NOT NULL CHECK ( num_columns > 0 ),
     num_economy_rows INT NOT NULL CHECK ( num_economy_rows > 0 ),
     num_business_rows INT NOT NULL CHECK ( num_business_rows > 0 ),
@@ -71,8 +71,8 @@ CREATE TABLE Model (
 
 CREATE TABLE Aircraft (
     aircraft_id VARCHAR(10) PRIMARY KEY,
-    model VARCHAR(50),
-    FOREIGN KEY (model) REFERENCES Model(model)
+    model_name VARCHAR(50),
+    FOREIGN KEY (model_name) REFERENCES Model(model_name)
 );
 
 
@@ -117,9 +117,9 @@ CREATE TABLE Seat (
     seat_class VARCHAR(20) NOT NULL ,
     seat_price DOUBLE CHECK ( seat_price > 0 ),
     is_reserved BOOLEAN,
-    model VARCHAR(50),
+    model_name VARCHAR(50),
     flight_id CHAR(36) NOT NULL,
-    FOREIGN KEY (model) REFERENCES model(model) ON DELETE CASCADE ,
+    FOREIGN KEY (model_name) REFERENCES model(model_name) ON DELETE CASCADE ,
     FOREIGN KEY (flight_id) REFERENCES flight(flight_id)
 
 );
@@ -273,13 +273,13 @@ BEGIN
     FROM
         Aircraft a
     JOIN
-        Model m ON a.model = m.model
+        Model m ON a.model_name = m.model_name
     JOIN
         Flight f ON a.aircraft_id = f.aircraft_id
     JOIN
         Booking b ON f.flight_id = b.flight_id
     WHERE
-        m.model = aircraft_model;
+        m.model_name = aircraft_model;
 
     RETURN total_revenue;
 END $$
@@ -384,5 +384,87 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE TRIGGER after_flight_insert
+AFTER INSERT ON flight
+FOR EACH ROW
+BEGIN
+    DECLARE num_economy_rows INT;
+    DECLARE num_business_rows INT;
+    DECLARE num_platinum_rows INT;
+    DECLARE model_name VARCHAR(50);
+    DECLARE r INT;
+    DECLARE c INT;
+
+    -- Get the model name for the newly inserted flight
+    SELECT model_name INTO model_name FROM aircraft WHERE aircraft_id = NEW.aircraft_id;
+
+    -- Get the number of rows for each class based on the model
+    SELECT num_economy_rows, num_business_rows, num_platinum_rows
+    INTO num_economy_rows, num_business_rows, num_platinum_rows
+    FROM model WHERE model_name = model_name;
+
+    -- Insert Economy Seats
+    SET r = 1;
+    WHILE r <= num_economy_rows DO
+        SET c = 1; -- Reset column for each new row
+        WHILE c <= 4 DO -- Assuming 4 columns for economy
+            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model_name, flight_id)
+            VALUES (UUID(), CHAR(64 + r), c, 'Economy',
+                    CASE
+                        WHEN model_name = 'Boeing 737' THEN 100
+                        WHEN model_name = 'Boeing 757' THEN 110
+                        WHEN model_name = 'Airbus A380' THEN 120
+                    END,
+                    FALSE, model_name, NEW.flight_id);
+            SET c = c + 1;
+        END WHILE;
+        SET r = r + 1;
+    END WHILE;
+
+    -- Insert Business Seats
+    SET r = 1; -- Reset row for business seats
+    WHILE r <= num_business_rows DO
+        SET c = 1; -- Reset column for each new row
+        WHILE c <= 4 DO -- Assuming 4 columns for business
+            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model_name, flight_id)
+            VALUES (UUID(), CHAR(64 + (num_economy_rows + r)), c, 'Business',
+                    CASE
+                        WHEN model_name = 'Boeing 737' THEN 200
+                        WHEN model_name = 'Boeing 757' THEN 220
+                        WHEN model_name = 'Airbus A380' THEN 240
+                    END,
+                    FALSE, model_name, NEW.flight_id);
+            SET c = c + 1;
+        END WHILE;
+        SET r = r + 1;
+    END WHILE;
+
+    -- Insert Platinum Seats
+    SET r = 1; -- Reset row for platinum seats
+    WHILE r <= num_platinum_rows DO
+        SET c = 1; -- Reset column for each new row
+        WHILE c <= 4 DO -- Assuming 4 columns for platinum
+            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model_name, flight_id)
+            VALUES (UUID(), CHAR(64 + (num_economy_rows + num_business_rows + r)), 1, 'Platinum',
+                    CASE
+                        WHEN model_name = 'Boeing 737' THEN 300
+                        WHEN model_name = 'Boeing 757' THEN 330
+                        WHEN model_name = 'Airbus A380' THEN 360
+                    END,
+                    FALSE, model_name, NEW.flight_id);
+            SET c = c + 1;
+        END WHILE;
+        SET r = r + 1;
+    END WHILE;
+
+END ;
+
+DELIMITER ;
+
+
 
 
