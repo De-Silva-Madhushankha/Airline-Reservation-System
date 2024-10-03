@@ -15,8 +15,11 @@ const BookingPage = () => {
   const [flightResults, setFlightResults] = useState([]); // Initialize as empty array
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [passengers, setPassengers] = useState([{ firstName: '', lastName: '', passport: '' }]); // Initialize passengers state here
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState({}); // Store selected seats and their corresponding passengers
   const [isPassengerConfirmed, setIsPassengerConfirmed] = useState(false); // Track if passengers are confirmed
+
+  const [globalSelectedSeats, setGlobalSelectedSeats] = useState({}); // Store globally selected seats
+  const [passengerSeats, setPassengerSeats] = useState({}); // Store selected seats for each passenger
 
   const steps = [
     { title: 'Flights' },
@@ -36,12 +39,16 @@ const BookingPage = () => {
 
   const handleSearchResults = (results) => {
     setFlightResults(results);
-    setFlightResults(results);
   };
 
   const handleFlightSelect = (flight) => {
+    // Check if the new flight is different from the currently selected one
+    if (selectedFlight?.id !== flight.id) {
+      // console.log(selectedFlight.id, flight.id);
+      setGlobalSelectedSeats({}); // Reset global selected seats only if flight changes
+      setPassengerSeats({}); // Reset passenger seats only if flight changes
+    }
     setSelectedFlight(flight);
-    console.log(flight);
     nextStep();
   };
 
@@ -52,7 +59,7 @@ const BookingPage = () => {
   };
 
   const handleSeatsSelected = (seats) => {
-    setSelectedSeats(seats);
+    setPassengerSeats(seats);
     nextStep();
   };
 
@@ -96,7 +103,15 @@ const BookingPage = () => {
           )}
 
           {currentStep === 2 && (
-            <SeatSelectionComponent passengers={passengers} onSeatsSelected={handleSeatsSelected} />
+            <SeatSelectionComponent 
+              passengers={passengers} 
+              onSeatsSelected={handleSeatsSelected} 
+              aircraft_id={selectedFlight?.aircraft_id} // Pass the aircraft_id here
+              passengerSeats={passengerSeats} // Pass passenger seats
+              globalSelectedSeats={globalSelectedSeats} // Pass globally selected seats
+              setGlobalSelectedSeats={setGlobalSelectedSeats} // Pass function to update global selected seats
+              setPassengerSeats={setPassengerSeats} // Pass function to update passenger seats
+            />
           )}
 
           {currentStep === 3 && <PaymentComponent />}
@@ -104,7 +119,7 @@ const BookingPage = () => {
 
         <div style={{ marginTop: '20px' }}>
           {currentStep > 0 && <Button onClick={prevStep}>Previous</Button>}
-          {currentStep < steps.length - 1 && (flightResults.length > 0 || passengers.length > 0 || selectedSeats.length > 0) && (
+          {currentStep < steps.length - 1 && (flightResults.length > 0 || passengers.length > 0 || Object.keys(selectedSeats).length > 0) && (
             <Button type="primary" onClick={nextStep}>Next</Button>
           )}
           {currentStep === steps.length - 1 && <Button type="primary">Confirm Booking</Button>}
