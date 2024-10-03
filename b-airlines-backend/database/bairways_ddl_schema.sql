@@ -37,10 +37,12 @@ CREATE TABLE Airport (
     FOREIGN KEY (location_id) REFERENCES Location(location_id) ON UPDATE CASCADE
 );
 
+SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE User (
     user_id CHAR(36) PRIMARY KEY,
     program_id  INT NOT NULL DEFAULT 1,
+    passenger_id CHAR(36) UNIQUE NOT NULL ,
     title VARCHAR(3) NOT NULL ,
     first_name VARCHAR(50) NOT NULL ,
     last_name VARCHAR(50) NOT NULL ,
@@ -52,8 +54,11 @@ CREATE TABLE User (
     role_id INT NOT NULL DEFAULT 2,
     loyalty_points INT DEFAULT 0,
     FOREIGN KEY (role_id) REFERENCES Role(role_id) ON UPDATE CASCADE ,
-    FOREIGN KEY (program_id) REFERENCES loyalty_program(program_id) ON UPDATE CASCADE
+    FOREIGN KEY (program_id) REFERENCES loyalty_program(program_id) ON UPDATE CASCADE,
+    FOREIGN KEY (passenger_id) REFERENCES  passenger(passenger_id) ON UPDATE CASCADE
 );
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 CREATE TABLE Model (
@@ -94,15 +99,13 @@ CREATE TABLE Flight (
 
 CREATE TABLE Passenger (
     passenger_id CHAR(36) PRIMARY KEY ,
-    user_id VARCHAR(36) DEFAULT 'guestuser',
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     passport_id VARCHAR(20) NOT NULL,
     age INT CHECK ( age > 0 ),
     phone_number VARCHAR(20) NOT NULL ,
     email VARCHAR(100) NOT NULL ,
-    is_registered BOOLEAN ,
-    FOREIGN KEY (user_id) REFERENCES User(user_id) ON UPDATE CASCADE
+    is_registered BOOLEAN
 );
 
 
@@ -162,8 +165,8 @@ CREATE VIEW user_info AS
     FROM user;
 
 CREATE VIEW user_bookings AS
-    SELECT passenger.user_id, booking.booking_id, booking.flight_id, booking.seat_id, booking.booking_date, booking.total_amount, booking.payment_status
-    FROM booking INNER JOIN passenger USING (passenger_id);
+    SELECT user.user_id, booking.booking_id, booking.flight_id, booking.seat_id, booking.booking_date, booking.total_amount, booking.payment_status
+    FROM booking INNER JOIN passenger USING (passenger_id) JOIN user USING (passenger_id);
 
 
 -- reports -  Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18

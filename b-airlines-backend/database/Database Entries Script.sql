@@ -175,7 +175,7 @@ VALUES
 
 
 -- Day 1: 2024-09-01
-INSERT INTO flight (route_id, aircraft_id, departure, arrival)
+INSERT INTO flight (flight_id, route_id, aircraft_id, departure, arrival)
 VALUES
 (1, 'BA737-001', '2024-09-01 06:00:00', '2024-09-01 09:00:00'),  -- CGK to DPS
 (2, 'BA737-002', '2024-09-01 10:00:00', '2024-09-01 13:00:00'),  -- DPS to CGK
