@@ -92,6 +92,7 @@ CREATE TABLE Flight (
     aircraft_id VARCHAR(10) NOT NULL ,
     departure TIMESTAMP,
     arrival TIMESTAMP,
+    delay BOOLEAN,
     FOREIGN KEY (route_id) REFERENCES Route(route_id) ,
     FOREIGN KEY (aircraft_id) REFERENCES Aircraft(aircraft_id)
 );
@@ -101,7 +102,7 @@ CREATE TABLE Passenger (
     passenger_id CHAR(36) PRIMARY KEY ,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    passport_id VARCHAR(20) NOT NULL,
+    passport_id VARCHAR(20) ,
     age INT CHECK ( age > 0 ),
     phone_number VARCHAR(20) NOT NULL ,
     email VARCHAR(100) NOT NULL ,
@@ -111,7 +112,8 @@ CREATE TABLE Passenger (
 
 CREATE TABLE Seat (
     seat_id CHAR(36) PRIMARY KEY ,
-    seat_code VARCHAR(10) NOT NULL ,
+    seat_row VARCHAR(2) NOT NULL ,
+    seat_column INT NOT NULL ,
     seat_class VARCHAR(20) NOT NULL ,
     seat_price DOUBLE CHECK ( seat_price > 0 ),
     is_reserved BOOLEAN,
@@ -146,7 +148,7 @@ CREATE INDEX booking_index
 ON booking(flight_id,passenger_id,booking_date);
 
 CREATE INDEX seat_index
-ON seat(seat_id, seat_code);
+ON seat(seat_id, seat_row, seat_column);
 
 -- flight-search
 
@@ -328,5 +330,59 @@ BEGIN
     WHERE user_id = (SELECT user_id FROM Passenger WHERE passenger_id = NEW.passenger_id);
 END;
 
+
+-- Auto Users available data as a passenger
+
+DELIMITER $$
+
+-- BEFORE INSERT trigger to check and handle user/passenger creation
+CREATE TRIGGER before_user_insert
+BEFORE INSERT ON User
+FOR EACH ROW
+BEGIN
+    DECLARE user_role_id INT;
+
+    -- Check if the role_id is not '1' (i.e., not an admin)
+    SET user_role_id = NEW.role_id;
+
+    IF user_role_id != 1 THEN
+        -- Insert into the Passenger table
+        INSERT INTO Passenger (passenger_id, first_name, last_name,age, email, phone_number, is_registered)
+        VALUES (UUID(), NEW.first_name, NEW.last_name,TIMESTAMPDIFF(YEAR, NEW.date_of_birth, CURDATE()), NEW.email, NEW.mobile_number, TRUE);
+
+        -- Set the passenger_id in the User table
+        SET NEW.passenger_id = (SELECT passenger_id FROM Passenger WHERE email = NEW.email);
+    END IF;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE PROCEDURE UpdatePassengerPassport(
+    IN p_user_id CHAR(36),
+    IN p_passport_id VARCHAR(20)
+)
+BEGIN
+    DECLARE v_passenger_id CHAR(36);
+
+    -- Find the passenger_id associated with the user_id
+    SELECT passenger_id INTO v_passenger_id
+    FROM User
+    WHERE user_id = p_user_id;
+
+    -- Check if a passenger entry exists for this user
+    IF v_passenger_id IS NOT NULL THEN
+        -- Update the passport_id in the Passenger table
+        UPDATE Passenger
+        SET passport_id = p_passport_id
+        WHERE passenger_id = v_passenger_id;
+    ELSE
+        -- Optionally, you could handle cases where the user doesn't have a passenger record
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No passenger record found for the given user ID';
+    END IF;
+END $$
+
+DELIMITER ;
 
 
