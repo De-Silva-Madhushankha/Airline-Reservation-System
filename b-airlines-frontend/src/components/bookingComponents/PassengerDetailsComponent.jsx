@@ -19,9 +19,9 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
   };
 
   const handleNext = () => {
-    const { firstName, lastName, passport } = passengers[currentIndex];
+    const { firstName, lastName,age,phoneNumber, passport } = passengers[currentIndex];
 
-    if (firstName === '' || lastName === '' || passport === '') {
+    if (firstName === '' || lastName === '' || passport === ''|| age === ''|| phoneNumber === '') {
       message.error('Please fill out all fields.');
       return;
     }
@@ -47,7 +47,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
   };
 
   const handleAddPassenger = () => {
-    const updatedPassengers = [...passengers, { firstName: '', lastName: '', passport: '' }];
+    const updatedPassengers = [...passengers, { firstName: '', lastName: '', age: '', phoneNumber: '', passport: '' }];
     setPassengers(updatedPassengers);
     setCurrentIndex(updatedPassengers.length - 1);
     setViewMode(false);
@@ -71,7 +71,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               <List.Item actions={[<Button onClick={() => handleEditPassenger(index)}>Edit</Button>]}>
                 <List.Item.Meta
                   title={`Passenger ${index + 1}`}
-                  description={`Name: ${passenger.firstName} ${passenger.lastName}, Passport: ${passenger.passport}`}
+                  description={`Name: ${passenger.firstName} ${passenger.lastName}, Age: ${passenger.age}, PhoneNumber: ${passenger.phoneNumber} , Passport: ${passenger.passport}`}
                 />
               </List.Item>
             )}
@@ -108,6 +108,29 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               </Form.Item>
             </Col>
           </Row>
+
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="Age" required>
+                <Input
+                  placeholder="Enter age"
+                  value={passengers[currentIndex]?.age} // Use optional chaining
+                  onChange={(e) => handlePassengerChange('age', e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Phone Number" required>
+                <Input
+                  placeholder="Enter phone number"
+                  value={passengers[currentIndex]?.phoneNumber} // Use optional chaining
+                  onChange={(e) => handlePassengerChange('phoneNumber', e.target.value)}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+
           <Form.Item label="Passport Number" required>
             <Input
               placeholder="Enter passport number"
@@ -134,8 +157,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
             </Button>
           )}
         </div>
-
-        {/* Confirm Button */}
+        <br />
         <Button type="primary" onClick={handleNext} className="add-passenger-btn" style={{ marginTop: 20 }}>
           Confirm Details
         </Button>

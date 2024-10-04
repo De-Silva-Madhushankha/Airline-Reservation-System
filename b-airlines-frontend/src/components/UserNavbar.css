@@ -34,6 +34,11 @@
   display: none;
 }
 
+.fa-typo3 {
+  margin-left: 0.5rem;
+  font-size: 1.8rem;
+}
+
 .user-nav-menu {
   display: flex;
   align-items: center;
@@ -61,6 +66,10 @@
 
 .user-nav-links-mobile {
   display: none;
+}
+
+.fa-bars {
+  color: #fff;
 }
 
 /* .user-dropdown-menu {

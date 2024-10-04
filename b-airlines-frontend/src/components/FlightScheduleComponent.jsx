@@ -1,14 +1,14 @@
 import React from 'react';
 import { ChevronRight, Plane } from 'lucide-react';
 import './FlightScheduleComponent.css';
-import moment from 'moment'; // Ensure moment.js is installed for date formatting
+import moment from 'moment'; 
 
 const FlightSchedule = ({ flights, onFlightSelect }) => {
   if (!flights || flights.length === 0) {
     return <div className="no-flights text-center text-gray-500">No flights available</div>;
   }
 
-  // Format time using moment.js for better readability
+  
   const formatTime = (date, time) => moment(`${date.substring(0, 10)}T${time}`).format('MMM Do, YYYY h:mm A');
 
   const calculateDuration = (dep_date, dep_time, arr_date, arr_time) => {
@@ -33,14 +33,14 @@ const FlightSchedule = ({ flights, onFlightSelect }) => {
             } hover:bg-gray-800 hover:text-white`}
             onClick={() => onFlightSelect(flight)} // Call onFlightSelect when a flight is clicked
           >
-            {/* Aircraft and flight ID */}
+            
             <div className="flex items-center mb-4 md:mb-0 md:flex-1">
               <Plane className="mr-4 text-gray-500 hover:text-white transition" />
               <span className="font-semibold text-lg">{flight.aircraft_id}</span>
               <span className="ml-2 text-sm text-gray-400">({flight.origin_code} → {flight.destination_code})</span>
             </div>
 
-            {/* Departure, Chevron, and Arrival */}
+            
             <div className="flex items-center justify-center md:flex-1">
               <div className="text-center mr-4">
                 <div className="text-lg font-bold">{formatTime(flight.departure, flight.dep_time)}</div>
@@ -53,7 +53,7 @@ const FlightSchedule = ({ flights, onFlightSelect }) => {
               </div>
             </div>
 
-            {/* Duration */}
+            
             <div className="duration flex items-center md:flex-1 justify-end text-sm">
               Duration: {calculateDuration(flight.departure, flight.dep_time, flight.arrival, flight.arr_time)}
             </div>

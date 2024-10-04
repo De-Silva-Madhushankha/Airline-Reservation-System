@@ -90,11 +90,11 @@ const UserNavbar = () => {
             </li>
             <li className='user-nav-item'>
               <Link
-                to='/user-settings'
+                to='/user-manage'
                 className='user-nav-links'
                 onClick={closeMobileMenu}
               >
-                Settings
+                Manage
               </Link>
             </li>
             <li className='user-nav-item'>

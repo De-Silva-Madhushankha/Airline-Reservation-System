@@ -3,9 +3,9 @@ import { Layout, Steps, Button } from 'antd';
 import Header from '../components/Header';
 import FlightSearch from '../components/FlightSearchComponent';
 import FlightSchedule from '../components/FlightScheduleComponent';
-import PassengerDetailsComponent from '../components/PassengerDetailsComponent';
-import SeatSelectionComponent from '../components/SeatSelectionComponent';
-import PaymentComponent from '../components/PaymentComponent';
+import PassengerDetailsComponent from '../components/bookingComponents/PassengerDetailsComponent';
+import SeatSelectionComponent from '../components/bookingComponents/SeatSelectionComponent';
+import PaymentComponent from '../components/bookingComponents/PaymentComponent';
 
 const { Content, Footer } = Layout;
 const { Step } = Steps;
