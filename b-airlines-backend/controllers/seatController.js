@@ -71,3 +71,4 @@ export const getSeatPriceById = async (req, res) => {
     }
 };
 
+ 

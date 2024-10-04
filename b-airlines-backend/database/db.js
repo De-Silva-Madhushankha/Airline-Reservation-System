@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+
 // Database connection configuration
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
@@ -17,34 +18,5 @@ const db = pool
 console.log("Database connected");
 
 export default db;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Example usage
-// insertUser(2, 'johnsmith', 'securePass1', '123-456-7890', 'john.smith@example.com', 5);
-
-
-// const aircrafts = await getAircrafts()
-// console.log(aircrafts)
-
-// // const result = await registerUser('Bawantha', 'Madhushankha', '2002-10-26', 'root@gmail.com', 'Gold')
-// // console.log(result)
-
 
 
