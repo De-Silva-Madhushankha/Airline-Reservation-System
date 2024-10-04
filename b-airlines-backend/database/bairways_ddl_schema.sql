@@ -41,7 +41,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE User (
     user_id CHAR(36) PRIMARY KEY,
-    program_id  INT NOT NULL DEFAULT 2,
+    program_id  INT NOT NULL DEFAULT 1,
     title VARCHAR(3) NOT NULL ,
     first_name VARCHAR(50) NOT NULL ,
     last_name VARCHAR(50) NOT NULL ,
