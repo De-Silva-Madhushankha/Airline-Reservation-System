@@ -51,6 +51,22 @@
     text-align: center;
     padding: 0 15px;
   }
+
+  .flight-search-form .ant-form-item-label > label {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .search-btn {
+    background-color: black;
+    border-color: black;
+  }
+  
+  .search-btn:hover {
+    background-color: #1f1f1fc2;
+    border-color: white;
+    background: #333;
+  }
   
   
   @media (max-width: 768px) {
@@ -71,21 +87,6 @@
     }
   }
   
-  
-  .flight-search-form .ant-form-item-label > label {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .search-btn {
-    background-color: black;
-    border-color: black;
-  }
-  
-  .search-btn:hover {
-    background-color: grey;
-    border-color: grey;
-  }
   
   @media (max-width: 768px) {
     .flight-search-header {

@@ -42,7 +42,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE User (
     user_id CHAR(36) PRIMARY KEY,
     program_id  INT NOT NULL DEFAULT 1,
-    passenger_id CHAR(36) UNIQUE DEFAULT NULL,
     title VARCHAR(3) NOT NULL ,
     first_name VARCHAR(50) NOT NULL ,
     last_name VARCHAR(50) NOT NULL ,
@@ -54,15 +53,14 @@ CREATE TABLE User (
     role_id INT NOT NULL DEFAULT 2,
     loyalty_points INT DEFAULT 0,
     FOREIGN KEY (role_id) REFERENCES Role(role_id) ON UPDATE CASCADE ,
-    FOREIGN KEY (program_id) REFERENCES loyalty_program(program_id) ON UPDATE CASCADE,
-    FOREIGN KEY (passenger_id) REFERENCES  passenger(passenger_id) ON UPDATE CASCADE
+    FOREIGN KEY (program_id) REFERENCES loyalty_program(program_id) ON UPDATE CASCADE
 );
 
 SET FOREIGN_KEY_CHECKS = 1;
 
 
 CREATE TABLE Model (
-    model_name VARCHAR(50) PRIMARY KEY,
+    model VARCHAR(50) PRIMARY KEY,
     num_columns INT NOT NULL CHECK ( num_columns > 0 ),
     num_economy_rows INT NOT NULL CHECK ( num_economy_rows > 0 ),
     num_business_rows INT NOT NULL CHECK ( num_business_rows > 0 ),
@@ -71,8 +69,8 @@ CREATE TABLE Model (
 
 CREATE TABLE Aircraft (
     aircraft_id VARCHAR(10) PRIMARY KEY,
-    model_name VARCHAR(50),
-    FOREIGN KEY (model_name) REFERENCES Model(model_name)
+    model VARCHAR(50),
+    FOREIGN KEY (model) REFERENCES Model(model)
 );
 
 
@@ -102,7 +100,7 @@ CREATE TABLE Passenger (
     passenger_id CHAR(36) PRIMARY KEY ,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
-    passport_id VARCHAR(20) ,
+    passport_id VARCHAR(20) NOT NULL,
     age INT CHECK ( age > 0 ),
     phone_number VARCHAR(20) NOT NULL ,
     email VARCHAR(100) NOT NULL ,
@@ -117,9 +115,9 @@ CREATE TABLE Seat (
     seat_class VARCHAR(20) NOT NULL ,
     seat_price DOUBLE CHECK ( seat_price > 0 ),
     is_reserved BOOLEAN,
-    model_name VARCHAR(50),
+    model VARCHAR(50),
     flight_id CHAR(36) NOT NULL,
-    FOREIGN KEY (model_name) REFERENCES model(model_name) ON DELETE CASCADE ,
+    FOREIGN KEY (model) REFERENCES model(model) ON DELETE CASCADE ,
     FOREIGN KEY (flight_id) REFERENCES flight(flight_id)
 
 );
@@ -130,12 +128,14 @@ CREATE TABLE Booking (
     flight_id CHAR(36) NOT NULL ,
     passenger_id CHAR(36) NOT NULL ,
     seat_id CHAR(36) NOT NULL ,
+    user_id CHAR(36) ,
     booking_date TIMESTAMP,
     total_amount DOUBLE,
     payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed') ),
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON UPDATE CASCADE ,
     FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id) ON UPDATE CASCADE ,
-    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id) ON UPDATE CASCADE
+    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id) ON UPDATE CASCADE ,
+    FOREIGN KEY (user_id) REFERENCES User(user_id) ON UPDATE CASCADE
 );
 
 CREATE INDEX user_index
@@ -158,17 +158,16 @@ CREATE VIEW search_flights AS
 
 
 
--- SELECT * FROM search_flights WHERE origin_code = 'CGK' AND destination_code = 'BIA' AND departure >= '2024-09-01' AND arrival <= '2024-09-05';
-
-
 -- for profile
+
 CREATE VIEW user_info AS
     SELECT user.user_id, user.title ,user.first_name, user.last_name, user.email, user.mobile_number, user.country, user.date_of_birth, user.loyalty_points
     FROM user;
 
 CREATE VIEW user_bookings AS
-    SELECT user.user_id, booking.booking_id, booking.flight_id, booking.seat_id, booking.booking_date, booking.total_amount, booking.payment_status
-    FROM booking INNER JOIN passenger USING (passenger_id) JOIN user USING (passenger_id);
+    SELECT booking.user_id, booking.booking_id, booking.flight_id, booking.seat_id, booking.booking_date, booking.total_amount, booking.payment_status
+    FROM booking;
+
 
 
 -- reports -  Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18
@@ -273,13 +272,13 @@ BEGIN
     FROM
         Aircraft a
     JOIN
-        Model m ON a.model_name = m.model_name
+        Model m ON a.model = m.model
     JOIN
         Flight f ON a.aircraft_id = f.aircraft_id
     JOIN
         Booking b ON f.flight_id = b.flight_id
     WHERE
-        m.model_name = aircraft_model;
+        m.model = aircraft_model;
 
     RETURN total_revenue;
 END $$
@@ -321,70 +320,16 @@ END $$
 DELIMITER ;
 
 
+DELIMITER $$
 CREATE TRIGGER after_booking_insert
 AFTER INSERT ON Booking
 FOR EACH ROW
 BEGIN
     UPDATE User
     SET loyalty_points = loyalty_points + 1
-    WHERE user_id = (SELECT user_id FROM Passenger WHERE passenger_id = NEW.passenger_id);
+    WHERE user_id = NEW.user_id;
 END;
-
-
--- Auto Users available data as a passenger
-
-DELIMITER $$
-
--- BEFORE INSERT trigger to check and handle user/passenger creation
-CREATE TRIGGER before_user_insert
-BEFORE INSERT ON User
-FOR EACH ROW
-BEGIN
-    DECLARE user_role_id INT;
-
-    -- Check if the role_id is not '1' (i.e., not an admin)
-    SET user_role_id = NEW.role_id;
-
-    IF user_role_id != 1 THEN
-        -- Insert into the Passenger table
-        INSERT INTO Passenger (passenger_id, first_name, last_name,age, email, phone_number, is_registered)
-        VALUES (UUID(), NEW.first_name, NEW.last_name,TIMESTAMPDIFF(YEAR, NEW.date_of_birth, CURDATE()), NEW.email, NEW.mobile_number, TRUE);
-
-        -- Set the passenger_id in the User table
-        SET NEW.passenger_id = (SELECT passenger_id FROM Passenger WHERE email = NEW.email);
-    END IF;
-END $$
-
 DELIMITER ;
-
-DELIMITER $$
-
-CREATE PROCEDURE UpdatePassengerPassport(
-    IN p_user_id CHAR(36),
-    IN p_passport_id VARCHAR(20)
-)
-BEGIN
-    DECLARE v_passenger_id CHAR(36);
-
-    -- Find the passenger_id associated with the user_id
-    SELECT passenger_id INTO v_passenger_id
-    FROM User
-    WHERE user_id = p_user_id;
-
-    -- Check if a passenger entry exists for this user
-    IF v_passenger_id IS NOT NULL THEN
-        -- Update the passport_id in the Passenger table
-        UPDATE Passenger
-        SET passport_id = p_passport_id
-        WHERE passenger_id = v_passenger_id;
-    ELSE
-        -- Optionally, you could handle cases where the user doesn't have a passenger record
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No passenger record found for the given user ID';
-    END IF;
-END $$
-
-DELIMITER ;
-
 
 DELIMITER $$
 
@@ -400,19 +345,19 @@ BEGIN
     DECLARE c INT;
 
     -- Get the model name for the newly inserted flight
-    SELECT model_name INTO model_name FROM aircraft WHERE aircraft_id = NEW.aircraft_id;
+    SELECT model INTO model_name FROM aircraft WHERE aircraft_id = NEW.aircraft_id;
 
     -- Get the number of rows for each class based on the model
     SELECT num_economy_rows, num_business_rows, num_platinum_rows
     INTO num_economy_rows, num_business_rows, num_platinum_rows
-    FROM model WHERE model_name = model_name;
+    FROM model WHERE model = model_name;
 
     -- Insert Economy Seats
     SET r = 1;
     WHILE r <= num_economy_rows DO
         SET c = 1; -- Reset column for each new row
         WHILE c <= 4 DO -- Assuming 4 columns for economy
-            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model_name, flight_id)
+            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
             VALUES (UUID(), CHAR(64 + r), c, 'Economy',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 100
@@ -430,7 +375,7 @@ BEGIN
     WHILE r <= num_business_rows DO
         SET c = 1; -- Reset column for each new row
         WHILE c <= 4 DO -- Assuming 4 columns for business
-            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model_name, flight_id)
+            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
             VALUES (UUID(), CHAR(64 + (num_economy_rows + r)), c, 'Business',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 200
@@ -448,7 +393,7 @@ BEGIN
     WHILE r <= num_platinum_rows DO
         SET c = 1; -- Reset column for each new row
         WHILE c <= 4 DO -- Assuming 4 columns for platinum
-            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model_name, flight_id)
+            INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
             VALUES (UUID(), CHAR(64 + (num_economy_rows + num_business_rows + r)), 1, 'Platinum',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 300
@@ -464,7 +409,3 @@ BEGIN
 END ;
 
 DELIMITER ;
-
-
-
-

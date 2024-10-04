@@ -46,13 +46,13 @@ VALUES
 ('Singapore Changi Airport', 16, 'SIN');
 
 -- Insert data into Model table
-INSERT INTO model (model_name,num_columns,  num_economy_rows, num_business_rows, num_platinum_rows) VALUES
+INSERT INTO model (model,num_columns,  num_economy_rows, num_business_rows, num_platinum_rows) VALUES
 ('Boeing 757', 4,  10, 2, 1),
 ('Airbus A380',4, 12, 3, 2),
 ('Boeing 737', 4, 8, 1, 1);
 
 -- Insert data into Aircraft table
-INSERT INTO aircraft (aircraft_id, model_name)
+INSERT INTO aircraft (aircraft_id, model)
 VALUES
 ('BA737-001', 'Boeing 737'),
 ('BA737-002', 'Boeing 737'),
