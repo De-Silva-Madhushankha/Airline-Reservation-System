@@ -26,10 +26,10 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
       return;
     }
 
-    if (!validatePassport(passport)) {
-      message.error('Please enter a valid passport number (6-9 alphanumeric characters).');
-      return;
-    }
+    // if (!validatePassport(passport)) {
+    //   message.error('Please enter a valid passport number (6-9 alphanumeric characters).');
+    //   return;
+    // }
 
     if (currentIndex < passengers.length - 1) {
       setCurrentIndex(currentIndex + 1);

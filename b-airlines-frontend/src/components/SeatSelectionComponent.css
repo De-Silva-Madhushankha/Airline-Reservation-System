@@ -1,42 +1,98 @@
 .seat-selection-layout {
-    padding: 40px; /* Increased padding for larger overall size */
-    text-align: center;
-    max-width: 90%; /* Limit the max width to keep it centered */
-    margin: 0 auto; /* Center the component */
-  }
-  
-  .seat-map {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0; /* Add margin for spacing */
-  }
-  
-  .seat-row {
-    display: flex;
-    justify-content: center; /* Center seats within the row */
-    margin-bottom: 15px; /* Increased spacing between rows */
-  }
-  
+  padding: 40px;
+  text-align: center;
+  max-width: 90%;
+  margin: 0 auto;
+  overflow-x: auto; /* Allow horizontal scrolling if content overflows */
+}
+
+.seat-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+  padding: 0 20px; /* Add padding to the sides for better visibility */
+  width: 100%;
+  overflow-x: auto; /* Enable horizontal scrolling for small screens */
+}
+
+.seat-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  white-space: nowrap; /* Prevent row from breaking into multiple lines */
+}
+
+.seat {
+  margin: 0 10px;
+  width: 80px;
+  height: 60px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.seat.selected {
+  background-color: #4caf50;
+  color: white;
+}
+
+.seat.occupied {
+  background-color: #f44336;
+  color: white;
+  cursor: not-allowed;
+}
+
+button {
+  font-size: 18px;
+}
+
+.seat-class-title {
+  font-size: 24px; /* Adjust font size if needed */
+  margin-top: 20px;
+  margin-bottom: 20px; /* Space between class name and seat rows */
+  font-weight: bold; /* Make class name bold */
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
   .seat {
-    margin: 0 10px; /* Increase margin between seats */
-    width: 80px; /* Increased width of the seats */
-    height: 60px; /* Increased height of the seats */
-    font-size: 16px; /* Larger font size for seat labels */
+    width: 70px;
+    height: 50px;
+    font-size: 14px;
   }
-  
-  .seat.selected {
-    background-color: #4caf50; /* Green for selected seats */
-    color: white;
-  }
-  
-  .seat.occupied {
-    background-color: #f44336; /* Red for occupied seats */
-    color: white;
-    cursor: not-allowed; /* Show not-allowed cursor */
-  }
-  
+
   button {
-    font-size: 18px; /* Increase button font size */
+    font-size: 16px;
   }
-  
+}
+
+@media (max-width: 768px) {
+  .seat {
+    width: 60px;
+    height: 45px;
+    font-size: 12px;
+    margin: 0 8px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .seat {
+    width: 50px;
+    height: 40px;
+    font-size: 10px;
+    margin: 0 6px;
+  }
+
+  button {
+    font-size: 12px;
+  }
+
+  .seat-selection-layout {
+    padding: 20px;
+    max-width: 95%;
+  }
+}

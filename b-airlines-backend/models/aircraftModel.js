@@ -1,4 +1,4 @@
-import db from '../db.js'
+import db from '..//database/db.js'
 
 const Aircraft = {
 
@@ -7,8 +7,18 @@ const Aircraft = {
             return rows
         },
 
+        getModelById : async (aircraft_id) =>{
+            console.log('dfg');
+            // const [rows ]= await db.query("SELECT 1 = 1", [aircraft_id])
+            console.log(aircraft_id);
+            const [rows ]= await db.query("SELECT model FROM Aircraft WHERE aircraft_id = ?", [aircraft_id])
+            // const [rows ]= await db.query("SELECT model FROM Aircraft WHERE aircraft_id = 'BA737-001'")
+            console.log('yo');
+            return rows
+        },
+
         getAircraftById : async (aircraft_id) =>{
-            const [rows] = await db.query("SELECT * FROM aircraft WHERE aircraft_id = ?", [aircraft_id])
+            const [rows] = await db.query("SELECT * FROM aircraft WHERE aircraft_id = BA737-001", [aircraft_id])
             return rows
         },
 

@@ -3,8 +3,7 @@ import { ChevronRight, Plane } from 'lucide-react';
 import './FlightScheduleComponent.css';
 import moment from 'moment'; // Ensure moment.js is installed for date formatting
 
-const FlightSchedule = ({ flights }) => {
-  console.log({schedule: flights});
+const FlightSchedule = ({ flights, onFlightSelect }) => {
   if (!flights || flights.length === 0) {
     return <div className="no-flights text-center text-gray-500">No flights available</div>;
   }
@@ -23,7 +22,7 @@ const FlightSchedule = ({ flights }) => {
 
   return (
     <div className="flight-schedule-container max-w-4xl mx-auto p-6 font-sans">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800" style={{ padding : '20px' }}>Flight Schedules</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800" style={{ padding: '20px' }}>Flight Schedules</h1>
 
       <div className="flight-list bg-white shadow-lg rounded-lg overflow-hidden">
         {flights.map((flight, index) => (
@@ -32,6 +31,7 @@ const FlightSchedule = ({ flights }) => {
             className={`flight-item flex flex-col md:flex-row justify-between items-center p-6 border-b transition duration-300 ${
               index % 2 === 0 ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'
             } hover:bg-gray-800 hover:text-white`}
+            onClick={() => onFlightSelect(flight)} // Call onFlightSelect when a flight is clicked
           >
             {/* Aircraft and flight ID */}
             <div className="flex items-center mb-4 md:mb-0 md:flex-1">
