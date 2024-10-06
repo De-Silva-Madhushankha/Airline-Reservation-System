@@ -28,12 +28,14 @@ console.log("Environment variables loaded");
 //import routes
 import userRoutes from './routes/userRoutes.js';
 import flightRoutes from './routes/flightRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 console.log("Routes imported");
 
 // Use routes
 app.use('/api/user', userRoutes);   // Prefix routes with /api/user
 app.use('/api/flight', flightRoutes);   // Prefix routes with /api/flight
+app.use('/api/admin', adminRoutes);
 
 
 

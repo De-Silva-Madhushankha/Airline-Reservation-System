@@ -21,6 +21,7 @@ const User = {
       );
       return result.insertId;
     } catch (error) {
+      console.log(error);
       throw error;
     }
   },
