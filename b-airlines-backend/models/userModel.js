@@ -15,8 +15,8 @@ const User = {
   create: async (title, first_name, last_name, email, password, date_of_birth, country, mobile_number ) => {
     try {
       const [result] = await db.query(
-        `INSERT INTO user (title, first_name, last_name, email, password, date_of_birth, country, mobile_number) 
-         VALUES (?,?,?,?,?,?,?,?)`, 
+        `INSERT INTO user (user_id, title, first_name, last_name, email, password, date_of_birth, country, mobile_number) 
+         VALUES (UUID(),?,?,?,?,?,?,?,?)`, 
          [title, first_name, last_name, email, password, date_of_birth, country, mobile_number]
       );
       return result.insertId;

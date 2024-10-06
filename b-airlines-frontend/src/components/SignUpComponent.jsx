@@ -43,7 +43,7 @@ const countryCodes = {
 const Join = () => {
   const [form] = Form.useForm();
   const [countryCode, setCountryCode] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); 
 
 const onFinish = (values) => {
 
