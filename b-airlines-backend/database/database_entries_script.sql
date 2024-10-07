@@ -1,7 +1,7 @@
 USE bairways;
 
 -- Insert data into Location table
-INSERT INTO location (location_name, parent_location_id, location_type) VALUES
+INSERT INTO Location (location_name, parent_location_id, location_type) VALUES
 ('World', NULL, 'Root'),
 ('Indonesia', 1, 'Country'),
 ('Jakarta', 2, 'City'),
@@ -21,18 +21,18 @@ INSERT INTO location (location_name, parent_location_id, location_type) VALUES
 
 
 -- Insert data into Loyalty_Program table
-INSERT INTO loyalty_program (program_id, program_name, min_points, max_points, discount) VALUES
+INSERT INTO Loyalty_program (program_id, program_name, min_points, max_points, discount) VALUES
 (1,'New',1,1,0),
 (2, 'Frequent', 2, 9, 5),
 (3, 'Gold', 10, 100,15);
 
 -- Insert data into Role table
-INSERT INTO role (role_id, role_name, role_description, permission_type) VALUES
+INSERT INTO Role (role_id, role_name, role_description, permission_type) VALUES
 (1, 'Admin', 'System Administrator', 'Full Access'),
 (2, 'Customer', 'Regular Customer', 'Booking Access');
 
 -- Insert data into Airport table
-INSERT INTO airport (airport_name, location_id, airport_code)
+INSERT INTO Airport (airport_name, location_id, airport_code)
 VALUES
 ('Soekarno-Hatta International Airport', 3, 'CGK'),
 ('Ngurah Rai International Airport', 4, 'DPS'),
@@ -46,13 +46,13 @@ VALUES
 ('Singapore Changi Airport', 16, 'SIN');
 
 -- Insert data into Model table
-INSERT INTO model (model,num_columns,  num_economy_rows, num_business_rows, num_platinum_rows) VALUES
+INSERT INTO Model (model,num_columns,  num_economy_rows, num_business_rows, num_platinum_rows) VALUES
 ('Boeing 757', 4,  10, 2, 1),
 ('Airbus A380',4, 12, 3, 2),
 ('Boeing 737', 4, 8, 1, 1);
 
 -- Insert data into Aircraft table
-INSERT INTO aircraft (aircraft_id, model)
+INSERT INTO Aircraft (aircraft_id, model)
 VALUES
 ('BA737-001', 'Boeing 737'),
 ('BA737-002', 'Boeing 737'),
@@ -64,7 +64,7 @@ VALUES
 ('AA380-001', 'Airbus A380');
 
 -- Indonesia to Sri Lanka
-INSERT INTO route (base_price, origin_code, destination_code)
+INSERT INTO Route (base_price, origin_code, destination_code)
 VALUES
 (180.0, 'CGK', 'BIA'),  -- Jakarta to Colombo
 (180.0, 'BIA', 'CGK'),  -- Colombo to Jakarta
@@ -136,7 +136,7 @@ VALUES
 
 
 -- Day 1: 2024-09-01
-INSERT INTO flight (flight_id, route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight (flight_id, route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),1, 'BA737-001', '2024-09-01 06:00:00', '2024-09-01 09:00:00'),  -- CGK to DPS
 ( UUID(),2, 'BA737-002', '2024-09-01 10:00:00', '2024-09-01 13:00:00'),  -- DPS to CGK
@@ -149,7 +149,7 @@ VALUES
 ( UUID(),9, 'BA737-001', '2024-09-01 12:00:00', '2024-09-01 15:00:00');  -- CGK to SIN
 
 -- Day 2: 2024-09-02
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),10, 'BA737-002', '2024-09-02 06:00:00', '2024-09-02 09:00:00'),  -- DPS to SIN
 ( UUID(),1, 'BA737-003', '2024-09-02 10:00:00', '2024-09-02 13:00:00'),  -- SIN to DPS
@@ -162,7 +162,7 @@ VALUES
 ( UUID(),48, 'BA737-001', '2024-09-02 22:00:00', '2024-09-02 02:00:00');  -- DPS to DEL
 
 -- Day 3: 2024-09-03
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),19, 'BA737-002', '2024-09-03 06:00:00', '2024-09-03 09:00:00'),  -- DPS to MAA
 ( UUID(),20, 'BA737-003', '2024-09-03 10:00:00', '2024-09-03 13:00:00'),  -- MAA to DPS
@@ -175,7 +175,7 @@ VALUES
 ( UUID(),47, 'BA737-001', '2024-09-03 12:00:00', '2024-09-03 15:00:00');  -- CGK to HRI
 
 -- Day 4: 2024-09-04
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),48, 'BA737-002', '2024-09-04 06:00:00', '2024-09-04 09:00:00'),  -- DPS to DEL
 ( UUID(),29, 'BA737-003', '2024-09-04 11:00:00', '2024-09-04 14:00:00'),  -- DEL to DPS
@@ -188,7 +188,7 @@ VALUES
 ( UUID(),6, 'BA737-001', '2024-09-04 12:00:00', '2024-09-04 15:00:00');  -- DPS to DMK
 
 -- Day 5: 2024-09-05
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),37, 'BA737-002', '2024-09-05 06:00:00', '2024-09-05 09:00:00'),  -- DPS to BIA
 ( UUID(),18, 'BA737-003', '2024-09-05 10:00:00', '2024-09-05 13:00:00'),  -- BIA to DPS
@@ -201,7 +201,7 @@ VALUES
 ( UUID(),35, 'BA737-001', '2024-09-05 22:00:00', '2024-09-05 02:00:00');  -- DPS to BKK
 
 -- Day 6: 2024-09-06
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),46, 'BA737-002', '2024-09-06 06:00:00', '2024-09-06 09:00:00'),  -- DPS to MAA
 ( UUID(),17, 'BA737-003', '2024-09-06 10:00:00', '2024-09-06 13:00:00'),  -- MAA to DPS
@@ -214,7 +214,7 @@ VALUES
 ( UUID(),14, 'BA737-001', '2024-09-06 12:00:00', '2024-09-06 15:00:00');  -- DPS to DEL
 
 -- Day 7: 2024-09-07
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),5, 'BA737-002', '2024-09-07 06:00:00', '2024-09-07 09:00:00'),  -- DPS to BOM
 ( UUID(),16, 'BA737-003', '2024-09-07 10:00:00', '2024-09-07 13:00:00'),  -- BOM to DPS
@@ -227,7 +227,7 @@ VALUES
 ( UUID(),3, 'BA737-001', '2024-09-07 12:00:00', '2024-09-07 15:00:00');  -- DPS to CGK
 
 -- Day 8: 2024-09-08
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),1, 'BA737-001', '2024-09-08 18:00:00', '2024-09-08 23:00:00'),  -- CGK to DPS
 ( UUID(),2, 'BA737-002', '2024-09-08 10:00:00', '2024-09-08 13:00:00'),  -- DPS to CGK
@@ -241,7 +241,7 @@ VALUES
 ( UUID(),10, 'BA737-001', '2024-09-08 16:00:00', '2024-09-08 19:00:00');  -- SIN to DPS
 
 -- Day 9: 2024-09-09
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),10, 'BA737-002', '2024-09-09 06:00:00', '2024-09-09 09:00:00'),  -- DPS to SIN
 ( UUID(),11, 'BA737-003', '2024-09-09 10:00:00', '2024-09-09 13:00:00'),  -- SIN to DPS
@@ -255,7 +255,7 @@ VALUES
 ( UUID(),19, 'BA737-002', '2024-09-09 18:00:00', '2024-09-09 21:00:00');  -- DEL to DPS
 
 -- Day 10: 2024-09-10
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),20, 'BA737-003', '2024-09-10 06:00:00', '2024-09-10 09:00:00'),  -- DPS to MAA
 ( UUID(),21, 'BA737-001', '2024-09-10 10:00:00', '2024-09-10 13:00:00'),  -- MAA to DPS
@@ -269,7 +269,7 @@ VALUES
 ( UUID(),29, 'BA737-003', '2024-09-10 17:00:00', '2024-09-10 20:00:00');  -- HRI to CGK
 
 -- Day 11: 2024-09-11
-INSERT INTO flight ( flight_id,route_id, aircraft_id, departure, arrival)
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
 VALUES
 ( UUID(),50, 'BA737-001', '2024-09-11 06:00:00', '2024-09-11 09:00:00'),  -- DPS to DEL
 ( UUID(),31, 'BA737-002', '2024-09-11 10:00:00', '2024-09-11 13:00:00'),  -- DEL to DPS

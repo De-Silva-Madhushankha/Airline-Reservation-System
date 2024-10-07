@@ -5,7 +5,7 @@ const Location = {
 
     // Create a new location
     createLocation: async (location, result) => {
-        db.query("INSERT INTO location SET ?", location, function(err, res) {
+        db.query("INSERT INTO Location SET ?", location, function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(err, null);
@@ -18,7 +18,7 @@ const Location = {
 
     // Get all locations
     getLocations: async (result) => {
-        db.query("SELECT * FROM location", function(err, res) {
+        db.query("SELECT * FROM Location", function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
@@ -31,7 +31,7 @@ const Location = {
 
     // Get location by ID 
     getLocationById: async (location_id, result) => {
-        db.query("SELECT * FROM location WHERE location_id = ?", location_id, function(err, res) {
+        db.query("SELECT * FROM Location WHERE location_id = ?", location_id, function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(err, null);
@@ -43,7 +43,7 @@ const Location = {
 
     // Update a location
     updateLocation: async (location_id, location, result) => {
-        db.query("UPDATE location SET location_name = ?, location_code = ? WHERE location_id = ?", [location.location_name, location.location_code, location_id], function(err, res) {
+        db.query("UPDATE Location SET location_name = ?, location_code = ? WHERE location_id = ?", [location.location_name, location.location_code, location_id], function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
@@ -55,7 +55,7 @@ const Location = {
 
     // Delete a location
     deleteLocation: async (location_id, result) => {
-        db.query("DELETE FROM location WHERE location_id = ?", location_id, function(err, res) {
+        db.query("DELETE FROM Location WHERE location_id = ?", location_id, function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
