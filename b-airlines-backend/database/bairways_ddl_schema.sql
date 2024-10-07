@@ -109,7 +109,7 @@ CREATE TABLE Passenger (
 
 CREATE TABLE Seat (
     seat_id CHAR(36) PRIMARY KEY ,
-    seat_row VARCHAR(2) NOT NULL ,
+    seat_row INT NOT NULL ,
     seat_column INT NOT NULL ,
     seat_class VARCHAR(20) NOT NULL ,
     seat_price DOUBLE CHECK ( seat_price > 0 ),
@@ -358,7 +358,7 @@ BEGIN
         SET c = 1; -- Reset column for each new row
         WHILE c <= 4 DO -- Assuming 4 columns for economy
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
-            VALUES (UUID(), CHAR(64 + r), c, 'Economy',
+            VALUES (UUID(), r, c, 'Economy',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 100
                         WHEN model_name = 'Boeing 757' THEN 110
@@ -376,7 +376,7 @@ BEGIN
         SET c = 1; -- Reset column for each new row
         WHILE c <= 4 DO -- Assuming 4 columns for business
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
-            VALUES (UUID(), CHAR(64 + (economy_rows + r)), c, 'Business',
+            VALUES (UUID(), economy_rows + r, c, 'Business',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 200
                         WHEN model_name = 'Boeing 757' THEN 220
@@ -394,7 +394,7 @@ BEGIN
         SET c = 1; -- Reset column for each new row
         WHILE c <= 4 DO -- Assuming 4 columns for platinum
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
-            VALUES (UUID(), CHAR(64 + (economy_rows + business_rows + r)), 1, 'Platinum',
+            VALUES (UUID(), economy_rows + business_rows + r, 1, 'Platinum',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 300
                         WHEN model_name = 'Boeing 757' THEN 330
