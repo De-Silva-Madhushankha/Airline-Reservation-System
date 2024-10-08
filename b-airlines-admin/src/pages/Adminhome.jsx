@@ -42,8 +42,6 @@ const Adminhome = () => {
   };
 
 
-
-
   return (
     <nav className="flex w-screen min-h-screen">
   <div className="w-64">

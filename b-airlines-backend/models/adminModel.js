@@ -17,3 +17,10 @@ export const getCounts = async () => {
     throw error;
   }
 };
+
+
+export const updateAircraft = async (aircraft_id, aircraft_name, aircraft_type, aircraft_capacity) => {
+    const [result] = await db.query(`SELECT passenger_count_by_destination(?, ?, ?) AS total_passengers`
+, [destination_code, start_date, end_date]);
+    return result.affectedRows;
+};
