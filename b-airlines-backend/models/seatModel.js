@@ -1,4 +1,4 @@
-import db from '../db.js'
+import db from '../database/db.js'
 
 
 const Seat = {
@@ -34,8 +34,8 @@ const Seat = {
         return result.affectedRows;
     },
 
-    getSeatByAircraftId : async (aircraft_id) => {
-        const [rows] = await db.query(`SELECT * FROM Seat WHERE aircraft_id = ?`, [aircraft_id])
+    getOccupiedByFlightId : async (flight_id) => {
+        const [rows] = await db.query(`SELECT seat_row, seat_column FROM Seat WHERE flight_id = ? and is_reserved = 1`, [flight_id])
         return rows
     },
 
