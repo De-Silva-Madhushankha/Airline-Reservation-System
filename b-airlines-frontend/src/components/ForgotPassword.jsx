@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Form, Input, Button, Typography, message } from 'antd';
 import { MailOutlined } from '@ant-design/icons';
-import './ForgotPassword.css'; // For responsive styles (we'll add this below)
+import './ForgotPassword.css'; 
 
 const { Content } = Layout;
 const { Title, Text } = Typography;

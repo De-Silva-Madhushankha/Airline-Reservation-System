@@ -5,7 +5,7 @@ dotenv.config();
 const User = {
   getAll: async () => {
     try {
-      const [rows] = await db.query('SELECT * FROM user');
+      const [rows] = await db.query('SELECT * FROM User');
       return rows;
     } catch (error) {
       throw error;
@@ -15,8 +15,8 @@ const User = {
   create: async (title, first_name, last_name, email, password, date_of_birth, country, mobile_number ) => {
     try {
       const [result] = await db.query(
-        `INSERT INTO user (title, first_name, last_name, email, password, date_of_birth, country, mobile_number) 
-         VALUES (?,?,?,?,?,?,?,?)`, 
+        `INSERT INTO User (user_id, title, first_name, last_name, email, password, date_of_birth, country, mobile_number) 
+         VALUES (UUID(),?,?,?,?,?,?,?,?)`, 
          [title, first_name, last_name, email, password, date_of_birth, country, mobile_number]
       );
       return result.insertId;
@@ -25,11 +25,13 @@ const User = {
     }
   },
 
-  updateUser: async (user_id, username, password, user_phone_number, user_email, loyalty_points) => {
+  updateProfile: async ( first_name, last_name ,country, mobile_number,user_id) => {
     try {
-      const [result] = await db.query(`UPDATE user 
-          SET username = ?, password = ?, user_phone_number = ?, user_email = ?, loyalty_points = ?
-          WHERE user_id = ?`, [username, password, user_phone_number, user_email, loyalty_points, user_id]);
+      const [result] = await db.query(`UPDATE User 
+          SET first_name = ?, last_name = ?, country = ?, mobile_number = ?
+          WHERE user_id = ?`, [first_name, last_name, country, mobile_number, user_id]);
+      
+      console.log(result);
       return result.affectedRows;
     } catch (error) {
       throw error;
@@ -38,7 +40,7 @@ const User = {
 
   delete: async (ID) => {
     try {
-      const [result] = await db.query('DELETE FROM user WHERE user_id = ?', [ID]);
+      const [result] = await db.query('DELETE FROM User WHERE user_id = ?', [ID]);
       return result.affectedRows;
     } catch (error) {
       throw error;
@@ -46,7 +48,7 @@ const User = {
   },
 
   findByEmail: async (email) => {
-    const [rows] = await db.query('SELECT * FROM user WHERE email = ?', [email]);
+    const [rows] = await db.query('SELECT * FROM User WHERE email = ?', [email]);
     return rows;
   },
 

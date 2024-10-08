@@ -5,7 +5,7 @@ const LoyaltyProgram = {
 
     // Create a new loyalty program
     createLoyaltyProgram: async (loyaltyProgram, result) => {
-        db.query("INSERT INTO loyalty_program SET ?", loyaltyProgram, function(err, res) {
+        db.query("INSERT INTO Loyalty_program SET ?", loyaltyProgram, function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(err, null);
@@ -18,7 +18,7 @@ const LoyaltyProgram = {
 
     // Get all loyalty programs
     getLoyaltyPrograms: async (result) => {
-        db.query("SELECT * FROM loyalty_program", function(err, res) {
+        db.query("SELECT * FROM Loyalty_program", function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
@@ -31,7 +31,7 @@ const LoyaltyProgram = {
 
     // Get loyalty program by ID 
     getLoyaltyProgramById: async (loyalty_program_id, result) => {
-        db.query("SELECT * FROM loyalty_program WHERE loyalty_program_id = ?", loyalty_program_id, function(err, res) {
+        db.query("SELECT * FROM Loyalty_program WHERE loyalty_program_id = ?", loyalty_program_id, function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(err, null);
@@ -43,7 +43,7 @@ const LoyaltyProgram = {
 
     // Update a loyalty program
     updateLoyaltyProgram: async (loyalty_program_id, loyaltyProgram, result) => {
-        db.query("UPDATE loyalty_program SET loyalty_program_name = ?, loyalty_program_description = ?, loyalty_program_discount = ? WHERE loyalty_program_id = ?", [loyaltyProgram.loyalty_program_name, loyaltyProgram.loyalty_program_description, loyaltyProgram.loyalty_program_discount, loyalty_program_id], function(err, res) {
+        db.query("UPDATE Loyalty_program SET loyalty_program_name = ?, loyalty_program_description = ?, loyalty_program_discount = ? WHERE loyalty_program_id = ?", [loyaltyProgram.loyalty_program_name, loyaltyProgram.loyalty_program_description, loyaltyProgram.loyalty_program_discount, loyalty_program_id], function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
@@ -55,7 +55,7 @@ const LoyaltyProgram = {
 
     // Delete a loyalty program
     deleteLoyaltyProgram: async (loyalty_program_id, result) => {
-        db.query("DELETE FROM loyalty_program WHERE loyalty_program_id = ?", loyalty_program_id, function(err, res) {
+        db.query("DELETE FROM Loyalty_program WHERE loyalty_program_id = ?", loyalty_program_id, function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(null, err);
@@ -66,7 +66,7 @@ const LoyaltyProgram = {
     },
 
     getDiscount: async (loyalty_program_id, result) => {
-        db.query("SELECT loyalty_program_discount FROM loyalty_program WHERE loyalty_program_id = ?", loyalty_program_id, function(err, res) {
+        db.query("SELECT loyalty_program_discount FROM Loyalty_program WHERE loyalty_program_id = ?", loyalty_program_id, function(err, res) {
             if (err) {
                 console.log("error: ", err);
                 result(err, null);

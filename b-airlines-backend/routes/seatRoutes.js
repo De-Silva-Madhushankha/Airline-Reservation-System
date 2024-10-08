@@ -1,8 +1,10 @@
 import express from "express";
-import {searchFlights} from "../controllers/flightController.js";
+import {getOccupiedByFlightId} from "../controllers/seatController.js";
+import {bookSeats} from "../controllers/seatController.js";
 
 const router = express.Router();
 
+router.get('/occupied/:flight_id', getOccupiedByFlightId);
 router.post("/book", bookSeats);
 
-export default router;
+export default router; 
