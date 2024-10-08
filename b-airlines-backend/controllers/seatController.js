@@ -10,6 +10,16 @@ export const getAllSeats = async (req, res) => {
     }
 };
 
+export const getOccupiedByFlightId = async (req, res) => {
+    try {
+        const { flight_id } = req.params;  // Assuming flight_id is passed as a route parameter
+        const seats = await Seat.getOccupiedByFlightId(flight_id);
+        res.json(seats);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Function to get seat by id
 export const getSeatById = async (req, res) => {
     const { id } = req.params;

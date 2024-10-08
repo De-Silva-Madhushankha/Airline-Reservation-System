@@ -107,6 +107,7 @@ const BookingPage = () => {
               passengers={passengers} 
               onSeatsSelected={handleSeatsSelected} 
               aircraft_id={selectedFlight?.aircraft_id} // Pass the aircraft_id here
+              flight_id={selectedFlight?.flight_id}
               passengerSeats={passengerSeats} // Pass passenger seats
               globalSelectedSeats={globalSelectedSeats} // Pass globally selected seats
               setGlobalSelectedSeats={setGlobalSelectedSeats} // Pass function to update global selected seats

@@ -18,10 +18,18 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
     setPassengers(updatedPassengers);
   };
 
-  const handleNext = () => {
-    const { firstName, lastName,age,phoneNumber, passport } = passengers[currentIndex];
+  const validatePhoneNumber = (_, value) => {
+    const phoneNumberPattern = /^[0-9]{7,14}$/; //7 to 14 digits only
+    if (value && phoneNumberPattern.test(value)) {
+      return Promise.resolve(); // Validation passed
+    }
+    return Promise.reject('Please enter a valid phone number (7-14 digits)');
+  };
 
-    if (firstName === '' || lastName === '' || passport === ''|| age === ''|| phoneNumber === '') {
+  const handleNext = () => {
+    const { firstName, lastName, age, phoneNumber, passport, email } = passengers[currentIndex];
+
+    if (firstName === '' || lastName === '' || passport === ''|| age === ''|| phoneNumber === '' || email === '') {
       message.error('Please fill out all fields.');
       return;
     }
@@ -47,7 +55,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
   };
 
   const handleAddPassenger = () => {
-    const updatedPassengers = [...passengers, { firstName: '', lastName: '', age: '', phoneNumber: '', passport: '' }];
+    const updatedPassengers = [...passengers, { firstName: '', lastName: '', age: '', phoneNumber: '', passport: '' , email: ''}];
     setPassengers(updatedPassengers);
     setCurrentIndex(updatedPassengers.length - 1);
     setViewMode(false);
@@ -120,7 +128,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Phone Number" required>
+              <Form.Item label="Phone Number"  required>
                 <Input
                   placeholder="Enter phone number"
                   value={passengers[currentIndex]?.phoneNumber} // Use optional chaining
@@ -136,6 +144,14 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               placeholder="Enter passport number"
               value={passengers[currentIndex]?.passport} // Use optional chaining
               onChange={(e) => handlePassengerChange('passport', e.target.value)}
+            />
+          </Form.Item>
+
+          <Form.Item label="Email" required>
+            <Input
+              placeholder="Enter your email"
+              value={passengers[currentIndex]?.email} // Use optional chaining
+              onChange={(e) => handlePassengerChange('email', e.target.value)}
             />
           </Form.Item>
         </Form>
