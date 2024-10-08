@@ -27,7 +27,7 @@ export default function InitialData() {
 
   return (
     <div>
-      <div className="p-4 sm:ml-64">
+
         <div className="grid grid-cols-2 gap-4">
             <div className='m-6 z-40 '>
                 <a href="#" className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -55,6 +55,6 @@ export default function InitialData() {
             </div>
         </div>
     </div>
-    </div>
+
   )
 }
