@@ -7,12 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "backend": "cd b-airlines-backend && npm run devStart",
     "frontend": "cd b-airlines-frontend && npm start",
-    "start": "concurrently \"npm run backend\"  \"npm run frontend\""
+    "adminend": "cd b-airlines-admin && npm start",
+    "start": "concurrently \"npm run backend\"  \"npm run frontend\" \"npm run adminend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "antd": "^5.21.2",
     "concurrently": "^9.0.1",
     "cors": "^2.8.5",
