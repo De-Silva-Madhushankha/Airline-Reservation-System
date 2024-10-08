@@ -5,9 +5,7 @@
     font-family: 'PT Sans', sans-serif;
   }
   
-  .home,
-  .services,
-  .products,
+  .home, 
   .sign-up {
     display: flex;
     height: 90vh;
@@ -16,24 +14,7 @@
     font-size: 3rem;
   }
   
-  .services {
-    background-image: url('/images/img-2.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: #fff;
-    font-size: 100px;
-  }
-  
-  .products {
-    background-image: url('/images/img-1.jpg');
-    background-position: center;
-    background-size: fill;
-    background-repeat: no-repeat;
-    color: #fff;
-    font-size: 100px;
-  }
-  
+
   .sign-up {
     background-image: url('/images/img-8.jpg');
     background-position: center;
@@ -42,3 +23,21 @@
     color: #fff;
     font-size: 100px;
   }
+
+  /* Override Ant Design Button styles */
+.ant-btn-primary {
+  font-size: 16px;
+  background-color: #000000; 
+  border: none; /* Remove borders */
+  color: white; /* White text */
+}
+
+.ant-btn-primary:hover {
+  background-color: #232323; 
+}
+
+.ant-btn-primary:focus {
+  background-color: #060606; /* Darker green on focus */
+  border: none; /* Remove borders */
+  box-shadow: none; /* Remove focus shadow */
+}
