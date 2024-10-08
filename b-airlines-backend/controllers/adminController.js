@@ -1,36 +1,28 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { getCounts } from '../models/adminModel.js';
 
-export const loadInitialData = async (req, res) => {
-    try {
-    //   const user_info = await User.findById(req.user.id);
-    //   const user_flights = await User.getUserFlights(req.user.id);
+// export const loadInitialData = async (req, res) => {
+//     try {
+//       const responseData = {
+//         status : 'Success'
+//       };
   
-      // Log the fetched user info
-      //console.log('Fetched User Info:', user_info);
-      //console.log('Fetched User Flights:', user_flights);
-  
-    //   if (!user_info) {
-    //     return res.status(404).json({ message: 'User not found' });
-    //   }
-  
-      const responseData = {
-        status : 'Success'
-      };
-  
-      // Log the response data
-      console.log('Response Data:', JSON.stringify(responseData, null, 2));
+//       // Log the response data
+//       console.log('Response Data:', JSON.stringify(responseData, null, 2));
       
-      return res.json(responseData);
+//       return res.json(responseData);
   
-    } catch (error) {
-      console.error('Error:', error.message);
-      return res.status(500).json({ error: error.message });
-    }
-  };
+//     } catch (error) {
+//       console.error('Error:', error.message);
+//       return res.status(500).json({ error: error.message });
+//     }
+//   };
   
 
+
+  
   export const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
   
@@ -39,7 +31,7 @@ export const loadInitialData = async (req, res) => {
       console.log(user);
   
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'Admin not found' });
       }
   
       const isPasswordValid = await bcrypt.compare(password, user[0].password);
@@ -54,5 +46,16 @@ export const loadInitialData = async (req, res) => {
     } catch (error) {
       console.log(error.message);
       res.status(500).json({ error: error.message });
+    }
+  };
+
+
+
+  export const loadInitialData = async (req, res) => {
+    try {
+      const counts = await getCounts();
+      res.status(200).json(counts);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching counts', error });
     }
   };

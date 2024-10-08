@@ -54,7 +54,7 @@ const SignIn = () => {
           sessionStorage.setItem('token', token); // Store in sessionStorage for single session
         }
 
-        navigate('/');
+        navigate('/Adminhome');
       } else {
         setErrorMessage(message || 'Login failed');
       }
@@ -85,9 +85,10 @@ const SignIn = () => {
         borderRadius: '8px', 
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)' 
       }}>
-        <h2 style={{ textAlign: 'center' }}>Log in to Your Account</h2>
-        <p style={{ textAlign: 'center', marginBottom: '30px' }}>Enjoy exclusive rewards and benefits.</p>
-        
+      <h1 style={{ textAlign: 'center' }}>
+        <strong>Log in to Admin Account</strong>
+      </h1>
+              
         {errorMessage && (
           <Row justify="center">
             <Col span={24}>
@@ -118,12 +119,7 @@ const SignIn = () => {
             <Input.Password placeholder="Enter password" />
           </Form.Item>
 
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <CustomCheckbox>Keep me logged in</CustomCheckbox>
-            </Form.Item>
-            <a href="/forgot-password" style={{ float: 'right' }}>Forgot password?</a>
-          </Form.Item>
+          
 
           <Form.Item>
             <Button type="primary" htmlType="submit" block loading={loading} style={{ backgroundColor: '#1d1e22', borderColor: '#d4d4dc' }}>
@@ -132,9 +128,7 @@ const SignIn = () => {
           </Form.Item>
         </Form>
 
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          Not a member yet? <a href="/sign-up">Join now</a>
-        </div>
+        
       </div>
     </div>
   );

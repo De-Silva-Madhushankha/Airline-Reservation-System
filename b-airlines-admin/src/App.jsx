@@ -13,6 +13,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<SignIn/>} />
+          <Route path="/Adminhome" element={<Adminhome/>} />
+
         </Routes>
       </Router>
   );

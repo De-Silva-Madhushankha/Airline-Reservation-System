@@ -1,5 +1,6 @@
 import React from "react";
 import SildeNav from "../components/SlideNav";
+import InitialData from "../components/InitialData";
 
 
 
@@ -12,6 +13,7 @@ const Adminhome = () => {
   return (
     <nav className="flex w-screen bg-black  min-h-screen ">
       <SildeNav/>
+      <InitialData/>
     </nav>
   );
 };

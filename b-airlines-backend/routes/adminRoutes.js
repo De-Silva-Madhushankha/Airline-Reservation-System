@@ -1,9 +1,9 @@
-// // routes/userRoutes.js
-// import express from 'express';
-// import { getUsers } from '../controllers/userController.js';
+import express from 'express';
+import { loginAdmin , loadInitialData} from '../controllers/adminController.js';
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get('/', getUsers);
+router.post('/sign-in', loginAdmin);
+router.get('/load-initial-data', loadInitialData);
 
-// export default router;
+export default router;
