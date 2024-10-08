@@ -144,9 +144,16 @@ CREATE TABLE Booking (
     FOREIGN KEY (user_id) REFERENCES User(user_id) ON UPDATE CASCADE
 );
 
+-- must add privileged access
 CREATE TABLE Config (
     config_key VARCHAR(50) PRIMARY KEY,  -- Unique key to identify the constant
     config_value DOUBLE NOT NULL,        -- Value of the constant
     description VARCHAR(100)             -- Description of what the constant is for
 );
 
+-- added here this doesnt belong outer scope
+-- privileged
+INSERT INTO Config (config_key, config_value, description)
+VALUES
+('base_price', 100.0, 'Base price for flight seat calculations'),
+('route_factor', 1.2, 'Multiplier based on route distance for price adjustments');
