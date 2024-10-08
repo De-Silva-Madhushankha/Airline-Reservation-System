@@ -30,6 +30,7 @@ export const registerUser = async (req, res) => {
     // Hash the password
     const hashedPassword = await hashPassword(password);
 
+
     // Insert the user into the database
     const insert_id = await User.create(title, firstName, lastName, email, hashedPassword, dateOfBirth, country, mobileNumber);
     console.log(insert_id);

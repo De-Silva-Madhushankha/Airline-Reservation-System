@@ -16,6 +16,7 @@ import NotFound from './pages/NotFound';
 
 
 
+
 const path = data.backend;
 axios.defaults.baseURL = path;
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/schedule" element={<Schedule/>} />
           <Route path="/user-profile" element = {<Profile/>}/>
           <Route path="*" element={<Home/>} />
+
         </Routes>
       </Router>
   );
