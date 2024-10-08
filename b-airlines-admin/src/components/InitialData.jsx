@@ -14,7 +14,7 @@ export default function InitialData() {
       useEffect(() => {
         const fetchCounts = async () => {
           try {
-            const response = await axios.get('http://localhost:3001/api/users/load-initial-data');
+            const response = await axios.get('http://localhost:3001/api/admin/load-initial-data');
             setCounts(response.data);
           } catch (err) {
             setError('Error fetching counts');
