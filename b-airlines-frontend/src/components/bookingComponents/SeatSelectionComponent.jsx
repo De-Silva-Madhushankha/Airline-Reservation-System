@@ -5,8 +5,8 @@ import axios from 'axios';
 
 const { Option } = Select;
 
-const SeatSelectionComponent = ({ passengers, aircraft_id, onSeatsSelected, passengerSeats, globalSelectedSeats, setGlobalSelectedSeats, setPassengerSeats }) => { // Accept global states and functions as props
-  const [occupiedSeats, setOccupiedSeats] = useState([2, 5]);
+const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSelected, passengerSeats, globalSelectedSeats, setGlobalSelectedSeats, setPassengerSeats }) => { // Accept global states and functions as props
+  const [occupiedSeats, setOccupiedSeats] = useState([]);
   const [rows, setRows] = useState(0);
   const [columns, setColumns] = useState(0);
   const [model, setModel] = useState(null);
@@ -16,6 +16,26 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, onSeatsSelected, pass
   const [selectedPassenger, setSelectedPassenger] = useState(passengers[0]?.passport);
 
 
+  useEffect(() => {
+    const fetchOccupiedSeats = async () => {
+      try {
+        if (!flight_id) return; // Ensure flight_id is present
+  
+        console.log('Fetching occupied seats for flight_id:', flight_id);
+        const response = await axios.get(`http://localhost:3001/api/seat/occupied/${flight_id}`); // Update with your endpoint
+
+        // Assuming response contains an array of occupied seats
+        const seatTuples = response.data.map(seat => [seat.seat_row, seat.seat_column]);
+        setOccupiedSeats(seatTuples); 
+      } catch (error) {
+        message.error('Failed to fetch occupied seats');
+        console.error(error);
+      }
+    };
+    
+    fetchOccupiedSeats();
+  }, [flight_id]); // Re-run when flight_id changes
+  
   useEffect(() => {
     const fetchModels = async () => {
       try {
@@ -113,7 +133,8 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, onSeatsSelected, pass
           {[...Array(columns)].map((_, columnIndex) => {
             const seatLabel = `R${startRow + rowIndex + 1}C${columnIndex + 1}`;
             const isSelected = passengerSeats[selectedPassenger] === seatLabel; // Check if it's the selected seat
-            const isOccupied = occupiedSeats.includes((startRow + rowIndex) * columns + columnIndex);
+            // sub 1 because indexing difference of database and program
+            const isOccupied = occupiedSeats.some(seat => seat[0] - 1 === (startRow + rowIndex) && seat[1] - 1 === columnIndex);
             const isGlobalSelected = globalSelectedSeats[seatLabel];
 
             return (

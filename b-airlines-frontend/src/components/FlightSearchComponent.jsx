@@ -13,6 +13,10 @@ const FlightSearch = ({ onSearch }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
+  const disabledDate = (current) => {
+    return current && current < dayjs().startOf('day');
+  };
+
   const handleSearch = async (values) => {
     setLoading(true);
 
@@ -100,9 +104,10 @@ const FlightSearch = ({ onSearch }) => {
                   name="dates"
                   label="Departing - Returning"
                   rules={[{ required: true, message: "Please select travel dates" }]}
+                  
 
                 >
-                  <RangePicker size="large" style={{ width: "100%" }} />
+                  <RangePicker size="large" style={{ width: "100%" }} disabledDate={disabledDate}/>
                 </Form.Item>
               </Col>
             </Row>

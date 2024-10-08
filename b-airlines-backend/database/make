@@ -1,0 +1,15 @@
+-- to load database, open mysql in terminal in this terminal and
+-- give "source make" command
+
+-- ddl
+source schema.sql
+source indexes.sql
+source views.sql
+
+source functions.sql
+source procedures.sql
+source triggers.sql
+
+-- data
+source insert.sql
+

@@ -4,7 +4,7 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import ProfileCard from '../components/profileComponents/profileCard';
 import FlightHistory from '../components/profileComponents/FlightHistory';
-import ProfileInfo from '../components/profileComponents/ProfileInfo';
+//import ProfileInfo from '../components/profileComponents/ProfileInfo';
 import dayjs from 'dayjs';
 
 const UserProfile = () => {
