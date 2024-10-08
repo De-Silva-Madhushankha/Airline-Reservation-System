@@ -6,6 +6,7 @@ import FlightSchedule from '../components/FlightScheduleComponent';
 import PassengerDetailsComponent from '../components/bookingComponents/PassengerDetailsComponent';
 import SeatSelectionComponent from '../components/bookingComponents/SeatSelectionComponent';
 import PaymentComponent from '../components/bookingComponents/PaymentComponent';
+import BookingConfirmationComponent from '../components/bookingComponents/BookingConfirmationComponent';
 
 const { Content, Footer } = Layout;
 const { Step } = Steps;
@@ -116,6 +117,14 @@ const BookingPage = () => {
           )}
 
           {currentStep === 3 && <PaymentComponent />}
+
+          {currentStep === 4 && (
+            <BookingConfirmationComponent 
+              selectedFlight={selectedFlight} 
+              passengers={passengers} 
+              selectedSeats={selectedSeats} // Pass selected seats to the confirmation component
+            />
+          )}
         </div>
 
         <div style={{ marginTop: '20px' }}>
