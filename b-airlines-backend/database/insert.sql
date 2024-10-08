@@ -20,6 +20,12 @@ INSERT INTO Location (location_name, parent_location_id, location_type) VALUES
 ('Singapore City', 15, 'City');
 
 
+INSERT INTO Seat_class (seat_class_id, seat_class_name, price_multiplier)
+VALUES
+(1, 'Economy', 1.0),
+(2, 'Business', 1.5),
+(3, 'Platinum', 2.0);
+
 -- Insert data into Loyalty_Program table
 INSERT INTO Loyalty_program (program_id, program_name, min_points, max_points, discount) VALUES
 (1,'New',1,1,0),
@@ -64,76 +70,74 @@ VALUES
 ('AA380-001', 'Airbus A380');
 
 -- Indonesia to Sri Lanka
-INSERT INTO Route (base_price, origin_code, destination_code)
+INSERT INTO Route (distance, origin_code, destination_code)
 VALUES
-(180.0, 'CGK', 'BIA'),  -- Jakarta to Colombo
-(180.0, 'BIA', 'CGK'),  -- Colombo to Jakarta
-(185.0, 'DPS', 'BIA'),  -- Denpasar to Colombo
-(185.0, 'BIA', 'DPS'),  -- Colombo to Denpasar
-(195.0, 'DPS', 'HRI'),  -- Denpasar to Mattala
-(195.0, 'HRI', 'DPS'),  -- Mattala to Denpasar
+(3400, 'CGK', 'BIA'),  -- Jakarta to Colombo (approx 3400 km)
+(3400, 'BIA', 'CGK'),  -- Colombo to Jakarta
+(3600, 'DPS', 'BIA'),  -- Denpasar to Colombo (approx 3600 km)
+(3600, 'BIA', 'DPS'),  -- Colombo to Denpasar
+(3800, 'DPS', 'HRI'),  -- Denpasar to Mattala (approx 3800 km)
+(3800, 'HRI', 'DPS'),  -- Mattala to Denpasar
 
 -- Indonesia to India
-(220.0, 'CGK', 'DEL'),  -- Jakarta to Delhi
-(220.0, 'DEL', 'CGK'),  -- Delhi to Jakarta
-(210.0, 'CGK', 'BOM'),  -- Jakarta to Mumbai
-(210.0, 'BOM', 'CGK'),  -- Mumbai to Jakarta
-(215.0, 'CGK', 'MAA'),  -- Jakarta to Chennai
-(215.0, 'MAA', 'CGK'),  -- Chennai to Jakarta
-(225.0, 'DPS', 'BOM'),  -- Denpasar to Mumbai
-(225.0, 'BOM', 'DPS'),  -- Mumbai to Denpasar
-(235.0, 'DPS', 'MAA'),  -- Denpasar to Chennai
-(235.0, 'MAA', 'DPS'),  -- Chennai to Denpasar
+(5800, 'CGK', 'DEL'),  -- Jakarta to Delhi (approx 5800 km)
+(5800, 'DEL', 'CGK'),  -- Delhi to Jakarta
+(5300, 'CGK', 'BOM'),  -- Jakarta to Mumbai (approx 5300 km)
+(5300, 'BOM', 'CGK'),  -- Mumbai to Jakarta
+(4400, 'CGK', 'MAA'),  -- Jakarta to Chennai (approx 4400 km)
+(4400, 'MAA', 'CGK'),  -- Chennai to Jakarta
+(5000, 'DPS', 'BOM'),  -- Denpasar to Mumbai (approx 5000 km)
+(5000, 'BOM', 'DPS'),  -- Mumbai to Denpasar
+(4300, 'DPS', 'MAA'),  -- Denpasar to Chennai (approx 4300 km)
+(4300, 'MAA', 'DPS'),  -- Chennai to Denpasar
 
--- Indonesia  to Thailand
-(130.0, 'CGK', 'BKK'),  -- Jakarta to Suvarnabhumi
-(130.0, 'BKK', 'CGK'),  -- Suvarnabhumi to Jakarta
-(125.0, 'CGK', 'DMK'),  -- Jakarta to Don Mueang
-(125.0, 'DMK', 'CGK'),  -- Don Mueang to Jakarta
-(140.0, 'DPS', 'BKK'),  -- Denpasar to Suvarnabhumi
-(140.0, 'BKK', 'DPS'),  -- Suvarnabhumi to Denpasar
-(135.0, 'DPS', 'DMK'),  -- Denpasar to Don Mueang
-(135.0, 'DMK', 'DPS'),  -- Don Mueang to Denpasar
+-- Indonesia to Thailand
+(2300, 'CGK', 'BKK'),  -- Jakarta to Suvarnabhumi (approx 2300 km)
+(2300, 'BKK', 'CGK'),  -- Suvarnabhumi to Jakarta
+(2200, 'CGK', 'DMK'),  -- Jakarta to Don Mueang (approx 2200 km)
+(2200, 'DMK', 'CGK'),  -- Don Mueang to Jakarta
+(2900, 'DPS', 'BKK'),  -- Denpasar to Suvarnabhumi (approx 2900 km)
+(2900, 'BKK', 'DPS'),  -- Suvarnabhumi to Denpasar
+(2800, 'DPS', 'DMK'),  -- Denpasar to Don Mueang (approx 2800 km)
+(2800, 'DMK', 'DPS'),  -- Don Mueang to Denpasar
 
 -- Indonesia to Singapore
-(90.0, 'CGK', 'SIN'),   -- Jakarta to Singapore
-(90.0, 'SIN', 'CGK'),   -- Singapore to Jakarta
-(100.0, 'DPS', 'SIN'),  -- Denpasar to Singapore
-(100.0, 'SIN', 'DPS'),  -- Singapore to Denpasar
+(900, 'CGK', 'SIN'),   -- Jakarta to Singapore (approx 900 km)
+(900, 'SIN', 'CGK'),   -- Singapore to Jakarta
+(1700, 'DPS', 'SIN'),  -- Denpasar to Singapore (approx 1700 km)
+(1700, 'SIN', 'DPS'),  -- Singapore to Denpasar
 
 -- Sri Lanka to India
-(110.0, 'BIA', 'DEL'),  -- Colombo to Delhi
-(110.0, 'DEL', 'BIA'),  -- Delhi to Colombo
-(105.0, 'BIA', 'BOM'),  -- Colombo to Mumbai
-(105.0, 'BOM', 'BIA'),  -- Mumbai to Colombo
-(115.0, 'BIA', 'MAA'),  -- Colombo to Chennai
-(115.0, 'MAA', 'BIA'),  -- Chennai to Colombo
-(120.0, 'HRI', 'DEL'),  -- Mattala to Delhi
-(120.0, 'DEL', 'HRI'),  -- Delhi to Mattala
-(125.0, 'HRI', 'MAA'),  -- Mattala to Chennai
-(125.0, 'MAA', 'HRI'),  -- Chennai to Mattala
+(2400, 'BIA', 'DEL'),  -- Colombo to Delhi (approx 2400 km)
+(2400, 'DEL', 'BIA'),  -- Delhi to Colombo
+(1600, 'BIA', 'BOM'),  -- Colombo to Mumbai (approx 1600 km)
+(1600, 'BOM', 'BIA'),  -- Mumbai to Colombo
+(1200, 'BIA', 'MAA'),  -- Colombo to Chennai (approx 1200 km)
+(1200, 'MAA', 'BIA'),  -- Chennai to Colombo
+(2500, 'HRI', 'DEL'),  -- Mattala to Delhi (approx 2500 km)
+(2500, 'DEL', 'HRI'),  -- Delhi to Mattala
+(1300, 'HRI', 'MAA'),  -- Mattala to Chennai (approx 1300 km)
+(1300, 'MAA', 'HRI'),  -- Chennai to Mattala
 
 -- India to Thailand
-(140.0, 'DEL', 'BKK'),  -- Delhi to Suvarnabhumi
-(140.0, 'BKK', 'DEL'),  -- Suvarnabhumi to Delhii
-(145.0, 'BOM', 'DMK'),  -- Mumbai to Don Mueang
-(145.0, 'DMK', 'BOM'),  -- Don Mueang to Mumbai
-(155.0, 'MAA', 'BKK'),  -- Chennai to Suvarnabhumi
-(155.0, 'BKK', 'MAA'),  -- Suvarnabhumi to Chennai
-(150.0, 'MAA', 'DMK'),  -- Chennai to Don Mueang
-(150.0, 'DMK', 'MAA'),  -- Don Mueang to Chennai
+(2900, 'DEL', 'BKK'),  -- Delhi to Suvarnabhumi (approx 2900 km)
+(2900, 'BKK', 'DEL'),  -- Suvarnabhumi to Delhi
+(3000, 'BOM', 'DMK'),  -- Mumbai to Don Mueang (approx 3000 km)
+(3000, 'DMK', 'BOM'),  -- Don Mueang to Mumbai
+(2300, 'MAA', 'BKK'),  -- Chennai to Suvarnabhumi (approx 2300 km)
+(2300, 'BKK', 'MAA'),  -- Suvarnabhumi to Chennai
+(2200, 'MAA', 'DMK'),  -- Chennai to Don Mueang (approx 2200 km)
+(2200, 'DMK', 'MAA'),  -- Don Mueang to Chennai
 
 -- Sri Lanka to Thailand
-(160.0, 'BIA', 'BKK'),  -- Colombo to Suvarnabhumi
-(160.0, 'BKK', 'BIA'),  -- Suvarnabhumi to Colombo
+(2400, 'BIA', 'BKK'),  -- Colombo to Suvarnabhumi (approx 2400 km)
+(2400, 'BKK', 'BIA'),  -- Suvarnabhumi to Colombo
 
 -- Sri Lanka to Singapore
-(170.0, 'BIA', 'SIN'),  -- Colombo to Singapore
-(170.0, 'SIN', 'BIA'),  -- Singapore to Colombo
-(175.0, 'HRI', 'SIN'),  -- Mattala to Singapore
-(175.0, 'SIN', 'HRI');  -- Singapore to Mattala
-
-
+(2800, 'BIA', 'SIN'),  -- Colombo to Singapore (approx 2800 km)
+(2800, 'SIN', 'BIA'),  -- Singapore to Colombo
+(3000, 'HRI', 'SIN'),  -- Mattala to Singapore (approx 3000 km)
+(3000, 'SIN', 'HRI');  -- Singapore to Mattala
 
 -- Day 1: 2024-11-01
 INSERT INTO Flight (flight_id, route_id, aircraft_id, departure, arrival)
