@@ -25,11 +25,13 @@ const User = {
     }
   },
 
-  updateUser: async (user_id, username, password, user_phone_number, user_email, loyalty_points) => {
+  updateProfile: async ( first_name, last_name ,country, mobile_number,user_id) => {
     try {
       const [result] = await db.query(`UPDATE User 
-          SET username = ?, password = ?, user_phone_number = ?, user_email = ?, loyalty_points = ?
-          WHERE user_id = ?`, [username, password, user_phone_number, user_email, loyalty_points, user_id]);
+          SET first_name = ?, last_name = ?, country = ?, mobile_number = ?
+          WHERE user_id = ?`, [first_name, last_name, country, mobile_number, user_id]);
+      
+      console.log(result);
       return result.affectedRows;
     } catch (error) {
       throw error;

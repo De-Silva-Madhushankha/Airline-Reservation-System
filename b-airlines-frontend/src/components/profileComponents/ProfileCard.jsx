@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Card, Avatar, Typography, Divider, Button, Progress, Input, Form } from 'antd';
+import { Card, Avatar, Typography, Divider, Button, Progress, Input, Form, Spin, Alert } from 'antd';
 import { EditOutlined, UploadOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
+import axios from 'axios';
 import './ProfileCard.css';
 
 
@@ -8,6 +9,8 @@ const { Title, Text } = Typography;
 
 const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country, mobileNumber, birthDay }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [profileData, setProfileData] = useState({
     title,
     firstName,
@@ -19,7 +22,7 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
     birthDay
   });
 
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProfileData({
@@ -33,7 +36,31 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
   };
 
   const handleSaveClick = () => {
-    // save logic
+    const saveProfileData = async () => {
+      setLoading(true);
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token'); // Get the token from localStorage
+
+      if (!token) {
+        setError('User is not authenticated');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await axios.put('http://localhost:3001/api/user/update', profileData, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Pass token in the Authorization header
+          },
+        });
+
+      } catch (err) {
+        console.error(err);
+        setError(err.response?.data?.message || 'Error Updating profile');
+      } finally {
+        setLoading(false);
+      }
+    };
+    saveProfileData();
     setIsEditing(false);
   };
 
@@ -41,6 +68,14 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
     setProfileData({ title, firstName, lastName, email, loyaltyPoints, country, mobileNumber, birthDay });
     setIsEditing(false);
   };
+
+  if (loading) {
+    return <Spin tip="Loading..." />;
+  }
+
+  if (error) {
+    return <Alert message="Error" description={error} type="error" showIcon />;
+  }
 
   return (
     <Card
@@ -67,13 +102,6 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
     >
       {isEditing ? (
         <Form layout="vertical">
-          <Form.Item label="Title">
-            <Input
-              name="title"
-              value={profileData.title}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
           <Form.Item label="First Name">
             <Input
               name="firstName"
@@ -99,13 +127,6 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
             <Input
               name="mobileNumber"
               value={profileData.mobileNumber}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-          <Form.Item label="Birthday">
-            <Input
-              name="birthDay"
-              value={profileData.birthDay}
               onChange={handleInputChange}
             />
           </Form.Item>
