@@ -1,65 +1,75 @@
-.layout {
-  /* min-height: 100vh; Ensures the layout takes up full viewport height */
-  background: #f0f2f5; /* Background color */
-  display: flex; /* Enables flexbox */
-  justify-content: center; /* Centers horizontally */
-  align-items: center; /* Centers vertically */
-  padding: 20px; /* Padding around the layout */
+.card-preview {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f2f5;
+  border-radius: 8px;
 }
 
-.container {
-  background: white;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
+.card-mockup {
+  width: 300px;
+  height: 180px;
+  perspective: 1000px;
+}
+
+.card-front {
   width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #494c4f, #717983);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  color: white;
 }
 
-.title {
-  font-size: 32px; /* Matches flight search title font size */
-  font-weight: 600;
-  color: #1a1a1a;
-  text-align: center;
-  margin-bottom: 15px;
+.card-chip {
+  width: 50px;
+  height: 40px;
+  background: linear-gradient(45deg, #ffd700, #ffec8b);
+  border-radius: 6px;
+  margin-bottom: 20px;
 }
 
-.subtitle {
-  font-size: 18px; /* Matches flight search subtitle font size */
-  color: #555;
-  margin-bottom: 30px;
-  text-align: center;
-  padding: 0 15px;
+.card-details {
+  display: flex;
+  flex-direction: column;
 }
 
-.form {
-  margin-top: 20px;
+.card-number {
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
 }
 
-.form .ant-form-item-label > label {
-  font-weight: bold;
-  color: #333;
-}
-
-.submit-btn {
-  background-color: #4caf50; /* Green */
-  border-color: #4caf50;
-}
-
-.submit-btn:hover {
-  background-color: #45a049; /* Darker green */
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
-  .container {
-    padding: 20px;
+  .payment-container {
+    padding: 1rem;
   }
 
-  .title {
-    font-size: 28px; /* Matches flight search title font size on mobile */
+  .card-preview {
+    margin-top: 2rem;
   }
 
-  .subtitle {
-    font-size: 16px; /* Matches flight search subtitle font size on mobile */
+  .card-mockup {
+    width: 250px;
+    height: 150px;
+  }
+
+  .card-number {
+    font-size: 1rem;
+  }
+
+  .card-info {
+    font-size: 0.8rem;
   }
 }

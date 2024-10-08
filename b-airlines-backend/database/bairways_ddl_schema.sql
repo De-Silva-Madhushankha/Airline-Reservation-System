@@ -377,7 +377,7 @@ BEGIN
         SET c = 1; -- Reset column for each new row
         WHILE c <= columns DO -- Assuming 4 columns for business
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
-            VALUES (UUID(), (economy_rows + r), c, 'Business',
+            VALUES (UUID(), economy_rows + r, c, 'Business',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 200
                         WHEN model_name = 'Boeing 757' THEN 220
@@ -395,7 +395,7 @@ BEGIN
         SET c = 1; -- Reset column for each new row
         WHILE c <= columns DO -- Assuming 4 columns for platinum
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class, seat_price, is_reserved, model, flight_id)
-            VALUES (UUID(), (economy_rows + business_rows + r), c, 'Platinum',
+            VALUES (UUID(), economy_rows + business_rows + r, c, 'Platinum',
                     CASE
                         WHEN model_name = 'Boeing 737' THEN 300
                         WHEN model_name = 'Boeing 757' THEN 330
