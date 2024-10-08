@@ -13,8 +13,13 @@ import Profile from './pages/Profile';
 import axiosSetup from './axiosSetup';
 import Schedule from './pages/Schedule';
 import NotFound from './pages/NotFound';
-
-
+import Manage from './pages/Manage'; // New Pages
+import BeforeYouFly from './pages/BeforeYouFly'; // New Pages
+import Baggage from './pages/Baggage'; // New Pages
+import VisaPassport from './pages/VisaPassport'; // New Pages
+import CancelBooking from './pages/CancelBooking';
+import ChangeBooking from './pages/ChangeBooking';
+import ChooseSeat from './pages/ChooseSeat';
 
 const path = data.backend;
 axios.defaults.baseURL = path;
@@ -23,16 +28,29 @@ function App() {
   return (
       <Router>
         <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/not-found" element={<NotFound/>} />
-          <Route path="/sign-up" element={<SignUp/>} />
-          <Route path="/sign-in" element={<SignIn/>} />
-          <Route path="/book" element={<Book/>} />
-          <Route path="/help" element={<Help/>} />
-          <Route path="/forgot-password" element={<ForgotPassword/>} />
-          <Route path="/schedule" element={<Schedule/>} />
-          <Route path="/user-profile" element = {<Profile/>}/>
-          <Route path="*" element={<Home/>} />
+          {/* Existing Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/not-found" element={<NotFound />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/book" element={<Book />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/user-profile" element={<Profile />} />
+
+          {/* New Pages for Manage Section */}
+          <Route path="/manage" element={<Manage />} />
+          <Route path="/manage/before-you-fly" element={<BeforeYouFly />} />
+          <Route path="/manage/baggage" element={<Baggage />} />
+          <Route path="/manage/visa-passport" element={<VisaPassport />} />
+          <Route path="/manage/cancel-booking" element={<CancelBooking />} />
+          <Route path="/manage/change-booking" element={<ChangeBooking />} />
+          <Route path="/manage/change-seat" element={<ChooseSeat />} />
+
+
+          {/* Catch-all Route */}
+          <Route path="*" element={<Home />} />
         </Routes>
       </Router>
   );

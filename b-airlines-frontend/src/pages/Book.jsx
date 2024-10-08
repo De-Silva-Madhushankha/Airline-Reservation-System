@@ -3,6 +3,9 @@ import { Layout, Steps, Button, Form, Input } from 'antd';
 import Header from '../components/Header';
 import FlightSearch from '../components/FlightSearchComponent';
 import FlightSchedule from '../components/FlightScheduleComponent';
+import Passenger from '../components/passengerComponent';
+import Options from '../components/Options';
+
 
 const { Content, Footer } = Layout;
 const { Step } = Steps;
@@ -66,11 +69,11 @@ const BookingPage = () => {
           )}
 
           {currentStep === 1 && (
-            <Form layout="vertical">
-              <Form.Item label="Number of Passengers">
-                <Input placeholder="1 Passenger" />
-              </Form.Item>
-            </Form>
+            <Passenger></Passenger>
+          )}
+
+          {currentStep === 2 && (
+            <Options></Options>
           )}
           {/* Add similar forms for Options, Payment, and Confirmation */}
         </div>
