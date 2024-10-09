@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Spin, Alert } from 'antd';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
-import ProfileCard from '../components/profileComponents/profileCard';
+import ProfileCard from '../components/profileComponents/ProfileCard';
 import FlightHistory from '../components/profileComponents/FlightHistory';
 //import ProfileInfo from '../components/profileComponents/ProfileInfo';
 import dayjs from 'dayjs';

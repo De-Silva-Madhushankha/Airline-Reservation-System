@@ -1,7 +1,14 @@
-import db from '../db.js'
+import db from '../database/db.js'
 
 
 const Booking = {  
+
+      // Method to calculate seat price using stored function in the database
+    calculateSeatPrice: async (flight_id, row, column) => {
+        const query = 'SELECT Calculate_seat_price(?, ?, ?) AS price';
+        const [rows] = await db.execute(query, [flight_id, row, column]);
+        return rows.length > 0 ? rows[0].price : null;
+    },
 
     getBooking: async (booking_id) =>{
         const [rows] = await db.query(`SELECT * FROM Booking WHERE booking_id = ?`, [booking_id])
