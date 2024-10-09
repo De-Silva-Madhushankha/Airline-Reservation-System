@@ -1,9 +1,9 @@
-// backend/models/Model.js
 import db from '../database/db.js';
 
 const Model = {
     getModels: async () => {
         const [rows] = await db.query("SELECT * FROM Model");
+        //console.log(rows);
         return rows;
     },
 
