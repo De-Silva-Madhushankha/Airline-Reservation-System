@@ -1,14 +1,11 @@
 import db from '../database/db.js';
-//import dotenv from 'dotenv'
-
-//dotenv.config()
 
 
 const Flight = { 
 
     // Create a new flight
-    createFlight: async (flight, result) => {
-        db.query("INSERT INTO Flight SET ?", flight, function(err, res) {
+    createFlight: async (route_id, aircraft_id, departure, arrival, result) => {
+        db.query("INSERT INTO Flight (flight_id, route_id, aircraft_id, departure, arrival) VALUES (UUID(),?,?,?,? )", [route_id, aircraft_id, departure, arrival], (err, res) => {
             if (err) {
                 console.log("error: ", err);
                 result(err, null);

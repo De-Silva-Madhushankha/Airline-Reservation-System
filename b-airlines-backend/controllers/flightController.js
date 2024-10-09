@@ -72,4 +72,19 @@ export const searchFlights = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
+
+export const createFlight = async (req, res) => {
+    console.log("Request body: ", req.body);
+    const route_id = req.body.route_id;
+    const aircraft_id = req.body.aircraft_id;
+    const departure = req.body.departure;
+    const arrival = req.body.arrival;
+
+    try {
+        const newFlight = await Flight.createFlight(route_id, aircraft_id, departure, arrival);
+        res.json(newFlight);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

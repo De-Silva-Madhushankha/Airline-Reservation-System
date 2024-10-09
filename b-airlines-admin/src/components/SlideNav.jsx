@@ -18,7 +18,7 @@ export default function SildeNav({ setActiveSection }) {
                 <li>
                     <button onClick={() => setActiveSection("dashboard")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <RxDashboard />
-                        <button className="ms-3">Dashboard</button>
+                        <span className="ms-3">Dashboard</span>
                     </button>
                 </li>
                 <li className=' group'>
@@ -46,7 +46,7 @@ export default function SildeNav({ setActiveSection }) {
                     </ul>
                 </li>
                 <li>
-                    <button onClick={() => setActiveSection("addFlights")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button onClick={() => setActiveSection("addFlights")}  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <MdOutlineAddRoad />
                         <span className="flex-1 ms-3 whitespace-nowrap">Add Flights</span>
                     </button>
