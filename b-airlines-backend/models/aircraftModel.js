@@ -17,11 +17,11 @@ const Aircraft = {
             return rows
         },
 
-        createAircraft : async (aircraft_name, aircraft_type, aircraft_capacity) => {
+        createAircraft : async (aircraft_id, model) => {
             const [result] = await db.query(
-                `INSERT INTO Aircraft (aircraft_name, aircraft_type, aircraft_capacity) 
-                VALUES(?,?,?)`,
-                [aircraft_name, aircraft_type, aircraft_capacity]
+                `INSERT INTO Aircraft (aircraft_id, model) 
+                VALUES(?,?)`,
+                [aircraft_id, model]
             );
             return result.insertId;
         },
