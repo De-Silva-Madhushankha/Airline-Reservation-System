@@ -1,9 +1,10 @@
-import db from '../db.js'
+import db from '../database/db.js'
 
 const Route = {
 
     getRoutes : async () => {
         const [rows] = await db.query("SELECT * FROM Route")
+        //console.log(rows)
         return rows
     },
 

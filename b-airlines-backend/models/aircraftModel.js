@@ -1,4 +1,4 @@
-import db from '..//database/db.js'
+import db from '../database/db.js'
 
 const Aircraft = {
 
@@ -36,6 +36,12 @@ const Aircraft = {
         deleteAircraft : async (aircraft_id) =>{
             const [result] = await db.query('DELETE FROM Aircraft WHERE aircraft_id = ?', [aircraft_id]);
             return result.affectedRows;
+        },
+
+        getRoutes : async () => {
+            const [rows] = await db.query("SELECT * FROM Route")
+            console.log(rows)
+            return rows
         },
 
         getRevenue : async (aircraft_id) => {
