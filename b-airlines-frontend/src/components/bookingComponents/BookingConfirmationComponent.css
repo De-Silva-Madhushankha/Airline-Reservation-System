@@ -1,34 +1,135 @@
-/* BookingConfirmationComponent.css */
-
-.booking-confirmation {
-    padding: 20px;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    margin-top: 20px;
+.booking-confirmation-layout {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
-.booking-confirmation h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+.confirmation-card {
+  width: 100%;
+  max-width: 900px;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.booking-confirmation h3 {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    font-size: 20px;
-    color: #666;
+/* Booking Title */
+.booking-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-size: 28px; /* Default font size for larger screens */
 }
 
-.booking-confirmation p {
-    margin: 5px 0;
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .booking-title {
+    font-size: 22px; /* Smaller font size for medium screens */
+    margin-bottom: 15px; /* Reduced bottom margin */
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-title {
+    font-size: 20px; /* Even smaller font size for small screens */
+    margin-bottom: 10px; /* Further reduced bottom margin */
+  }
+}
+
+.passenger-card {
+  margin-bottom: 15px;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.passenger-info {
+  align-items: center;
+}
+
+/* Passenger details */
+.passenger-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.flight-route-text {
+  font-size: 16px;
+  color: #555;
+  margin-top: 8px;
+}
+
+.flight-text {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.seat-text {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.seat-class-tag {
+  margin-left: 10px;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* Cost column */
+.cost-text {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Subtotal card */
+.subtotal-card {
+  margin-top: 20px;
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Button Container */
+.button-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .confirmation-card, .passenger-card {
+    padding: 10px;
+  }
+
+  .booking-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .passenger-name {
     font-size: 16px;
-    color: #555;
-}
+  }
 
-.booking-confirmation .passenger-detail {
-    margin-left: 20px;
+  .flight-route-text {
+    font-size: 14px;
+  }
+
+  .seat-text, .seat-class-tag {
+    font-size: 12px;
+  }
+
+  .flight-text {
+    font-size: 12px;
+  }
+
+  .subtotal-card {
+    padding: 10px;
+    margin-top: 15px;
+  }
+
+  .button-container {
+    margin-top: 15px;
+  }
 }
