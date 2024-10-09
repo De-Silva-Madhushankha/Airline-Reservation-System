@@ -1,5 +1,27 @@
 import Booking from '../models/bookingModel.js';
 
+// Controller to calculate booking cost
+export const getBookingCost = async (req, res) => {
+    try {
+        console.log('hehe')
+        const { flight_id, seat } = req.body;
+        const { row, column } = seat; // Assuming seat has row and column properties
+        console.log('booking controller' , flight_id, row, column)
+        // Call the model to calculate the seat price using the stored function
+        const totalCost = await Booking.calculateSeatPrice(flight_id, row, column);
+        console.log('totoal cost', totalCost)
+        if (totalCost === null) {
+            return res.status(400).json({ message: 'Unable to calculate seat price' });
+        }
+
+        // Return the calculated price in the response
+        res.status(200).json({ totalCost });
+    } catch (error) {
+        // Handle any server errors
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Function to insert a new booking into the database
 export const createBooking = async (req, res) => {
     try {
