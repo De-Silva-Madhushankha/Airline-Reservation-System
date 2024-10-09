@@ -5,7 +5,7 @@ const Booking = {
 
       // Method to calculate seat price using stored function in the database
     calculateSeatPrice: async (flight_id, row, column) => {
-        const query = 'SELECT Calculate_seat_price(?, ?, ?) AS price';
+        const query = 'SELECT calculate_seat_price(?, ?, ?) AS price';
         const [rows] = await db.execute(query, [flight_id, row, column]);
         return rows.length > 0 ? rows[0].price : null;
     },

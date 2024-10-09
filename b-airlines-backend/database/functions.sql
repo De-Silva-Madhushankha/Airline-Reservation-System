@@ -64,7 +64,7 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE FUNCTION Calculate_seat_price(
+CREATE FUNCTION calculate_seat_price(
     flight_id_0 CHAR(36),
     row_num INT,
     column_num INT
