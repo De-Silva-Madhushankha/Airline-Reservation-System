@@ -11,5 +11,13 @@ export const getPassengerByRouteId = async (req, res) => {
     }
 };
 
+export const getRoutes = async (req, res) => {
+    try {
+      const routes = await Route.getRoutes();
+      res.json(routes);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+}; 
 
 

@@ -1,10 +1,10 @@
-// backend/controllers/modelController.js
 import Model from '../models/modelModel.js';
 
 export const getModels = async (req, res) => {
     try {
         const models = await Model.getModels();
         res.json(models);
+        //console.log(models);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
