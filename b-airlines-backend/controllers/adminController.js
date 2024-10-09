@@ -1,25 +1,7 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { getCounts } from '../models/adminModel.js';
-
-// export const loadInitialData = async (req, res) => {
-//     try {
-//       const responseData = {
-//         status : 'Success'
-//       };
-  
-//       // Log the response data
-//       console.log('Response Data:', JSON.stringify(responseData, null, 2));
-      
-//       return res.json(responseData);
-  
-//     } catch (error) {
-//       console.error('Error:', error.message);
-//       return res.status(500).json({ error: error.message });
-//     }
-//   };
-  
+import { getCounts, getCountsByDestination} from '../models/adminModel.js';
 
 
   
@@ -55,6 +37,31 @@ import { getCounts } from '../models/adminModel.js';
     try {
       const counts = await getCounts();
       res.status(200).json(counts);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching counts', error });
+    }
+  };
+
+
+
+  export const getCountbyDestination = async (req, res) => {
+    const { destinationCode, startDate, endDate } = req.query;
+  
+    try {
+      const counts = await getCountsByDestination(destinationCode, startDate, endDate);
+      res.status(200).json({ passengerCount: counts });
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching counts', error });
+    }
+  };
+
+
+  export const getCountbyTime = async (req, res) => {
+    const { startDate, endDate } = req.query;
+  
+    try {
+      const counts = await getCountsByTime(startDate, endDate);
+      res.status(200).json({ passengerCount: counts });
     } catch (error) {
       res.status(500).json({ message: 'Error fetching counts', error });
     }

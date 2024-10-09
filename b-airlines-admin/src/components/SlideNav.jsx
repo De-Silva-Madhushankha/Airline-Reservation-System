@@ -3,22 +3,12 @@ import { AiFillAccountBook, AiFillFileZip } from "react-icons/ai";
 import { MdOutlineKeyboardArrowDown, MdFlight, MdLogout, MdOutlineAddRoad} from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { FaUsers } from "react-icons/fa";
-//import axios from 'axios';
-//import { useState, useEffect } from 'react';
 
 
 
 
-export default function SildeNav() {
 
-    // const [data, setData] = useState([]);
-
-    // useEffect(() => {
-    //     axios.get('http://localhost:3001/api/users')
-    //         .then(res => setData(res.data))
-    //         .catch(err => console.log(err));
-    // }, []);
-    //const initialData = await axios.get('http://localhost:3001/api/user/load-initial-data', {});
+export default function SildeNav({ setActiveSection }) {
 
   return (
     <div>
@@ -26,10 +16,10 @@ export default function SildeNav() {
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
             <ul className="space-y-2 font-medium">
                 <li>
-                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button onClick={() => setActiveSection("dashboard")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <RxDashboard />
                         <button className="ms-3">Dashboard</button>
-                    </a>
+                    </button>
                 </li>
                 <li className=' group'>
                     <button type="button" className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
@@ -39,40 +29,40 @@ export default function SildeNav() {
                     </button>
                     <ul id="dropdown-example" className="hidden group-hover:block  py-2 space-y-2">
                         <li>
-                            <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 1</a>
+                            <button onClick={() => setActiveSection("report1")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 1</button>
                         </li>
                         <li>
-                            <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 2</a>
+                            <button onClick={() => setActiveSection("report2")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 2</button>
                         </li>
                         <li>
-                            <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 3</a>
+                            <button onClick={() => setActiveSection("report3")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 3</button>
                         </li>
                         <li>
-                            <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 4</a>
+                            <button onClick={() => setActiveSection("report4")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 4</button>
                         </li>
                         <li>
-                            <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 5</a>
+                            <button onClick={() => setActiveSection("report5")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 5</button>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button onClick={() => setActiveSection("addFlights")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <MdOutlineAddRoad />
                         <span className="flex-1 ms-3 whitespace-nowrap">Add Flights</span>
-                    </a>
+                    </button>
                 </li>
                 
                 <li>
-                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button onClick={() => setActiveSection("users")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <FaUsers />
                         <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
-                    </a>
+                    </button>
                 </li>
                 <li>
-                    <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <button onClick={() => setActiveSection("addAircraft")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <MdFlight />
                         <span className="flex-1 ms-3 whitespace-nowrap">Add aircrafts</span>
-                    </a>
+                    </button>
                 </li>
                 <li>
                     <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
