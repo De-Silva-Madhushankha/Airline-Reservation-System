@@ -15,14 +15,16 @@ const Booking = {
         return rows
     },  
 
-    createBooking: async (flight_id, passenger_id, total_amount, booking_date) => {
+    createBooking: async (flight_id, passenger_id, seat_id, total_amount) => {
         const [result] = await db.query(
-            `INSERT INTO Booking (flight_id, passenger_id, total_amount, booking_date) 
-            VALUES(?,?,?,?)`,
-            [flight_id, passenger_id, total_amount, booking_date]
+            `INSERT INTO Booking (booking_id, flight_id, passenger_id, seat_id, total_amount, payment_status) 
+            VALUES(UUID(), ?, ?, ?, ?, 'Paid')`,
+            [flight_id, passenger_id, seat_id, total_amount]
         );
         return result.insertId;
     },
+
+    
 
     updateBooking: async (booking_id, flight_id, passenger_id, total_amount, booking_date) =>{
         const [result] = await db.query(`UPDATE Booking 

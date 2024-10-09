@@ -40,6 +40,37 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
     fetchPassengerCosts();
   }, [passengers, passengerSeats, selectedFlight, setPassengerCosts]);
 
+  const handleConfirmBooking = async () => {
+    try {
+      // Prepare booking data
+      const bookingData = {
+        flight_id: selectedFlight.flight_id,
+        passengers: passengers.map(passenger => ({
+          firstName: passenger.firstName,
+          lastName: passenger.lastName,
+          age: passenger.age,
+          phoneNumber: passenger.phoneNumber,
+          passport: passenger.passport,
+          email: passenger.email,
+          seatRow: passengerSeats[passenger.passport].row, // Separate seatRow
+          seatColumn: passengerSeats[passenger.passport].column,
+        })),
+      };
+      console.log(bookingData);
+      // Send booking data to the backend
+      const response = await axios.post('http://localhost:3001/api/booking/create', bookingData);
+      
+      if (response.data.success) {
+        message.success('Booking confirmed successfully!', 3); // Display success message for 3 seconds
+      } else {
+        message.error('Failed to confirm booking. Please try again.');
+      }
+    } catch (error) {
+      message.error('An error occurred while confirming the booking.');
+      console.error(error);
+    }
+  };
+
   return (
     <div className="booking-confirmation-layout">
       <Card className="confirmation-card">
@@ -60,14 +91,14 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
                   {/* Column 1: Name, Origin-Destination, Seat Class */}
                   <Col xs={24} sm={16}>
                     <Text strong className="passenger-name">{`${passenger.firstName} ${passenger.lastName}`}</Text><br/>
-                    <Text className="flight-route-text">{`${selectedFlight.origin} to ${selectedFlight.destination}`}</Text><br/>
-                    <Text className="seat-text">{`Seat: Row ${seat.row}, Column ${seat.column}`}</Text>
-                    <Tag color="blue" className="seat-class-tag">{seat.class}</Tag>
+                    <Text className="flight-route-text">{`${selectedFlight.origin_code} to ${selectedFlight.destination_code}`}</Text><br/>
+                    <Text className="seat-text">{`Seat R${seat.row}C${seat.column}`}</Text>
+                    <Tag color="blue" className="seat-class-tag">{seat.className}</Tag>
                   </Col>
 
                   {/* Departure and Arrival Times */}
                   <Col xs={24} sm={16}>
-                    <Text className="flight-text">{`Departs: ${selectedFlight.departureTime} >> Arrives: ${selectedFlight.arrivalTime}`}</Text><br/>
+                    <Text className="flight-text">{`Departs: ${selectedFlight.dep_time} >> Arrives: ${selectedFlight.arr_time}`}</Text><br/>
                   </Col>
 
                   {/* Passenger Cost */}
@@ -92,9 +123,8 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
           </Row>
         </Card>
 
-
         <div className="button-container">
-          <Button type="primary" size="large">
+          <Button type="primary" size="large" onClick={handleConfirmBooking}>
             Confirm Booking
           </Button>
         </div>
