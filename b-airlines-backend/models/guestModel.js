@@ -3,7 +3,7 @@ import db from '../db.js';
 const Guest = {
     getAll: async () => {
         try {
-            const [rows] = await db.query('SELECT * FROM passenger');
+            const [rows] = await db.query('SELECT * FROM Passenger');
             return rows;
         } catch (error) {
             throw error;
@@ -31,7 +31,7 @@ const Guest = {
     update: async (first_name, last_name, age, phone_number, email) => {
       const { Branch_ID } = updates;
       try {
-        const [result] = await db.query(`UPDATE passenger 
+        const [result] = await db.query(`UPDATE Passenger 
             SET first_name = ?, last_name = ?, age = ?, phone_number = ?, email = ?`, [Branch_ID, ID]);
         return result.affectedRows;
       } catch (error) {
@@ -41,7 +41,7 @@ const Guest = {
 
     delete: async (ID) => {
         try {
-            const [result] = await db.query('DELETE FROM passenger WHERE passenger_id = ?', [ID]);
+            const [result] = await db.query('DELETE FROM Passenger WHERE passenger_id = ?', [ID]);
             return result.affectedRows;
         } catch (error) {
             throw error;
@@ -50,7 +50,7 @@ const Guest = {
 
     getByPassengerName: async (name) => {
         try {
-            const [rows] = await db.query('SELECT * FROM passenger WHERE name = ?', [name]);
+            const [rows] = await db.query('SELECT * FROM Passenger WHERE name = ?', [name]);
             return rows[0];
         } catch (error) {
             throw error;

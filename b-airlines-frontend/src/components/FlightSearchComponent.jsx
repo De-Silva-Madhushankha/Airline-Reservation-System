@@ -9,13 +9,17 @@ const { Content } = Layout;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
-const FlightSearch = ({ onSearch }) => { 
+const FlightSearch = ({ onSearch }) => {
   const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
+
+  const disabledDate = (current) => {
+    return current && current < dayjs().startOf('day');
+  };
 
   const handleSearch = async (values) => {
     setLoading(true);
-    
+
     values.dates = values.dates.map(date => dayjs(date).format("YYYY-MM-DD"));
     console.log("Search values: ", values);
 
@@ -24,7 +28,7 @@ const FlightSearch = ({ onSearch }) => {
       console.log("Search results: ", response.data);
       message.success("Flights found!");
 
-      
+
       onSearch(response.data.flights);
 
     } catch (error) {
@@ -47,7 +51,7 @@ const FlightSearch = ({ onSearch }) => {
           <Form
             form={form}
             layout="vertical"
-            onFinish={handleSearch} 
+            onFinish={handleSearch}
             className="flight-search-form"
           >
             <Row gutter={[16, 16]}>
@@ -58,16 +62,16 @@ const FlightSearch = ({ onSearch }) => {
                   rules={[{ required: true, message: "Please select departure airport" }]}
                 >
                   <Select placeholder="Select Departure" size="large">
-                      <Option value="BIA">Colombo (BIA)</Option>
-                      <Option value="BKK">Bankok (BKK)</Option>
-                      <Option value="BOM">Mumbai (BOM)</Option>
-                      <Option value="CGK">Jakarta (CGK)</Option>
-                      <Option value="DEL">Delhi (DEL)</Option>
-                      <Option value="DMK">Don Mueang (DMK)</Option>
-                      <Option value="DPS">Kuta (DPS)</Option>
-                      <Option value="HRI">Mattala (HRI)</Option>
-                      <Option value="MAA">Chennai (MAA)</Option>
-                      <Option value="SIN">Singapore (SIN)</Option>
+                    <Option value="BIA">Colombo (BIA)</Option>
+                    <Option value="BKK">Bankok (BKK)</Option>
+                    <Option value="BOM">Mumbai (BOM)</Option>
+                    <Option value="CGK">Jakarta (CGK)</Option>
+                    <Option value="DEL">Delhi (DEL)</Option>
+                    <Option value="DMK">Don Mueang (DMK)</Option>
+                    <Option value="DPS">Kuta (DPS)</Option>
+                    <Option value="HRI">Mattala (HRI)</Option>
+                    <Option value="MAA">Chennai (MAA)</Option>
+                    <Option value="SIN">Singapore (SIN)</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -79,16 +83,16 @@ const FlightSearch = ({ onSearch }) => {
                   rules={[{ required: true, message: "Please select arrival airport" }]}
                 >
                   <Select placeholder="Select Arrival" size="large">
-                      <Option value="BIA">Colombo (BIA)</Option>
-                      <Option value="BKK">Bankok (BKK)</Option>
-                      <Option value="BOM">Mumbai (BOM)</Option>
-                      <Option value="CGK">Jakarta (CGK)</Option>
-                      <Option value="DEL">Delhi (DEL)</Option>
-                      <Option value="DMK">Don Mueang (DMK)</Option>
-                      <Option value="DPS">Kuta (DPS)</Option>
-                      <Option value="HRI">Mattala (HRI)</Option>
-                      <Option value="MAA">Chennai (MAA)</Option>
-                      <Option value="SIN">Singapore (SIN)</Option>
+                    <Option value="BIA">Colombo (BIA)</Option>
+                    <Option value="BKK">Bankok (BKK)</Option>
+                    <Option value="BOM">Mumbai (BOM)</Option>
+                    <Option value="CGK">Jakarta (CGK)</Option>
+                    <Option value="DEL">Delhi (DEL)</Option>
+                    <Option value="DMK">Don Mueang (DMK)</Option>
+                    <Option value="DPS">Kuta (DPS)</Option>
+                    <Option value="HRI">Mattala (HRI)</Option>
+                    <Option value="MAA">Chennai (MAA)</Option>
+                    <Option value="SIN">Singapore (SIN)</Option>
                   </Select>
                 </Form.Item>
               </Col>
@@ -101,8 +105,9 @@ const FlightSearch = ({ onSearch }) => {
                   label="Departing - Returning"
                   rules={[{ required: true, message: "Please select travel dates" }]}
                   
+
                 >
-                  <RangePicker size="large" style={{ width: "100%" }} />
+                  <RangePicker size="large" style={{ width: "100%" }} disabledDate={disabledDate}/>
                 </Form.Item>
               </Col>
             </Row>
@@ -145,7 +150,7 @@ export default FlightSearch;
 // } from "antd";
 // import { SearchOutlined } from "@ant-design/icons";
 // import { useNavigate } from "react-router-dom";
-// import "./FlightSearchComponent.css"; 
+// import "./FlightSearchComponent.css";
 // import axios from "axios";
 
 // const { Content } = Layout;
@@ -154,8 +159,8 @@ export default FlightSearch;
 
 // const FlightSearch = () => {
 //     const [form] = Form.useForm();
-//     const [loading, setLoading] = useState(false); 
-//     const navigate = useNavigate(); 
+//     const [loading, setLoading] = useState(false);
+//     const navigate = useNavigate();
 
 //     const handleSearch = async (values) => {
 //         setLoading(true);

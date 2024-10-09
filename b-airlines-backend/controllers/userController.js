@@ -30,6 +30,7 @@ export const registerUser = async (req, res) => {
     // Hash the password
     const hashedPassword = await hashPassword(password);
 
+
     // Insert the user into the database
     const insert_id = await User.create(title, firstName, lastName, email, hashedPassword, dateOfBirth, country, mobileNumber);
     console.log(insert_id);
@@ -49,22 +50,6 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-
-export const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const updates = req.body;
-  try {
-    const affectedRows = await User.update(id, updates);
-    if (affectedRows) {
-      res.json({ message: 'user updated successfully' });
-    } else {
-      res.status(404).json({ message: 'user not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
@@ -78,6 +63,25 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+export const updateUser = async (req, res) => {
+  const id = req.user.id;
+  const updates = req.body;
+  //console.log(updates);
+  //console.log(id);
+  try {
+    const affectedRows = await User.updateProfile(updates.firstName, updates.lastName, updates.country, updates.mobileNumber, id);
+    if (affectedRows) {
+      res.json({ message: 'user updated successfully' });
+    } else {
+      res.status(404).json({ message: 'user information can not be updated' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -131,7 +135,7 @@ export const getUserProfile = async (req, res) => {
     };
 
     // Log the response data
-    console.log('Response Data:', JSON.stringify(responseData, null, 2));
+    //console.log('Response Data:', JSON.stringify(responseData, null, 2));
     
     return res.json(responseData);
 
