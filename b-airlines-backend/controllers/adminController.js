@@ -66,3 +66,14 @@ import { getCounts, getCountsByDestination} from '../models/adminModel.js';
       res.status(500).json({ message: 'Error fetching counts', error });
     }
   };
+
+  export const getCountbyAge = async (req, res) => {
+    const {flightNumber} = req.query;
+  
+    try {
+      const counts = await getCountsByAge(flightNumber);
+      res.status(200).json({ passengerCount: counts });
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching counts', error });
+    }
+  };

@@ -5,23 +5,20 @@ import axios from 'axios'; // Import Axios
 const { RangePicker } = DatePicker;
 
 export default function Report1Content() {
-  const [destinationCode, setDestinationCode] = useState('');
-  const [dateRange, setDateRange] = useState([]);
+  const [flightNumber, setFlightNumber] = useState('');
   const [passengerCount, setPassengerCount] = useState(null);
 
   const handleSubmit = async () => {
-    if (!destinationCode) {
+    if (!flightNumber) {
       message.error("Please enter a Flight Number");
       return;
     }
 
     try {
       const [startDate, endDate] = dateRange;
-      const response = await axios.get('http://localhost:3001/api/admin/user-count-destination', {
+      const response = await axios.get('http://localhost:3001/api/admin/user-count-age', {
         params: {
-          destinationCode,
-          startDate: startDate.format('YYYY-MM-DD'),
-          endDate: endDate.format('YYYY-MM-DD'),
+          flightNumber
         },
       });
 
@@ -46,8 +43,8 @@ export default function Report1Content() {
           <Input 
             placeholder="Enter Destination Code" 
             className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-            value={destinationCode}
-            onChange={(e) => setDestinationCode(e.target.value)}
+            value={flightNumber}
+            onChange={(e) => setFlightNumber(e.target.value)}
           />
         </div>
 

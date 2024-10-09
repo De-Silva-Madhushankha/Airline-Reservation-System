@@ -43,3 +43,19 @@ export const getCountsByTime = async (startDate, endDate) => {
     throw error;
   }
 };
+
+export const getCountsByAge = async (flightNumber) => {
+  try {
+    const [above18] = await db.query(
+      'SELECT * FROM flight_passenger_age_report WHERE flight_id = ? AND age_group > 18;',
+      [flightNumber]
+    );
+    const [below18] = await db.query(
+      'SELECT * FROM flight_passenger_age_report WHERE flight_id = ? AND age_group < 18;',
+      [flightNumber]
+    );
+    return result[0].count;
+  } catch (error) {
+    throw error;
+  }
+};
