@@ -1,4 +1,4 @@
-import db from '..//database/db.js'
+import db from '../database/db.js'
 
 const Aircraft = {
 
@@ -17,11 +17,11 @@ const Aircraft = {
             return rows
         },
 
-        createAircraft : async (aircraft_name, aircraft_type, aircraft_capacity) => {
+        createAircraft : async (aircraft_id, model) => {
             const [result] = await db.query(
-                `INSERT INTO Aircraft (aircraft_name, aircraft_type, aircraft_capacity) 
-                VALUES(?,?,?)`,
-                [aircraft_name, aircraft_type, aircraft_capacity]
+                `INSERT INTO Aircraft (aircraft_id, model) 
+                VALUES(?,?)`,
+                [aircraft_id, model]
             );
             return result.insertId;
         },
@@ -36,6 +36,12 @@ const Aircraft = {
         deleteAircraft : async (aircraft_id) =>{
             const [result] = await db.query('DELETE FROM Aircraft WHERE aircraft_id = ?', [aircraft_id]);
             return result.affectedRows;
+        },
+
+        getRoutes : async () => {
+            const [rows] = await db.query("SELECT * FROM Route")
+            console.log(rows)
+            return rows
         },
 
         getRevenue : async (aircraft_id) => {

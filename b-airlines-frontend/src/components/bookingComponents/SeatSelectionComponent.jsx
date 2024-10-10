@@ -15,7 +15,6 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
   const [platinumRows, setPlatinumRows] = useState(0);
   const [selectedPassenger, setSelectedPassenger] = useState(passengers[0]?.passport);
 
-
   useEffect(() => {
     const fetchOccupiedSeats = async () => {
       try {
@@ -23,7 +22,6 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
   
         console.log('Fetching occupied seats for flight_id:', flight_id);
         const response = await axios.get(`http://localhost:3001/api/seat/occupied/${flight_id}`); // Update with your endpoint
-
         // Assuming response contains an array of occupied seats
         const seatTuples = response.data.map(seat => [seat.seat_row, seat.seat_column]);
         setOccupiedSeats(seatTuples); 
@@ -74,10 +72,11 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     fetchModelDetails();
   }, [aircraft_id, model]);
 
-  const handleSeatClick = (rowIndex, columnIndex) => {
-    const seatLabel = `R${rowIndex + 1}C${columnIndex + 1}`;
+  const handleSeatClick = (rowIndex, columnIndex, className) => {
+    const seatPair = { row: rowIndex + 1, column: columnIndex + 1, className}; // Store as row-column pair
 
     // Check if the seat is already selected globally
+    const seatLabel = `R${seatPair.row}C${seatPair.column}`;
     if (globalSelectedSeats[seatLabel] && globalSelectedSeats[seatLabel] !== selectedPassenger) {
       message.error('This seat has already been selected by another passenger!');
       return;
@@ -86,7 +85,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     // If the seat is currently selected by the passenger, deselect it
     const currentPassengerSeat = passengerSeats[selectedPassenger];
 
-    if (currentPassengerSeat === seatLabel) {
+    if (currentPassengerSeat && currentPassengerSeat.row === seatPair.row && currentPassengerSeat.column === seatPair.column) {
       // Deselect the seat
       const updatedGlobalSelectedSeats = { ...globalSelectedSeats };
       delete updatedGlobalSelectedSeats[seatLabel]; // Remove from global selection
@@ -103,13 +102,14 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
 
     if (currentPassengerSeat) {
       // Remove the previously selected seat from global selection
-      delete updatedGlobalSelectedSeats[currentPassengerSeat];
+      const previousSeatLabel = `R${currentPassengerSeat.row}C${currentPassengerSeat.column}`;
+      delete updatedGlobalSelectedSeats[previousSeatLabel];
     }
 
     updatedGlobalSelectedSeats[seatLabel] = selectedPassenger; // Mark globally selected
     setPassengerSeats({
       ...passengerSeats,
-      [selectedPassenger]: seatLabel, // Add new selection for passenger
+      [selectedPassenger]: seatPair, // Add new selection for passenger as row-column pair
     });
     setGlobalSelectedSeats(updatedGlobalSelectedSeats); // Update global selection state
   };
@@ -131,17 +131,17 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
       {[...Array(numRows)].map((_, rowIndex) => (
         <div key={rowIndex} className="seat-row">
           {[...Array(columns)].map((_, columnIndex) => {
-            const seatLabel = `R${startRow + rowIndex + 1}C${columnIndex + 1}`;
-            const isSelected = passengerSeats[selectedPassenger] === seatLabel; // Check if it's the selected seat
-            // sub 1 because indexing difference of database and program
-            const isOccupied = occupiedSeats.some(seat => seat[0] - 1 === (startRow + rowIndex) && seat[1] - 1 === columnIndex);
+            const seatPair = { row: startRow + rowIndex + 1, column: columnIndex + 1, className: className };
+            const seatLabel = `R${seatPair.row}C${seatPair.column}`;
+            const isSelected = passengerSeats[selectedPassenger]?.row === seatPair.row && passengerSeats[selectedPassenger]?.column === seatPair.column;
+            const isOccupied = occupiedSeats.some(seat => seat[0] === seatPair.row && seat[1] === seatPair.column);
             const isGlobalSelected = globalSelectedSeats[seatLabel];
 
             return (
               <Button
                 key={columnIndex}
                 className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''} ${isGlobalSelected ? 'global-selected' : ''}`}
-                onClick={() => handleSeatClick(startRow + rowIndex, columnIndex)}
+                onClick={() => handleSeatClick(startRow + rowIndex, columnIndex, className)}
                 disabled={isOccupied && !isSelected} // Disable button if occupied (but allow selection for the current passenger)
                 style={{
                   backgroundColor: isOccupied ? '#ff4d4d' : (isGlobalSelected ? 'lightgreen' : ''), // Set color for occupied seats
