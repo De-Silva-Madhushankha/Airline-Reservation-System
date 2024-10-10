@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { DatePicker, Input, message } from 'antd';
+import { DatePicker, Input, message ,Flex, Progress} from 'antd';
 import axios from 'axios'; // Import Axios
 
-const { RangePicker } = DatePicker;
 
 export default function Report1Content() {
   const [flightNumber, setFlightNumber] = useState('');
@@ -15,7 +14,6 @@ export default function Report1Content() {
     }
 
     try {
-      const [startDate, endDate] = dateRange;
       const response = await axios.get('http://localhost:3001/api/admin/user-count-age', {
         params: {
           flightNumber
@@ -41,7 +39,6 @@ export default function Report1Content() {
             Enter Flight Number
           </label>
           <Input 
-            placeholder="Enter Destination Code" 
             className="w-full px-4 py-2 border border-gray-300 rounded-lg"
             value={flightNumber}
             onChange={(e) => setFlightNumber(e.target.value)}
@@ -57,10 +54,34 @@ export default function Report1Content() {
           Submit
         </button>
 
-        {passengerCount !== null && (
-          <div className="mt-4 text-center text-gray-700 dark:text-gray-300">
-            <h2>Passenger Count: {passengerCount}</h2>
+        {passengerCount != null && (
+        <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col  items-center">
+        
+        <div className="flex flex-row gap-12 mt-4">
+          <div className="basis-1/2 ">
+            <h2>Above_18</h2>
+            <strong> {passengerCount.pax_above_18}</strong>
           </div>
+          <div className="basis-1/2">
+            <h2>Below_18</h2>
+            <strong>{passengerCount.pax_below_18}</strong>
+          </div>
+        </div>
+        <div className="mt-4 flex justify-center mb-4">
+          <Flex gap="small" wrap>
+            <Progress
+              type="dashboard"
+              percent={passengerCount.pax_above_18 * 100 / (passengerCount.pax_above_18 + passengerCount.pax_below_18)}
+            />
+            <Progress
+              type="dashboard"
+              percent={passengerCount.pax_below_18 * 100 / (passengerCount.pax_above_18 + passengerCount.pax_below_18)}
+              gapDegree={60}
+            />
+          </Flex>
+        </div>
+      </div>
+      
         )}
       </div>
     </div>

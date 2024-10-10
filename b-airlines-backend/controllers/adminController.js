@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { getCounts, getCountsByDestination} from '../models/adminModel.js';
+import { getCounts, getCountsByDestination , getCountsByAge} from '../models/adminModel.js';
 
 
   

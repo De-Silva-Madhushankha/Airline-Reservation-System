@@ -47,15 +47,42 @@ export const getCountsByTime = async (startDate, endDate) => {
 export const getCountsByAge = async (flightNumber) => {
   try {
     const [above18] = await db.query(
-      'SELECT * FROM flight_passenger_age_report WHERE flight_id = ? AND age_group > 18;',
+      'SELECT COUNT(*) AS COUNT_ABOVE_18 FROM  User WHERE role_id = ?',
       [flightNumber]
     );
     const [below18] = await db.query(
-      'SELECT * FROM flight_passenger_age_report WHERE flight_id = ? AND age_group < 18;',
+      'SELECT COUNT(*) AS COUNT_BELOW_18 FROM User WHERE role_id = ?',
       [flightNumber]
     );
-    return result[0].count;
+
+    const pax_count = await db.query(
+      `select 
+          pax_above_18.count AS pax_above_18,
+            pax_below_18.count AS pax_below_18
+        from
+        (SELECT COUNT(*) AS count FROM User WHERE role_id = ?) pax_above_18,
+        (SELECT COUNT(*) AS count FROM User WHERE role_id = ?) pax_below_18`,
+      [flightNumber, flightNumber]
+    );
+
+    return pax_count[0][0];
   } catch (error) {
     throw error;
   }
 };
+
+// export const getCountsByAge = async (flightNumber) => {
+//   try {
+//     const [above18] = await db.query(
+//       'SELECT * FROM flight_passenger_age_report WHERE flight_id = ? AND age_group > 18;',
+//       [flightNumber]
+//     );
+//     const [below18] = await db.query(
+//       'SELECT * FROM flight_passenger_age_report WHERE flight_id = ? AND age_group < 18;',
+//       [flightNumber]
+//     );
+//     return result[0].count;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
