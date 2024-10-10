@@ -13,9 +13,10 @@ const pool = mysql.createPool({
 }).promise()
 
 const db = pool
-
+//const [raw]= await db.query("SELECT* FROM flight")
 // Test the connection
 console.log("Database connected");
+//console.log(raw);
 
 export default db;
 
