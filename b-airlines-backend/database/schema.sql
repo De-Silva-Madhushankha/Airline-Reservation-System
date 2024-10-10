@@ -135,7 +135,7 @@ CREATE TABLE Booking (
     passenger_id CHAR(36) NOT NULL ,
     seat_id CHAR(36) NOT NULL ,
     user_id CHAR(36) ,
-    booking_date TIMESTAMP,
+    booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_amount DOUBLE,
     payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed') ),
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON UPDATE CASCADE ,
