@@ -61,3 +61,49 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
+
+CREATE FUNCTION Calculate_seat_price(
+    flight_id_0 CHAR(36),
+    row_num INT,
+    column_num INT
+) RETURNS DOUBLE
+READS SQL DATA
+BEGIN
+    DECLARE base_price DOUBLE;
+    DECLARE route_factor DOUBLE;
+    DECLARE aircraft_factor DOUBLE;
+    DECLARE seat_class_factor DOUBLE;
+    DECLARE seat_price DOUBLE;
+    DECLARE distances DOUBLE;
+    DECLARE aircraft_model VARCHAR(50);
+    DECLARE seat_class_id_0 INT;
+    DECLARE aircraft_id_0 VARCHAR(10);
+
+    SELECT config_value INTO base_price FROM Config WHERE config_key = 'base_price';
+    SELECT config_value INTO route_factor FROM Config WHERE config_key = 'route_factor';
+
+    SELECT aircraft_id INTO aircraft_id_0 FROM Flight WHERE flight_id = flight_id_0;
+
+    SELECT model INTO aircraft_model FROM Aircraft WHERE aircraft_id = aircraft_id_0;
+    
+    SELECT price_multiplier INTO aircraft_factor 
+    FROM Model WHERE model = aircraft_model;
+
+    SELECT seat_class_id INTO seat_class_id_0
+    FROM Seat 
+    WHERE flight_id = flight_id_0 AND seat_row = row_num AND seat_column = column_num;
+
+    SELECT price_multiplier INTO seat_class_factor 
+    FROM Seat_class WHERE seat_class_id = seat_class_id_0 ;
+
+    -- optimize this
+    SELECT distance INTO distances FROM Route WHERE route_id = (SELECT DISTINCT route_id FROM Flight WHERE flight_id = flight_id_0);
+
+    SET seat_price = base_price + (route_factor * distances) + aircraft_factor + seat_class_factor;
+
+    RETURN seat_price;
+END $$
+
+DELIMITER ;
