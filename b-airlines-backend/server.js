@@ -44,7 +44,6 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/model', modelRoutes);
 app.use('/api/aircraft', aircraftRoutes);
 app.use('/api/seat', seatRoutes);
-
 app.use('/api/route', route);
 app.use('/api/booking', bookingRoutes);
 

@@ -1,5 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {
+  Container,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Button,
+  Typography,
+  Paper,
+  TableContainer,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+// Custom styling for better aesthetics
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  fontWeight: 'bold',
+  backgroundColor: theme.palette.primary.light,
+  color: theme.palette.common.white,
+  textAlign: 'center',
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
 
 const CancelBooking = () => {
   const [bookings, setBookings] = useState([]);
@@ -22,7 +49,6 @@ const CancelBooking = () => {
           Authorization: `Bearer ${token}`, // Pass token in the Authorization header
         },
       });
-      console.log(response.data)
       setBookings(response.data); // Set bookings data from response
     } catch (err) {
       console.error('Error fetching bookings:', err);
@@ -49,7 +75,7 @@ const CancelBooking = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setBookings(bookings.filter((booking) => booking.id !== bookingId)); // Update the bookings list
+      setBookings(bookings.filter((booking) => booking.booking_id !== bookingId)); // Update the bookings list
     } catch (err) {
       console.error('Error deleting booking:', err);
       setError(err.response?.data?.message || 'Error deleting booking');
@@ -60,30 +86,57 @@ const CancelBooking = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
-      <h1>Manage Your Bookings</h1>
+    <Container>
+      <Typography variant="h4" gutterBottom align="center" sx={{ mt: 3, mb: 3 }}>
+        Manage Your Bookings
+      </Typography>
+
       {bookings.length > 0 ? (
-        <ul>
-          {bookings.map((booking) => (
-            <li key={booking.booking_id} style={{ marginBottom: '20px' }}>
-              <p><strong>Booking ID:</strong> {booking.booking_id}</p>
-              <p><strong>Flight ID:</strong> {booking.flight_id}</p>
-              <p><strong>Passenger ID:</strong> {booking.passenger_id}</p>
-              <p><strong>Seat ID:</strong> {booking.seat_id}</p>
-              <p><strong>User ID:</strong> {booking.user_id}</p>
-              <p><strong>Booking Date:</strong> {new Date(booking.booking_date).toLocaleString()}</p>
-              <p><strong>Total Amount:</strong> ${booking.total_amount}</p>
-              <p><strong>Payment Status:</strong> {booking.payment_status}</p>
-              <button onClick={() => handleDelete(booking.booking_id)}>Cancel Booking</button>
-            </li>
-          ))}
-        </ul>
+        <TableContainer component={Paper} sx={{ mb: 3 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Booking ID</StyledTableCell>
+                <StyledTableCell>Flight ID</StyledTableCell>
+                <StyledTableCell>Passenger ID</StyledTableCell>
+                <StyledTableCell>Seat ID</StyledTableCell>
+                <StyledTableCell>User ID</StyledTableCell>
+                <StyledTableCell>Booking Date</StyledTableCell>
+                <StyledTableCell>Total Amount</StyledTableCell>
+                <StyledTableCell>Payment Status</StyledTableCell>
+                <StyledTableCell>Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {bookings.map((booking) => (
+                <StyledTableRow key={booking.booking_id}>
+                  <TableCell align="center">{booking.booking_id}</TableCell>
+                  <TableCell align="center">{booking.flight_id}</TableCell>
+                  <TableCell align="center">{booking.passenger_id}</TableCell>
+                  <TableCell align="center">{booking.seat_id}</TableCell>
+                  <TableCell align="center">{booking.user_id}</TableCell>
+                  <TableCell align="center">{new Date(booking.booking_date).toLocaleString()}</TableCell>
+                  <TableCell align="center">${booking.total_amount}</TableCell>
+                  <TableCell align="center">{booking.payment_status}</TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => handleDelete(booking.booking_id)}
+                    >
+                      Cancel Booking
+                    </Button>
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       ) : (
-        <p>No bookings available.</p>
+        <Typography align="center">No bookings available.</Typography>
       )}
-    </div>
+    </Container>
   );
-  
 };
 
 export default CancelBooking;

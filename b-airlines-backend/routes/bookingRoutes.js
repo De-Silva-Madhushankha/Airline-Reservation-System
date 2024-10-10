@@ -9,7 +9,8 @@ import {
     getBookingsByFlightId,
     getFlightRevenue,
     getRevenueByDateRange,
-    getPassengerTypeCount
+    getPassengerTypeCount,
+    changeBooking
 } from '../controllers/bookingController.js';
 
 import verifyToken from '../middleware/tokenAuth.js';
@@ -28,5 +29,8 @@ router.delete('/bookings/:id', deleteBooking);
 
 router.post("/cost", getBookingCost);
 router.post("/create", createBookingController);
+
+router.put('/bookings/:id/change', verifyToken, changeBooking);
+
 
 export default router;
