@@ -4,7 +4,8 @@ import { getModels, getModelDetails } from '../controllers/modelController.js'; 
 
 const router = express.Router();
 
-router.get('/models', getModels);
+router.get('/model', getModels);
+router.get('/:model', getModelDetails);
 // router.get('/aircraft_id', getModelDetails); // Change ':mode' to ':model'
 
 // Other CRUD routes (create, update, delete) can be added here
