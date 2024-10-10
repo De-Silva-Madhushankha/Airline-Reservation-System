@@ -18,6 +18,15 @@ export const getRoutes = async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-}; 
+};
+
+export const getDestinations = async (req, res) => {  
+    try {
+      const destinations = await Route.getDestinations();
+      res.json(destinations);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+};
 
 

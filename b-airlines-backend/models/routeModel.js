@@ -1,3 +1,4 @@
+import { getDestinations } from '../controllers/routeController.js'
 import db from '../database/db.js'
 
 const Route = {
@@ -5,6 +6,12 @@ const Route = {
     getRoutes : async () => {
         const [rows] = await db.query("SELECT * FROM Route")
         //console.log(rows)
+        return rows
+    },
+
+    getDestinations : async () => {
+        const [rows] = await db.query("SELECT DISTINCT destination_code FROM Route")
+        console.log(rows)
         return rows
     },
 
