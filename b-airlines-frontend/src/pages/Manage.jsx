@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Grid, Card, CardContent, Typography, Button, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const Manage = () => {
   const navigate = useNavigate();
@@ -10,6 +11,8 @@ const Manage = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <Container sx={{ mt: 5 }}>
       <Typography variant="h4" align="center" gutterBottom>
         Manage Your Booking
@@ -104,6 +107,7 @@ const Manage = () => {
         </Grid>
       </Grid>
     </Container>
+    </>
   );
 };
 
