@@ -92,6 +92,52 @@ export const updateBooking = async (req, res) => {
     }
 };
 
+export const changeBooking = async (req, res) => {
+    const { booking_id, new_plane_type, new_booking_date } = req.body;
+
+    try {
+        // Fetch the current booking details
+        const [currentBooking] = await Booking.getBooking(booking_id);
+        if (!currentBooking) {
+            return res.status(404).json({ message: 'Booking not found' });
+        }
+
+        // Check if there's a change in plane type or booking date
+        let extraFee = 0;
+        if (currentBooking.plane_type !== new_plane_type) {
+            extraFee += 100; // $100 for changing plane type
+        }
+        if (currentBooking.booking_date !== new_booking_date) {
+            extraFee += 50; // $50 for changing date
+        }
+
+        // Calculate new total amount (existing total + extra fee)
+        const newTotalAmount = currentBooking.total_amount + extraFee;
+
+        // Update the booking in the database
+        const updatedRows = await Booking.updateBookingDetails(
+            booking_id, 
+            new_plane_type, 
+            new_booking_date, 
+            newTotalAmount
+        );
+
+        if (updatedRows) {
+            res.status(200).json({ 
+                message: 'Booking updated successfully', 
+                extraFee, 
+                newTotalAmount 
+            });
+        } else {
+            res.status(404).json({ message: 'Booking not updated' });
+        }
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
 export const deleteBooking = async (req, res) => {
     const { id } = req.params;
     console.log('Delete booking:',id);
