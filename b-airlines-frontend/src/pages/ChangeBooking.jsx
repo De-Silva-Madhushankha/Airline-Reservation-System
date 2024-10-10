@@ -81,7 +81,7 @@ const ChangeBooking = () => {
                 fullWidth
               >
                 <MenuItem value="Boeing 737">Boeing 737</MenuItem>
-                <MenuItem value="Airbus A320">Airbus A320</MenuItem>
+                <MenuItem value="Airbus A330">Airbus A320</MenuItem>
                 <MenuItem value="Boeing 747">Boeing 747</MenuItem>
                 <MenuItem value="Airbus A380">Airbus A380</MenuItem>
               </Select>

@@ -56,7 +56,7 @@ const Manage = () => {
                     }}
                   >
                     <ListItemText
-                      primary="Cancel your booking"
+                      primary="Cancel Your Booking"
                       sx={{ fontSize: '1rem', fontWeight: '600', '&:hover': { color: '#1976d2' } }}
                     />
                   </ListItem>
@@ -77,7 +77,7 @@ const Manage = () => {
                     }}
                   >
                     <ListItemText
-                      primary="Change your booking"
+                      primary="Change Your Booking"
                       sx={{ fontSize: '1rem', fontWeight: '600', '&:hover': { color: '#1976d2' } }}
                     />
                   </ListItem>
@@ -98,7 +98,7 @@ const Manage = () => {
                     }}
                   >
                     <ListItemText
-                      primary="Choose your seat"
+                      primary="Choose Your Seat"
                       sx={{ fontSize: '1rem', fontWeight: '600', '&:hover': { color: '#1976d2' } }}
                     />
                   </ListItem>
