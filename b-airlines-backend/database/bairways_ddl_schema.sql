@@ -129,7 +129,7 @@ CREATE TABLE Booking (
     user_id CHAR(36) ,
     booking_date TIMESTAMP,
     total_amount DOUBLE,
-    payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed') ),
+    payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed','Canceled') ),
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON UPDATE CASCADE ,
     FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id) ON UPDATE CASCADE ,
     FOREIGN KEY (seat_id) REFERENCES Seat(seat_id) ON UPDATE CASCADE ,

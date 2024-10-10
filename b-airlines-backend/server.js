@@ -31,7 +31,7 @@ import flightRoutes from './routes/flightRoutes.js';
 import modelRoutes from './routes/modelRoutes.js';
 import aircraftRoutes from './routes/aircraftRoutes.js';
 import seatRoutes from './routes/seatRoutes.js';
-//import bookingRoutes from './routes/bookingRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
 
 console.log("Routes imported");
 
@@ -41,7 +41,7 @@ app.use('/api/flight', flightRoutes);   // Prefix routes with /api/flight
 app.use('/api/model', modelRoutes);
 app.use('/api/aircraft', aircraftRoutes);
 app.use('/api/seat', seatRoutes);
-//app.use('/api/booking', bookingRoutes);
+app.use('/api/booking', bookingRoutes);
 
 console.log("Routes setup complete");
 
