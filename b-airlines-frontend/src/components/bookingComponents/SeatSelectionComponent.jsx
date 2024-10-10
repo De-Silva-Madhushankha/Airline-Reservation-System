@@ -72,8 +72,8 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     fetchModelDetails();
   }, [aircraft_id, model]);
 
-  const handleSeatClick = (rowIndex, columnIndex) => {
-    const seatPair = { row: rowIndex + 1, column: columnIndex + 1 }; // Store as row-column pair
+  const handleSeatClick = (rowIndex, columnIndex, className) => {
+    const seatPair = { row: rowIndex + 1, column: columnIndex + 1, className}; // Store as row-column pair
 
     // Check if the seat is already selected globally
     const seatLabel = `R${seatPair.row}C${seatPair.column}`;
@@ -131,7 +131,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
       {[...Array(numRows)].map((_, rowIndex) => (
         <div key={rowIndex} className="seat-row">
           {[...Array(columns)].map((_, columnIndex) => {
-            const seatPair = { row: startRow + rowIndex + 1, column: columnIndex + 1 };
+            const seatPair = { row: startRow + rowIndex + 1, column: columnIndex + 1, className: className };
             const seatLabel = `R${seatPair.row}C${seatPair.column}`;
             const isSelected = passengerSeats[selectedPassenger]?.row === seatPair.row && passengerSeats[selectedPassenger]?.column === seatPair.column;
             const isOccupied = occupiedSeats.some(seat => seat[0] === seatPair.row && seat[1] === seatPair.column);
@@ -141,7 +141,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
               <Button
                 key={columnIndex}
                 className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''} ${isGlobalSelected ? 'global-selected' : ''}`}
-                onClick={() => handleSeatClick(startRow + rowIndex, columnIndex)}
+                onClick={() => handleSeatClick(startRow + rowIndex, columnIndex, className)}
                 disabled={isOccupied && !isSelected} // Disable button if occupied (but allow selection for the current passenger)
                 style={{
                   backgroundColor: isOccupied ? '#ff4d4d' : (isGlobalSelected ? 'lightgreen' : ''), // Set color for occupied seats

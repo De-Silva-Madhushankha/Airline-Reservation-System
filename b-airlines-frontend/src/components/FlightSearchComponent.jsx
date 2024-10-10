@@ -28,7 +28,6 @@ const FlightSearch = ({ onSearch }) => {
       console.log("Search results: ", response.data);
       message.success("Flights found!");
 
-
       onSearch(response.data.flights);
 
     } catch (error) {
