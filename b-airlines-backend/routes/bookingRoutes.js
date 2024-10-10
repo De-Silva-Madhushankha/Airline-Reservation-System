@@ -1,7 +1,6 @@
 import express from 'express';
 import {createBookingController, getBookingCost} from "../controllers/bookingController.js";
 import {
-    createBooking,
     getAllBookings,
     getBookingById,
     updateBooking,
