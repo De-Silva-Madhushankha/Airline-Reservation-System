@@ -33,6 +33,17 @@ const Booking = {
         return result.affectedRows;
     },
 
+    updateBookingDetails: async (booking_id, booking_date, total_amount) => {
+        const [result] = await db.query(`
+            UPDATE Booking 
+            SET booking_date = ?, total_amount = ?
+            WHERE booking_id = ?`, 
+            [ booking_date, total_amount, booking_id]
+        );
+        return result.affectedRows;
+    },
+    
+
     deleteBooking: async (booking_id) => {
         const [result] = await db.query('DELETE FROM Booking WHERE booking_id = ?', [booking_id]);
         return result.affectedRows;
@@ -51,14 +62,16 @@ const Booking = {
         return rows
     },
 
-    getBookingByPassengerId: async (passenger_id) => {
-        const [rows] = await db.query(`SELECT * FROM Booking WHERE passenger_id = ?`, [passenger_id])
-        return rows
+    getBookingByUserId: async (id) => {
+        console.log('hey',id)
+        const [rows] = await db.query(`SELECT * FROM Booking WHERE user_id = ?`, [id])
+        console.log(rows)
+        return rows;
     },  
 
     getBookingByFlightId: async (flight_id) =>{
         const [rows] = await db.query(`SELECT * FROM Booking WHERE flight_id = ?`, [flight_id])
-        return rows
+        return [rows]
     },  
 
     getBookingByDate: async (booking_date) => {
@@ -79,7 +92,14 @@ const Booking = {
     getBookingByTotalAmountRange: async (total_amount1, total_amount2) => {
         const [rows] = await db.query(`SELECT * FROM Booking WHERE total_amount BETWEEN ? AND ?`, [total_amount1, total_amount2])
         return rows
+    },
+
+    deleteBooking: async (booking_id) => {
+        const [result] = await db.query('DELETE FROM Booking WHERE booking_id = ?', [booking_id]);
+        return result.affectedRows;
     }
+
+
 
 }
 

@@ -3,6 +3,9 @@ import { Layout, Steps, Button } from 'antd';
 import Header from '../components/Header';
 import FlightSearch from '../components/FlightSearchComponent';
 import FlightSchedule from '../components/FlightScheduleComponent';
+import Passenger from '../components/passengerComponent';
+import Options from '../components/Options';
+
 import PassengerDetailsComponent from '../components/bookingComponents/PassengerDetailsComponent';
 import SeatSelectionComponent from '../components/bookingComponents/SeatSelectionComponent';
 import PaymentComponent from '../components/bookingComponents/PaymentComponent';

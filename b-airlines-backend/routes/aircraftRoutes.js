@@ -3,9 +3,7 @@ import { getModelById , getAllAircrafts, createAircraft} from '../controllers/ai
 
 const router = express.Router();
 
-router.get('/aircrafts',getAllAircrafts);
+router.get('/models/:aircraft_id/',getModelById);
 router.post('/create-aircraft', createAircraft);
-
-
 
 export default router;
