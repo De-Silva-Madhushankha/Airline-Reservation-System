@@ -45,6 +45,65 @@ traveler class (Economy, Business or Platinum).
 
 ![App Screenshot](b-airlines-frontend/public/images/bairwayshome.jpeg)
 
+## Getting Started
+
+First, you’ll need to clone the repo to your machine.
+
+In the root directory of the project...
+
+1. Install node modules using command `yarn install` or `npm install`.
+
+Install the node modules in frontend, backend, and admin directories following the above process...
+
+2. Switch to the root directory and Start development server `yarn start` or `npm start`.
+
+## Next Steps
+
+Next you have to create a .env file in the backend directory and include the following
+
+```
+MYSQL_HOST='127.0.0.1'
+MYSQL_USER='root'
+MYSQL_PASSWORD='enter your password here'
+MYSQL_DATABASE='bairways'
+PORT=3001
+SECRET_KEY='talkischeapshowmethecode';
+```
+
+replace your local host password as MYSQL_PASSWORD
+
+## Creating Database
+
+to load database, open mysql in terminal in b-airlines-backend\database directory and give `source make` command
+
+## File Structure
+
+The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/ and the admin-end on http://localhost:5174/.
+
+```
+.
+├── backend/ - Express server that provides API routes and serves front-end
+│ ├── routes/ - API routes
+│ ├── model/ - Handles the query logics connecting the database
+│ ├── controller/ - Handles API calls for routes
+│ ├── middleware/ - Adds middleware to the express server
+│ └── server.js - Configures Port and HTTP Server
+├── frontend/  - React front-end
+│ ├── src
+│ | ├── components - React components for each page
+| | ├── pages -  each page
+│ ├── App.jsx - React routing
+│ └── index.jsx - React root component
+└── README.md
+```
+
+## Additional Documentation
+
+- React - https://reactjs.org/
+- React Router - https://reacttraining.com/react-router/
+
+- Bootstrap CSS - https://getbootstrap.com/
+- Express - https://expressjs.com/
 
 ## Appendix
 
