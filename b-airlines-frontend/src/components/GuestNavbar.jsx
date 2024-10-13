@@ -52,16 +52,7 @@ const Navbar = () => {
                 Schedule
               </Link>
             </li>
-            <li className='nav-item'>
-              <Link
-                to='/book'
-                className='nav-links'
-                onClick={closeMobileMenu}
-              >
-                Book
-              </Link>
-            </li>
-
+            
             <li className='nav-item'>
               <Link
                 to='/help'
