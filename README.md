@@ -70,7 +70,7 @@ PORT=3001
 SECRET_KEY='talkischeapshowmethecode';
 ```
 
-replace your local host password as MYSQL_PASSWORD
+replace MYSQL_PASSWORD to your localhost password  
 
 ## Creating Database
 
