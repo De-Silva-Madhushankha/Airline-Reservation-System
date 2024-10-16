@@ -60,11 +60,11 @@ export default function Report1Content() {
         <div className="flex flex-row gap-12 mt-4">
           <div className="basis-1/2 ">
             <h2>Above_18</h2>
-            <strong> {passengerCount.pax_above_18}</strong>
+            <strong> {passengerCount.above18}</strong>
           </div>
           <div className="basis-1/2">
             <h2>Below_18</h2>
-            <strong>{passengerCount.pax_below_18}</strong>
+            <strong>{passengerCount.below18}</strong>
           </div>
         </div>
         <div className="mt-4 flex justify-center mb-4">
