@@ -3,7 +3,10 @@ import Aircraft from '../models/aircraftModel.js';
 // Function to insert a new aircraft into the database
 export const createAircraft = async (req, res) => {
   try {
-    const aircraft = await Aircraft.create(req.body);
+    const aircraft_id = req.body.aircraft_id;
+    const model = req.body.model; 
+    console.log(aircraft_id, model);
+    const aircraft = await Aircraft.createAircraft(aircraft_id, model);
     res.status(201).json(aircraft);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -88,3 +91,5 @@ export const getAircraftRevenue = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+

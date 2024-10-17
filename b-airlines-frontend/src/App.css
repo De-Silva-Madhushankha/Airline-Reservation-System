@@ -1,43 +1,47 @@
+/* Tailwind CSS layers */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     font-family: 'PT Sans', sans-serif;
-  }
+}
   
-  .home, 
-  .sign-up {
+.home, 
+.sign-up {
     display: flex;
     height: 90vh;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-  }
+}
   
-
-  .sign-up {
+.sign-up {
     background-image: url('/images/img-8.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
     font-size: 100px;
-  }
+}
 
-  /* Override Ant Design Button styles */
+/* Override Ant Design Button styles */
 .ant-btn-primary {
-  font-size: 16px;
-  background-color: #000000; 
-  border: none; /* Remove borders */
-  color: white; /* White text */
+    font-size: 16px;
+    background-color: #000000; 
+    border: none; /* Remove borders */
+    color: white; /* White text */
 }
 
 .ant-btn-primary:hover {
-  background-color: #232323; 
+    background-color: #232323; 
 }
 
 .ant-btn-primary:focus {
-  background-color: #060606; /* Darker green on focus */
-  border: none; /* Remove borders */
-  box-shadow: none; /* Remove focus shadow */
+    background-color: #060606; /* Darker green on focus */
+    border: none; /* Remove borders */
+    box-shadow: none; /* Remove focus shadow */
 }

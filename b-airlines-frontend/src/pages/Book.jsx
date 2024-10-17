@@ -3,9 +3,13 @@ import { Layout, Steps, Button } from 'antd';
 import Header from '../components/Header';
 import FlightSearch from '../components/FlightSearchComponent';
 import FlightSchedule from '../components/FlightScheduleComponent';
+import Passenger from '../components/passengerComponent';
+import Options from '../components/Options';
+
 import PassengerDetailsComponent from '../components/bookingComponents/PassengerDetailsComponent';
 import SeatSelectionComponent from '../components/bookingComponents/SeatSelectionComponent';
 import PaymentComponent from '../components/bookingComponents/PaymentComponent';
+import BookingConfirmationComponent from '../components/bookingComponents/BookingConfirmationComponent';
 
 const { Content, Footer } = Layout;
 const { Step } = Steps;
@@ -17,9 +21,10 @@ const BookingPage = () => {
   const [passengers, setPassengers] = useState([{ firstName: '', lastName: '', passport: '' }]); // Initialize passengers state here
   const [selectedSeats, setSelectedSeats] = useState({}); // Store selected seats and their corresponding passengers
   const [isPassengerConfirmed, setIsPassengerConfirmed] = useState(false); // Track if passengers are confirmed
-
   const [globalSelectedSeats, setGlobalSelectedSeats] = useState({}); // Store globally selected seats
   const [passengerSeats, setPassengerSeats] = useState({}); // Store selected seats for each passenger
+  const [passengerCosts, setPassengerCosts] = useState({}); // Store costs for each passenger
+  const [totalCost, setTotalCost] = useState(0); // Total cost of booking
 
   const steps = [
     { title: 'Flights' },
@@ -47,6 +52,7 @@ const BookingPage = () => {
       // console.log(selectedFlight.id, flight.id);
       setGlobalSelectedSeats({}); // Reset global selected seats only if flight changes
       setPassengerSeats({}); // Reset passenger seats only if flight changes
+      setPassengerCosts({}); // Reset passenger costs
     }
     setSelectedFlight(flight);
     nextStep();
@@ -60,7 +66,15 @@ const BookingPage = () => {
 
   const handleSeatsSelected = (seats) => {
     setPassengerSeats(seats);
+    console.log(passengerSeats)
     nextStep();
+  };
+
+  const handleConfirmBooking = () => {
+    // Implement logic to confirm the booking, e.g., sending data to backend
+    message.success('Booking confirmed successfully!');
+    // eval this
+    setCurrentStep(currentStep + 1); // Move to the confirmation step
   };
 
   return (
@@ -107,6 +121,7 @@ const BookingPage = () => {
               passengers={passengers} 
               onSeatsSelected={handleSeatsSelected} 
               aircraft_id={selectedFlight?.aircraft_id} // Pass the aircraft_id here
+              flight_id={selectedFlight?.flight_id}
               passengerSeats={passengerSeats} // Pass passenger seats
               globalSelectedSeats={globalSelectedSeats} // Pass globally selected seats
               setGlobalSelectedSeats={setGlobalSelectedSeats} // Pass function to update global selected seats
@@ -115,14 +130,30 @@ const BookingPage = () => {
           )}
 
           {currentStep === 3 && <PaymentComponent />}
+
+          {currentStep === 4 && (
+            <BookingConfirmationComponent 
+              selectedFlight={selectedFlight}
+              passengers={passengers}
+              passengerSeats={passengerSeats}
+              setPassengerCosts={setPassengerCosts}
+          />
+          )}
         </div>
+
 
         <div style={{ marginTop: '20px' }}>
           {currentStep > 0 && <Button onClick={prevStep}>Previous</Button>}
-          {currentStep < steps.length - 1 && (flightResults.length > 0 || passengers.length > 0 || Object.keys(selectedSeats).length > 0) && (
-            <Button type="primary" onClick={nextStep}>Next</Button>
+          {currentStep < steps.length - 1 && (
+            <Button type="primary" onClick={nextStep} disabled={currentStep === 1 && !isPassengerConfirmed}>
+              Next
+            </Button>
           )}
-          {currentStep === steps.length - 1 && <Button type="primary">Confirm Booking</Button>}
+          {currentStep === steps.length - 1 && (
+            <Button type="primary" onClick={handleConfirmBooking}>
+              Confirm Booking
+            </Button>
+          )}
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>B Airways ©2024 Created by Madhushankha De Silva</Footer>
