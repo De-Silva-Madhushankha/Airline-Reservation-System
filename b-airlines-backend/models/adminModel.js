@@ -130,3 +130,15 @@ export const updateFlightStatus = async (flight_id, status) => {
     throw error; // Propagate error
   }
 };
+
+
+export const getRevenueByAircraftType = async () => {
+  try {
+    const [result] = await db.query(
+      'SELECT aircraft_model, total_revenue FROM Total_Revenue_By_Aircraft_Types'
+    );
+    return result; // Return the revenue data
+  } catch (error) {
+    throw error;
+  }
+};

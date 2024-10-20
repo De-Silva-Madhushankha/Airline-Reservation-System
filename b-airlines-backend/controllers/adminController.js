@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, getPastFlightModel, updateFlightStatus} from '../models/adminModel.js';
+import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, getPastFlightModel, updateFlightStatus, getRevenueByAircraftType} from '../models/adminModel.js';
 
 
   
@@ -116,5 +116,15 @@ import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, ge
       res.status(200).json({ message: 'Status updated successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error updating status', error });
+    }
+  };
+
+
+  export const getRevenueByType = async (req, res) => {
+    try {
+      const counts = await getRevenueByAircraftType();
+      res.status(200).json(counts);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching counts', error });
     }
   };
