@@ -35,7 +35,7 @@ export const getCountsByDestination = async (destinationCode, startDate, endDate
 export const getCountsByTime = async (startDate, endDate) => {
   try {
     const [result] = await db.query(
-      'call booking_count_by_passenger_type_proc(?, ?)',
+      'call Get_Passengers_By_Seat_Class(?, ?)',
       [startDate, endDate]
     );
     return {
