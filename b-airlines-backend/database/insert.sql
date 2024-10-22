@@ -306,6 +306,9 @@ VALUES
 (UUID(),  'Mr', 'Elijah', 'Hassan', 'elijah.hassan@example.com', '$2y$10$5XYODux/NqE5/MHZ3H.kRuUsNHhxImQCjkJHArH3KUO7HP3XeHrpu', '1979-11-04', 'Egypt', '+201123456789'),
 (UUID(),  'Mr', 'David', 'Smith', 'david.smith@example.com', '$2y$10$N8/mwCRsSHFxSyCKRLz4/uFyb0E9RUhzSRKlf04/TluIMB8rbcrzO', '1983-02-28', 'USA', '+121234567890');
 
+INSERT INTO User (user_id, title, first_name, last_name, email, password, date_of_birth, country, mobile_number)
+VALUES (UUID(), 'Mr', 'User', 'Bairways', 'user@bairways.com', '$2b$12$dkIRzA27qdodvIY0DP0Rx.iub5LciRKLsSlIpvwvICb05m82Ie73y', '2002-10-26', 'LK', '+94704424913');
+
 
 -- System Administrator
 
