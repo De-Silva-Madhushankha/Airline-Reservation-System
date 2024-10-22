@@ -1,7 +1,7 @@
 -- flight-search
 
 CREATE VIEW search_flights AS
-    SELECT  flight_id, Route.origin_code, Route.destination_code, DATE(Flight.departure) departure, TIME(Flight.departure) dep_time, DATE(Flight.arrival) arrival, TIME(Flight.arrival) arr_time, Flight.aircraft_id
+    SELECT  flight_id, Route.origin_code, Route.destination_code, DATE(Flight.departure) departure, TIME(Flight.departure) dep_time, DATE(Flight.arrival) arrival, TIME(Flight.arrival) arr_time, Flight.aircraft_id, Flight.delay
     FROM  Flight INNER JOIN Route USING(route_id);
 
 
