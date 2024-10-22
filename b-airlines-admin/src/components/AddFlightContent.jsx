@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, DatePicker, TimePicker, Button, Select, Layout, Typography, message } from 'antd';
+import { Form, Input, DatePicker, Button, Select, Layout, Typography, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import dayjs from 'dayjs';
-
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -56,6 +55,10 @@ const AddFlightContent = () => {
     }
   };
 
+  const disabledDate = (current) => {
+    return current && current < dayjs().startOf('day');
+  };
+
   return (
     <Layout className="min-h-screen bg-white">
       <Header className="bg-black p-4">
@@ -89,10 +92,10 @@ const AddFlightContent = () => {
               </Select>
             </Form.Item>
             <Form.Item name="departure" label="Departure" rules={[{ required: true }]}>
-              <DatePicker showTime className="w-full" />
+              <DatePicker showTime className="w-full" disabledDate={disabledDate} />
             </Form.Item>
             <Form.Item name="arrival" label="Arrival" rules={[{ required: true }]}>
-              <DatePicker showTime className="w-full" />
+              <DatePicker showTime className="w-full" disabledDate={disabledDate} />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" icon={<PlusOutlined />} className="bg-black text-white hover:bg-gray-800">
