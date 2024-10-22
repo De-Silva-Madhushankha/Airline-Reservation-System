@@ -31,7 +31,7 @@ const AddFlightContent = () => {
 
   const fetchAircraft = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/aircraft/aircrafts');
+      const response = await axios.get('http://localhost:3001/api/admin/aircrafts');
       setAircraft(response.data);
       console.log(response.data);
     } catch (error) {
