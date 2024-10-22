@@ -104,8 +104,7 @@ CREATE TABLE Passenger (
     passport_id VARCHAR(20) UNIQUE NOT NULL,
     age INT CHECK ( age > 0 ),
     phone_number VARCHAR(20) NOT NULL ,
-    email VARCHAR(100) NOT NULL ,
-    is_registered BOOLEAN
+    email VARCHAR(100) NOT NULL 
 );
 
 

@@ -24,12 +24,13 @@ export const getBookingCost = async (req, res) => {
 
 // Function to insert a new booking into the database
 export const createBookingController = async (req, res) => {
+    const user_id = req.user.id;
+
     const { flight_id, passengers } = req.body; // Extract flight_id and passengers array
 
     try {
         // Iterate over each passenger and create a booking for each
         const bookingIds = [];
-        const bookingDate = new Date(); // Assuming you want to use the current date for the booking
         for (const passenger of passengers) {
             const { firstName, lastName, age, phoneNumber, passport, email, seatRow, seatColumn } = passenger;
 
@@ -40,7 +41,7 @@ export const createBookingController = async (req, res) => {
             const seat_id = await Seat.getSeatId(flight_id, seatRow, seatColumn);            
             const done = await Seat.occupySeat(seat_id);
             // Create the booking and collect the ID
-            const bookingId = await Booking.createBooking(flight_id, passengerId, seat_id, total_amount);
+            const bookingId = await Booking.createBooking(flight_id, passengerId, seat_id, user_id, total_amount);
             bookingIds.push(bookingId); // Store the created booking ID
         }
 
