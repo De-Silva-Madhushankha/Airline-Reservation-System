@@ -28,7 +28,7 @@ router.put('/bookings/:id', updateBooking);
 router.delete('/bookings/:id', deleteBooking);
 
 router.post("/cost", getBookingCost);
-router.post("/create", createBookingController);
+router.post("/create",verifyToken, createBookingController);
 
 router.put('/bookings/:id/change', verifyToken, changeBooking);
 
