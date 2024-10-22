@@ -8,4 +8,8 @@ export default defineConfig({
     port: 3000, // Change to a different port if needed
     host: 'localhost', // Ensure it binds to localhost
   },
+  css: {
+    postcss: './postcss.config.js',
+  },
 })
+
