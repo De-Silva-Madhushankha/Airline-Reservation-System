@@ -71,11 +71,11 @@ export default function Report1Content() {
           <Flex gap="small" wrap>
             <Progress
               type="dashboard"
-              percent={passengerCount.pax_above_18 * 100 / (passengerCount.pax_above_18 + passengerCount.pax_below_18)}
+              percent={passengerCount.above18 * 100 / (passengerCount.above18 + passengerCount.below18)}
             />
             <Progress
               type="dashboard"
-              percent={passengerCount.pax_below_18 * 100 / (passengerCount.pax_above_18 + passengerCount.pax_below_18)}
+              percent={passengerCount.below18 * 100 / (passengerCount.above18 + passengerCount.below18)}
               gapDegree={60}
             />
           </Flex>

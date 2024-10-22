@@ -21,21 +21,24 @@ export const getCounts = async () => {
 
 export const getCountsByDestination = async (destinationCode, startDate, endDate) => {
   try {
-    const [result] = await db.query(
-      'SELECT passenger_count_by_destination(? , ?, ?) as count',
+    const [rows] = await db.query(
+      'CALL passenger_count_by_destination(?, ?, ?)',
       [destinationCode, startDate, endDate]
     );
-    return result[0].count;
+    
+    // Access the count from the result
+    return rows[0]; // passenger_count is the alias used in the procedure
   } catch (error) {
     throw error;
   }
 };
 
 
+
 export const getCountsByTime = async (startDate, endDate) => {
   try {
     const [result] = await db.query(
-      'call Get_Passengers_By_Seat_Class(?, ?)',
+      'call GetReservedSeatCountsByClassAndDateRange(?, ?)',
       [startDate, endDate]
     );
     return {
