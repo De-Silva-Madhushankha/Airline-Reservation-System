@@ -52,7 +52,7 @@ const UserNavbar = () => {
                 Home
               </Link>
             </li>
-            <li className='user-nav-item'>
+            {/* <li className='user-nav-item'>
               <Link
                 to='/schedule'
                 className='user-nav-links'
@@ -60,7 +60,7 @@ const UserNavbar = () => {
               >
                 Schedule
               </Link>
-            </li>
+            </li> */}
             <li className='user-nav-item'>
               <Link
                 to='/book'
