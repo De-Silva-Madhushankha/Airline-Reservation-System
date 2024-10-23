@@ -1,8 +1,8 @@
 import express from 'express';
-import { loginAdmin , loadInitialData , getCountbyDestination , getCountbyTime} from '../controllers/adminController.js';
 import { getAllAircrafts } from '../controllers/aircraftController.js';
 import { getAllUsers } from '../controllers/userController.js';
 import { getModels, createModel } from '../controllers/modelController.js';
+import { loginAdmin , loadInitialData , getCountbyDestination , getCountbyTime, getCountbyAge, getPastFlights, updateStatus , getRevenueByType } from '../controllers/adminController.js';
 
 const router = express.Router();
 
@@ -14,5 +14,10 @@ router.get('/aircrafts', getAllAircrafts,);
 router.get('/users', getAllUsers);
 router.get('/models', getModels);
 router.post('/create-model', createModel);
+router.get('/user-count-age', getCountbyAge);
+router.get('/past-flights-report', getPastFlights);
+router.post('/update-flight-status', updateStatus);
+router.get('/revenue-by-aircraft-type', getRevenueByType);
+
 
 export default router;

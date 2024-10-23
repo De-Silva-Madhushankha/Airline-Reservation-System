@@ -29,19 +29,19 @@ export default function SildeNav({ setActiveSection }) {
                     </button>
                     <ul id="dropdown-example" className="hidden group-hover:block  py-2 space-y-2">
                         <li>
-                            <button onClick={() => setActiveSection("report1")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 1</button>
+                            <button onClick={() => setActiveSection("report1")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Below/Over age 18</button>
                         </li>
                         <li>
-                            <button onClick={() => setActiveSection("report2")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 2</button>
+                            <button onClick={() => setActiveSection("report2")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Num of passenger Travel to given destination</button>
                         </li>
                         <li>
-                            <button onClick={() => setActiveSection("report3")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 3</button>
+                            <button onClick={() => setActiveSection("report3")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Num of Booking By passenger Types</button>
                         </li>
                         <li>
-                            <button onClick={() => setActiveSection("report4")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 4</button>
+                            <button onClick={() => setActiveSection("report4")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Pasenger Count and manage Delay</button>
                         </li>
                         <li>
-                            <button onClick={() => setActiveSection("report5")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Report 5</button>
+                            <button onClick={() => setActiveSection("report5")} href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Revenues By Aircrafts</button>
                         </li>
                     </ul>
                 </li>
@@ -52,12 +52,12 @@ export default function SildeNav({ setActiveSection }) {
                     </button>
                 </li>
                 
-                <li>
+                {/* <li>
                     <button onClick={() => setActiveSection("users")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <FaUsers />
                         <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
                     </button>
-                </li>
+                </li> */}
                 <li>
                     <button onClick={() => setActiveSection("addAircraft")} href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <MdFlight />
