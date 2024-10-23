@@ -139,6 +139,61 @@ VALUES
 (3000, 'HRI', 'SIN'),  -- Mattala to Singapore (approx 3000 km)
 (3000, 'SIN', 'HRI');  -- Singapore to Mattala
 
+-- Day 1: 2024-10-01
+INSERT INTO Flight (flight_id, route_id, aircraft_id, departure, arrival)
+VALUES
+( UUID(),1, 'BA737-001', '2024-10-01 06:00:00', '2024-10-01 09:00:00'),  -- CGK to DPS
+( UUID(),2, 'BA737-002', '2024-10-01 10:00:00', '2024-10-01 13:00:00'),  -- DPS to CGK
+( UUID(),3, 'BA757-001', '2024-10-01 07:00:00', '2024-10-01 09:30:00'),  -- CGK to BIA
+( UUID(),11, 'BA757-002', '2024-10-01 12:00:00', '2024-10-01 14:30:00'),  -- BIA to CGK
+( UUID(),5, 'BA757-003', '2024-10-01 08:00:00', '2024-10-01 10:30:00'),  -- DPS to HRI
+( UUID(),16, 'BA757-004', '2024-10-01 14:00:00', '2024-10-01 16:30:00'),  -- HRI to DPS
+( UUID(),7, 'AA380-001', '2024-10-01 09:00:00', '2024-10-01 13:00:00'),  -- CGK to DEL
+( UUID(),18, 'AA380-001', '2024-10-01 23:00:00', '2024-10-02 01:00:00'),  -- DEL to CGK
+( UUID(),9, 'BA737-001', '2024-10-01 12:00:00', '2024-10-01 15:00:00');  -- CGK to SIN
+
+-- Day 2: 2024-10-02
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
+VALUES
+( UUID(),10, 'BA737-002', '2024-10-02 06:00:00', '2024-10-02 09:00:00'),  -- DPS to SIN
+( UUID(),1, 'BA737-003', '2024-10-02 10:00:00', '2024-10-02 13:00:00'),  -- SIN to DPS
+( UUID(),32, 'BA757-001', '2024-10-02 07:00:00', '2024-10-02 09:30:00'),  -- BIA to MAA
+( UUID(),13, 'BA757-002', '2024-10-02 11:00:00', '2024-10-02 13:30:00'),  -- MAA to BIA
+( UUID(),4, 'BA757-003', '2024-10-02 08:00:00', '2024-10-02 10:30:00'),  -- BIA to BOM
+( UUID(),15, 'BA757-004', '2024-10-02 14:00:00', '2024-10-02 16:30:00'),  -- BOM to BIA
+( UUID(),16, 'AA380-001', '2024-10-02 09:00:00', '2024-10-02 13:00:00'),  -- CGK to BKK
+( UUID(),17, 'AA380-001', '2024-10-02 15:00:00', '2024-10-02 19:00:00'),  -- BKK to CGK
+( UUID(),48, 'BA737-001', '2024-10-02 22:00:00', '2024-10-03 02:00:00');  -- DPS to DEL
+
+-- Day 3: 2024-10-03
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
+VALUES
+( UUID(),19, 'BA737-002', '2024-10-03 06:00:00', '2024-10-03 09:00:00'),  -- DPS to MAA
+( UUID(),20, 'BA737-003', '2024-10-03 10:00:00', '2024-10-03 13:00:00'),  -- MAA to DPS
+( UUID(),21, 'BA757-001', '2024-10-03 07:00:00', '2024-10-03 09:30:00'),  -- CGK to DMK
+( UUID(),32, 'BA757-002', '2024-10-03 11:00:00', '2024-10-03 13:30:00'),  -- DMK to CGK
+( UUID(),3, 'BA757-003', '2024-10-03 08:00:00', '2024-10-03 10:30:00'),  -- DPS to BKK
+( UUID(),24, 'BA757-004', '2024-10-03 14:00:00', '2024-10-03 16:30:00'),  -- BKK to DPS
+( UUID(),5, 'AA380-001', '2024-10-03 09:00:00', '2024-10-03 13:00:00'),  -- CGK to BOM
+( UUID(),26, 'AA380-001', '2024-10-03 05:00:00', '2024-10-03 09:00:00'),  -- BOM to CGK
+( UUID(),47, 'BA737-001', '2024-10-03 12:00:00', '2024-10-03 15:00:00');  -- CGK to HRI
+
+-- Day 4: 2024-10-04
+INSERT INTO Flight ( flight_id,route_id, aircraft_id, departure, arrival)
+VALUES
+( UUID(),48, 'BA737-002', '2024-10-04 06:00:00', '2024-10-04 09:00:00'),  -- DPS to DEL
+( UUID(),29, 'BA737-003', '2024-10-04 11:00:00', '2024-10-04 14:00:00'),  -- DEL to DPS
+( UUID(),30, 'BA757-001', '2024-10-04 07:00:00', '2024-10-04 10:30:00'),  -- BIA to BKK
+( UUID(),31, 'BA757-002', '2024-10-04 11:00:00', '2024-10-04 13:30:00'),  -- BKK to BIA
+( UUID(),2, 'BA757-003', '2024-10-04 08:00:00', '2024-10-04 10:30:00'),  -- HRI to SIN
+( UUID(),33, 'BA757-004', '2024-10-04 14:00:00', '2024-10-04 16:30:00'),  -- SIN to HRI
+( UUID(),34, 'AA380-001', '2024-10-04 09:00:00', '2024-10-04 13:00:00'),  -- CGK to MAA
+( UUID(),35, 'AA380-001', '2024-10-04 15:00:00', '2024-10-04 19:00:00'),  -- MAA to CGK
+( UUID(),6, 'BA737-001', '2024-10-04 12:00:00', '2024-10-04 15:00:00');  -- DPS to DMK
+
+
+
+
 -- Day 1: 2024-11-01
 INSERT INTO Flight (flight_id, route_id, aircraft_id, departure, arrival)
 VALUES
@@ -284,8 +339,29 @@ VALUES
 ( UUID(),36, 'AA380-001', '2024-11-11 09:00:00', '2024-11-11 13:00:00'),  -- CGK to MAA
 ( UUID(),7, 'AA380-001', '2024-11-11 15:00:00', '2024-11-11 19:00:00'),  -- MAA to CGK
 ( UUID(),38, 'BA737-003', '2024-11-11 12:00:00', '2024-11-11 15:00:00'),  -- DPS to DMK
-( UUID(),29, 'BA737-001', '2024-11-11 20:00:00', '2024-11-11 23:00:00');  -- DMK to DPS
+( UUID(),29, 'BA737-001', '2024-11-11 20:00:00', '2024-11-11 23:00:00'),  -- DMK to DPS
 
+-- Day 3: 2024-11-12
+( UUID(), 19, 'BA737-002', '2024-11-12 06:00:00', '2024-11-12 09:00:00'),  -- DPS to MAA
+( UUID(), 20, 'BA737-003', '2024-11-12 10:00:00', '2024-11-12 13:00:00'),  -- MAA to DPS
+( UUID(), 21, 'BA757-001', '2024-11-12 07:00:00', '2024-11-12 09:30:00'),  -- CGK to DMK
+( UUID(), 32, 'BA757-002', '2024-11-12 11:00:00', '2024-11-12 13:30:00'),  -- DMK to CGK
+( UUID(), 3, 'BA757-003', '2024-11-12 08:00:00', '2024-11-12 10:30:00'),  -- DPS to BKK
+( UUID(), 24, 'BA757-004', '2024-11-12 14:00:00', '2024-11-12 16:30:00'),  -- BKK to DPS
+( UUID(), 5, 'AA380-001', '2024-11-12 09:00:00', '2024-11-12 13:00:00'),  -- CGK to BOM
+( UUID(), 26, 'AA380-001', '2024-11-12 05:00:00', '2024-11-12 09:00:00'),  -- BOM to CGK
+( UUID(), 47, 'BA737-001', '2024-11-12 12:00:00', '2024-11-12 15:00:00'),  -- CGK to HRI
+
+-- Day 4: 2024-11-13
+( UUID(), 48, 'BA737-002', '2024-11-13 06:00:00', '2024-11-13 09:00:00'),  -- DPS to DEL
+( UUID(), 29, 'BA737-003', '2024-11-13 11:00:00', '2024-11-13 14:00:00'),  -- DEL to DPS
+( UUID(), 30, 'BA757-001', '2024-11-13 07:00:00', '2024-11-13 10:30:00'),  -- BIA to BKK
+( UUID(), 31, 'BA757-002', '2024-11-13 11:00:00', '2024-11-13 13:30:00'),  -- BKK to BIA
+( UUID(), 2, 'BA757-003', '2024-11-13 08:00:00', '2024-11-13 10:30:00'),  -- HRI to SIN
+( UUID(), 33, 'BA757-004', '2024-11-13 14:00:00', '2024-11-13 16:30:00'),  -- SIN to HRI
+( UUID(), 34, 'AA380-001', '2024-11-13 09:00:00', '2024-11-13 13:00:00'),  -- CGK to MAA
+( UUID(), 35, 'AA380-001', '2024-11-13 15:00:00', '2024-11-13 19:00:00'),  -- MAA to CGK
+( UUID(), 6, 'BA737-001', '2024-11-13 12:00:00', '2024-11-13 15:00:00');  -- DPS to DMK
 
 
 INSERT INTO User (user_id, title, first_name, last_name, email, password, date_of_birth, country, mobile_number)
@@ -306,6 +382,9 @@ VALUES
 (UUID(),  'Mr', 'Elijah', 'Hassan', 'elijah.hassan@example.com', '$2y$10$5XYODux/NqE5/MHZ3H.kRuUsNHhxImQCjkJHArH3KUO7HP3XeHrpu', '1979-11-04', 'Egypt', '+201123456789'),
 (UUID(),  'Mr', 'David', 'Smith', 'david.smith@example.com', '$2y$10$N8/mwCRsSHFxSyCKRLz4/uFyb0E9RUhzSRKlf04/TluIMB8rbcrzO', '1983-02-28', 'USA', '+121234567890');
 
+INSERT INTO User (user_id, title, first_name, last_name, email, password, date_of_birth, country, mobile_number)
+VALUES (UUID(), 'Mr', 'User', 'Bairways', 'user@bairways.com', '$2b$12$dkIRzA27qdodvIY0DP0Rx.iub5LciRKLsSlIpvwvICb05m82Ie73y', '2002-10-26', 'LK', '+94704424913');
+
 
 -- System Administrator
 
@@ -315,47 +394,47 @@ VALUES (UUID(), 'Mr', 'Admin', 'Bairways', 'admin@bairways.com', '$2b$12$dkIRzA2
 
 -- passengers  -- guest customers
 
-INSERT INTO Passenger (passenger_id, first_name, last_name, passport_id, age, phone_number, email, is_registered) VALUES
-(UUID(), 'Emily', 'Smith', 'P123456001', 28, '+1-234-555-1001', 'emily.smith@example.com', FALSE),
-(UUID(), 'Michael', 'Johnson', 'P123456002', 35, '+1-234-555-1002', 'michael.johnson@example.com', FALSE),
-(UUID(), 'Sarah', 'Williams', 'P123456003', 42, '+1-234-555-1003', 'sarah.williams@example.com', FALSE),
-(UUID(), 'David', 'Brown', 'P123456004', 30, '+1-234-555-1004', 'david.brown@example.com', FALSE),
-(UUID(), 'Jessica', 'Jones', 'P123456005', 37, '+1-234-555-1005', 'jessica.jones@example.com', FALSE),
-(UUID(), 'James', 'Garcia', 'P123456006', 25, '+1-234-555-1006', 'james.garcia@example.com', FALSE),
-(UUID(), 'Laura', 'Martinez', 'P123456007', 31, '+1-234-555-1007', 'laura.martinez@example.com', FALSE),
-(UUID(), 'Robert', 'Hernandez', 'P123456008', 45, '+1-234-555-1008', 'robert.hernandez@example.com', FALSE),
-(UUID(), 'Linda', 'Lopez', 'P123456009', 39, '+1-234-555-1009', 'linda.lopez@example.com', FALSE),
-(UUID(), 'William', 'Wilson', 'P123456010', 28, '+1-234-555-1010', 'william.wilson@example.com', FALSE),
-(UUID(), 'Barbara', 'Anderson', 'P123456011', 34, '+1-234-555-1011', 'barbara.anderson@example.com', FALSE),
-(UUID(), 'Charles', 'Thomas', 'P123456012', 41, '+1-234-555-1012', 'charles.thomas@example.com', FALSE),
-(UUID(), 'Susan', 'Taylor', 'P123456013', 29, '+1-234-555-1013', 'susan.taylor@example.com', FALSE),
-(UUID(), 'Daniel', 'Moore', 'P123456014', 36, '+1-234-555-1014', 'daniel.moore@example.com', FALSE),
-(UUID(), 'Jessica', 'Jackson', 'P123456015', 27, '+1-234-555-1015', 'jessica.jackson@example.com', FALSE),
-(UUID(), 'Joseph', 'White', 'P123456016', 32, '+1-234-555-1016', 'joseph.white@example.com', FALSE),
-(UUID(), 'Karen', 'Harris', 'P123456017', 40, '+1-234-555-1017', 'karen.harris@example.com', FALSE),
-(UUID(), 'Brian', 'Martin', 'P123456018', 33, '+1-234-555-1018', 'brian.martin@example.com', FALSE),
-(UUID(), 'Emily', 'Thompson', 'P123456019', 38, '+1-234-555-1019', 'emily.thompson@example.com', FALSE),
-(UUID(), 'Kevin', 'Garcia', 'P123456020', 26, '+1-234-555-1020', 'kevin.garcia@example.com', FALSE),
-(UUID(), 'Rebecca', 'Martinez', 'P123456021', 29, '+1-234-555-1021', 'rebecca.martinez@example.com', FALSE),
-(UUID(), 'Matthew', 'Robinson', 'P123456022', 44, '+1-234-555-1022', 'matthew.robinson@example.com', FALSE),
-(UUID(), 'Laura', 'Clark', 'P123456023', 31, '+1-234-555-1023', 'laura.clark@example.com', FALSE),
-(UUID(), 'Stephen', 'Rodriguez', 'P123456024', 35, '+1-234-555-1024', 'stephen.rodriguez@example.com', FALSE),
-(UUID(), 'Michelle', 'Lewis', 'P123456025', 39, '+1-234-555-1025', 'michelle.lewis@example.com', FALSE),
-(UUID(), 'Paul', 'Lee', 'P123456026', 29, '+1-234-555-1026', 'paul.lee@example.com', FALSE),
-(UUID(), 'Elizabeth', 'Walker', 'P123456027', 30, '+1-234-555-1027', 'elizabeth.walker@example.com', FALSE),
-(UUID(), 'Daniel', 'Hall', 'P123456028', 27, '+1-234-555-1028', 'daniel.hall@example.com', FALSE),
-(UUID(), 'Deborah', 'Allen', 'P123456029', 42, '+1-234-555-1029', 'deborah.allen@example.com', FALSE),
-(UUID(), 'Matthew', 'Young', 'P123456030', 34, '+1-234-555-1030', 'matthew.young@example.com', FALSE),
-(UUID(), 'Christopher', 'Hernandez', 'P123456031', 40, '+1-234-555-1031', 'christopher.hernandez@example.com', FALSE),
-(UUID(), 'Sharon', 'King', 'P123456032', 36, '+1-234-555-1032', 'sharon.king@example.com', FALSE),
-(UUID(), 'Anthony', 'Wright', 'P123456033', 29, '+1-234-555-1033', 'anthony.wright@example.com', FALSE),
-(UUID(), 'Nancy', 'Scott', 'P123456034', 35, '+1-234-555-1034', 'nancy.scott@example.com', FALSE),
-(UUID(), 'Rebecca', 'Green', 'P123456035', 38, '+1-234-555-1035', 'rebecca.green@example.com', FALSE),
-(UUID(), 'Gary', 'Adams', 'P123456036', 43, '+1-234-555-1036', 'gary.adams@example.com', FALSE),
-(UUID(), 'Deborah', 'Baker', 'P123456037', 32, '+1-234-555-1037', 'deborah.baker@example.com', FALSE),
-(UUID(), 'Brian', 'Gonzalez', 'P123456038', 36, '+1-234-555-1038', 'brian.gonzalez@example.com', FALSE),
-(UUID(), 'Karen', 'Nelson', 'P123456039', 27, '+1-234-555-1039', 'karen.nelson@example.com', FALSE),
-(UUID(), 'Michelle', 'Carter', 'P123456040', 30, '+1-234-555-1040', 'michelle.carter@example.com', FALSE);
+INSERT INTO Passenger (passenger_id, first_name, last_name, passport_id, age, phone_number, email) VALUES
+(UUID(), 'Emily', 'Smith', 'P123456001', 28, '+1-234-555-1001', 'emily.smith@example.com'),
+(UUID(), 'Michael', 'Johnson', 'P123456002', 35, '+1-234-555-1002', 'michael.johnson@example.com'),
+(UUID(), 'Sarah', 'Williams', 'P123456003', 42, '+1-234-555-1003', 'sarah.williams@example.com'),
+(UUID(), 'David', 'Brown', 'P123456004', 30, '+1-234-555-1004', 'david.brown@example.com'),
+(UUID(), 'Jessica', 'Jones', 'P123456005', 37, '+1-234-555-1005', 'jessica.jones@example.com'),
+(UUID(), 'James', 'Garcia', 'P123456006', 25, '+1-234-555-1006', 'james.garcia@example.com' ),
+(UUID(), 'Laura', 'Martinez', 'P123456007', 31, '+1-234-555-1007', 'laura.martinez@example.com' ),
+(UUID(), 'Robert', 'Hernandez', 'P123456008', 45, '+1-234-555-1008', 'robert.hernandez@example.com' ),
+(UUID(), 'Linda', 'Lopez', 'P123456009', 39, '+1-234-555-1009', 'linda.lopez@example.com' ),
+(UUID(), 'William', 'Wilson', 'P123456010', 28, '+1-234-555-1010', 'william.wilson@example.com' ),
+(UUID(), 'Barbara', 'Anderson', 'P123456011', 34, '+1-234-555-1011', 'barbara.anderson@example.com' ),
+(UUID(), 'Charles', 'Thomas', 'P123456012', 41, '+1-234-555-1012', 'charles.thomas@example.com' ),
+(UUID(), 'Susan', 'Taylor', 'P123456013', 29, '+1-234-555-1013', 'susan.taylor@example.com' ),
+(UUID(), 'Daniel', 'Moore', 'P123456014', 36, '+1-234-555-1014', 'daniel.moore@example.com' ),
+(UUID(), 'Jessica', 'Jackson', 'P123456015', 27, '+1-234-555-1015', 'jessica.jackson@example.com' ),
+(UUID(), 'Joseph', 'White', 'P123456016', 32, '+1-234-555-1016', 'joseph.white@example.com' ),
+(UUID(), 'Karen', 'Harris', 'P123456017', 40, '+1-234-555-1017', 'karen.harris@example.com' ),
+(UUID(), 'Brian', 'Martin', 'P123456018', 33, '+1-234-555-1018', 'brian.martin@example.com' ),
+(UUID(), 'Emily', 'Thompson', 'P123456019', 38, '+1-234-555-1019', 'emily.thompson@example.com' ),
+(UUID(), 'Kevin', 'Garcia', 'P123456020', 26, '+1-234-555-1020', 'kevin.garcia@example.com' ),
+(UUID(), 'Rebecca', 'Martinez', 'P123456021', 29, '+1-234-555-1021', 'rebecca.martinez@example.com' ),
+(UUID(), 'Matthew', 'Robinson', 'P123456022', 44, '+1-234-555-1022', 'matthew.robinson@example.com' ),
+(UUID(), 'Laura', 'Clark', 'P123456023', 31, '+1-234-555-1023', 'laura.clark@example.com' ),
+(UUID(), 'Stephen', 'Rodriguez', 'P123456024', 35, '+1-234-555-1024', 'stephen.rodriguez@example.com' ),
+(UUID(), 'Michelle', 'Lewis', 'P123456025', 39, '+1-234-555-1025', 'michelle.lewis@example.com' ),
+(UUID(), 'Paul', 'Lee', 'P123456026', 29, '+1-234-555-1026', 'paul.lee@example.com' ),
+(UUID(), 'Elizabeth', 'Walker', 'P123456027', 30, '+1-234-555-1027', 'elizabeth.walker@example.com' ),
+(UUID(), 'Daniel', 'Hall', 'P123456028', 27, '+1-234-555-1028', 'daniel.hall@example.com' ),
+(UUID(), 'Deborah', 'Allen', 'P123456029', 42, '+1-234-555-1029', 'deborah.allen@example.com' ),
+(UUID(), 'Matthew', 'Young', 'P123456030', 34, '+1-234-555-1030', 'matthew.young@example.com' ),
+(UUID(), 'Christopher', 'Hernandez', 'P123456031', 40, '+1-234-555-1031', 'christopher.hernandez@example.com' ),
+(UUID(), 'Sharon', 'King', 'P123456032', 36, '+1-234-555-1032', 'sharon.king@example.com' ),
+(UUID(), 'Anthony', 'Wright', 'P123456033', 29, '+1-234-555-1033', 'anthony.wright@example.com' ),
+(UUID(), 'Nancy', 'Scott', 'P123456034', 35, '+1-234-555-1034', 'nancy.scott@example.com' ),
+(UUID(), 'Rebecca', 'Green', 'P123456035', 38, '+1-234-555-1035', 'rebecca.green@example.com' ),
+(UUID(), 'Gary', 'Adams', 'P123456036', 43, '+1-234-555-1036', 'gary.adams@example.com' ),
+(UUID(), 'Deborah', 'Baker', 'P123456037', 32, '+1-234-555-1037', 'deborah.baker@example.com' ),
+(UUID(), 'Brian', 'Gonzalez', 'P123456038', 36, '+1-234-555-1038', 'brian.gonzalez@example.com' ),
+(UUID(), 'Karen', 'Nelson', 'P123456039', 27, '+1-234-555-1039', 'karen.nelson@example.com' ),
+(UUID(), 'Michelle', 'Carter', 'P123456040', 30, '+1-234-555-1040', 'michelle.carter@example.com' );
 
 
 
