@@ -88,3 +88,33 @@ export const createFlight = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const getFlights = async (req, res) => {
+    try {
+        const flights = await Flight.getFlights();
+        //console.log("Flights: ", flights);
+        res.json(flights);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const updateFlight = async (req, res) => {
+    const { flightId } = req.params;
+    const flightData = req.body;
+    console.log("Flight data: ", flightData);
+    console.log("Flight ID: ", flightId);
+
+    try {
+        const result = await Flight.updateFlight(flightId, flightData);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Flight not found" });
+        }
+
+        res.json({ message: "Flight updated successfully" });
+    } catch (err) {
+        console.error("Error updating flight:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
