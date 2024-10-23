@@ -12,7 +12,14 @@ const Model = {
         return rows;
     },
 
-    // Other CRUD functions can be added here
+    createModel: async (model,price_multiplier, num_columns, num_economy_rows, num_business_rows, num_platinum_rows) => {
+        const [result] = await db.query(
+            `INSERT INTO Model (model,price_multiplier, num_columns, num_economy_rows, num_business_rows, num_platinum_rows) 
+            VALUES (?,?,?,?,?,?)`,
+            [model,price_multiplier, num_columns, num_economy_rows, num_business_rows, num_platinum_rows]
+        );
+        return result.insertId;
+    },
 };
 
 export default Model;
