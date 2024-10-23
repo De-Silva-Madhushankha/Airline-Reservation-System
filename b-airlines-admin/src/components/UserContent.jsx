@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Card, Input, Space, Button, Tag, Avatar } from 'antd';
-import { SearchOutlined, UserOutlined } from '@ant-design/icons';
+import { Table, Card, Input, Space, Button, Tag, Avatar, Modal } from 'antd';
+import { SearchOutlined, UserOutlined, EditOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
 const UserContent = () => {
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userDetails, setUserDetails] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -87,6 +90,15 @@ const UserContent = () => {
       dataIndex: 'mobile_number',
       width: 150,
     },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => (
+        <Button icon={<EditOutlined />} onClick={() => handleRowClick(record)}>
+          View Details
+        </Button>
+      ),
+    },
   ];
 
   const filteredUsers = users.filter(user =>
@@ -94,6 +106,17 @@ const UserContent = () => {
       val.toString().toLowerCase().includes(searchText.toLowerCase())
     )
   );
+
+  const handleRowClick = async (record) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/api/admin/users/${record.user_id}`);
+      setUserDetails(response.data);
+      setSelectedUser(record);
+      setIsModalVisible(true);
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  };
 
   return (
     <Card
@@ -123,6 +146,37 @@ const UserContent = () => {
         }}
         scroll={{ x: 1000 }}
       />
+      <Modal
+        title="User Details"
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+      >
+        {userDetails && (
+          <div>
+            <h3>{`${selectedUser.title} ${selectedUser.first_name} ${selectedUser.last_name}`}</h3>
+            <p>Email: {selectedUser.email}</p>
+            <p>Phone: {selectedUser.mobile_number}</p>
+            <p>Country: {selectedUser.country}</p>
+            <h4>Bookings:</h4>
+            <ul>
+              {userDetails.bookings.map(booking => (
+                <li key={booking.booking_id}>
+                  Booking ID: {booking.booking_id}, Date: {booking.date}
+                </li>
+              ))}
+            </ul>
+            <h4>Passengers:</h4>
+            <ul>
+              {userDetails.passengers.map(passenger => (
+                <li key={passenger.passenger_id}>
+                  {passenger.first_name} {passenger.last_name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </Modal>
     </Card>
   );
 };
