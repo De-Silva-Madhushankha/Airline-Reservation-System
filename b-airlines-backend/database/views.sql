@@ -41,3 +41,49 @@ WHERE
     f.departure > CURRENT_TIMESTAMP
 ORDER BY
     f.flight_id, p.age;
+
+
+
+
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `revenuebyaircrafttype` AS
+    SELECT 
+        `ac`.`model` AS `aircraft_model`,
+        SUM(`b`.`total_amount`) AS `total_revenue`
+    FROM
+        (((`booking` `b`
+        JOIN `flight` `f` ON ((`b`.`flight_id` = `f`.`flight_id`)))
+        JOIN `aircraft` `ac` ON ((`f`.`aircraft_id` = `ac`.`aircraft_id`)))
+        JOIN `model` `m` ON ((`ac`.`model` = `m`.`model`)))
+    GROUP BY `ac`.`model` , `m`.`price_multiplier`;
+
+
+
+    CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `flight_passenger_age_report` AS
+    SELECT 
+        `f`.`flight_id` AS `flight_id`,
+        `p`.`passenger_id` AS `passenger_id`,
+        `p`.`first_name` AS `first_name`,
+        `p`.`last_name` AS `last_name`,
+        `p`.`age` AS `age`,
+        (CASE
+            WHEN (`p`.`age` < 18) THEN 'Below 18'
+            ELSE 'Above 18'
+        END) AS `age_group`
+    FROM
+        ((`flight` `f`
+        JOIN `booking` `b` ON ((`f`.`flight_id` = `b`.`flight_id`)))
+        JOIN `passenger` `p` ON ((`b`.`passenger_id` = `p`.`passenger_id`)))
+    WHERE
+        (`f`.`departure` > NOW())
+    ORDER BY `f`.`flight_id` , `p`.`age`;
+
+
+    

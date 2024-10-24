@@ -42,9 +42,7 @@ export const getCountsByTime = async (startDate, endDate) => {
       [startDate, endDate]
     );
     return {
-      Type1: result[0].count ,
-      Type2: result[0].count ,
-      Type3: result[0].count
+      result
     };
   } catch (error) {
     throw error;
@@ -138,7 +136,7 @@ export const updateFlightStatus = async (flight_id, status) => {
 export const getRevenueByAircraftType = async () => {
   try {
     const [result] = await db.query(
-      'SELECT aircraft_model, total_revenue FROM Total_Revenue_By_Aircraft_Types'
+      'SELECT * FROM RevenueByAircraftType'
     );
     return result; // Return the revenue data
   } catch (error) {
