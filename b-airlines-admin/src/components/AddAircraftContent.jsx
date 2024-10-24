@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Select, Layout, Typography, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -18,7 +18,7 @@ const AddAircraftContent = () => {
 
   const fetchModels = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/admin/models');
+      const response = await axios.get('/admin/models');
       setModels(response.data);
       console.log(response.data);
     } catch (error) {
@@ -29,7 +29,7 @@ const AddAircraftContent = () => {
   const onFinish = async (values) => {
     try {
       console.log(values);
-      await axios.post('http://localhost:3001/api/aircraft/create-aircraft', values);
+      await axios.post('/aircraft/create-aircraft', values);
       message.success('Aircraft added successfully');
       form.resetFields();
     } catch (error) {
@@ -40,7 +40,7 @@ const AddAircraftContent = () => {
   const onModelFinish = async (values) => {
     try {
       console.log(values);
-      await axios.post('http://localhost:3001/api/admin/create-model', values);
+      await axios.post('/admin/create-model', values);
       message.success('Model added successfully');
       modelForm.resetFields();
       fetchModels(); // Refresh the models list

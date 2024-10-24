@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { DatePicker, Input, message, Flex, Progress, Table } from 'antd';
-import axios from 'axios';
+import { DatePicker, Input, message } from 'antd';
+import axios from 'axios'; // Import Axios
+
+const { RangePicker } = DatePicker;
 
 export default function Report1Content() {
   const [flightNumber, setFlightNumber] = useState('');
@@ -13,7 +15,8 @@ export default function Report1Content() {
     }
 
     try {
-      const response = await axios.get('http://localhost:3001/api/admin/user-count-age', {
+      const [startDate, endDate] = dateRange;
+      const response = await axios.get('http://localhost:3001/api/admin/user-count-destination', {
         params: {
           flightNumber
         },
