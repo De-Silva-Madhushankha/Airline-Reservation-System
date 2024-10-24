@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, message, Table, Progress, Typography } from 'antd';
+import { Select, message, Table, Progress, Typography, DatePicker, Input, message  } from 'antd';
 import axios from '../axiosConfig.js';
 import dayjs from 'dayjs';
 
@@ -36,6 +36,7 @@ const Report1Content = () => {
     try {
       const response = await axios.get('/admin/user-count-age', {
         params: { flightNumber: flightId },
+
       });
       
       // Check if the response data has the expected structure
