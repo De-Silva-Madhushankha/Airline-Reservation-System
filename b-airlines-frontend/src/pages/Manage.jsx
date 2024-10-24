@@ -15,7 +15,6 @@ const Manage = () => {
       <Navbar />
       <Container sx={{ mt: 5, color: '#000000' }}>
         <Grid container spacing={4}>
-          {/* Manage Booking Card - Highlighted */}
           <Grid item xs={12}>
             <Card
               sx={{
@@ -31,7 +30,6 @@ const Manage = () => {
               }}
             >
               <CardContent>
-                {/* Manage Your Booking Title */}
                 <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
                   Manage Your Booking
                 </Typography>
@@ -173,7 +171,6 @@ const Manage = () => {
             </Card>
           </Grid>
 
-          {/* Visa & Passport Card */}
           <Grid item xs={12} md={6}>
             <Card
               sx={{

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Row, Col } from 'antd';
 import { CheckOutlined, CoffeeOutlined, WifiOutlined, TeamOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import './Options.css'; // Custom CSS for additional styling
+import './Options.css'; 
 
 const benefits = [
   {
