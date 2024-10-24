@@ -33,7 +33,7 @@ export default function Report3Content() {
           counts.Type1 = row.reserved_seat_count;
         } else if (row.seat_class_name === 'Business') {
           counts.Type2 = row.reserved_seat_count;
-        } else if (row.seat_class_name === 'Type3') {
+        } else if (row.seat_class_name === 'Platinum') {
           counts.Type3 = row.reserved_seat_count; // Add Type3 if needed
         }
       });
@@ -76,26 +76,26 @@ export default function Report3Content() {
           <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col  items-center">
             <strong className='p-4'>Economy Count: {passengerCount.Type1}</strong>
             <strong className='p-4'>Business Count: {passengerCount.Type2}</strong>
-            <strong className='p-4'>Type 3 Count: {passengerCount.Type3}</strong>
+            <strong className='p-4'>Platinum Count: {passengerCount.Type3}</strong>
 
             <div className="mt-4 flex justify-center mb-4">
               <Row gutter={[16, 16]}>
                 <Col>
                   <Progress
                     type="dashboard"
-                    percent={passengerCount.Type1 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
+                    percent={(passengerCount.Type1 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)).toFixed(2)}
                   />
                 </Col>
                 <Col>
                   <Progress
                     type="dashboard"
-                    percent={passengerCount.Type2 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
+                    percent={(passengerCount.Type2 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)).toFixed(2)}
                   />
                 </Col>
                 <Col>
                   <Progress
                     type="dashboard"
-                    percent={passengerCount.Type3 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
+                    percent={(passengerCount.Type3 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)).toFixed(2)}
                   />
                 </Col>
               </Row>

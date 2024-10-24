@@ -62,6 +62,8 @@ VIEW `revenuebyaircrafttype` AS
 
 
 
+
+
     CREATE 
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 
@@ -86,4 +88,24 @@ VIEW `flight_passenger_age_report` AS
     ORDER BY `f`.`flight_id` , `p`.`age`;
 
 
-    
+
+
+
+
+
+    CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `passenger_details_by_destination_view` AS
+    SELECT 
+        `r`.`destination_code` AS `destination_code`,
+        `f`.`departure` AS `departure`,
+        `p`.`passenger_id` AS `passenger_id`,
+        `p`.`first_name` AS `passenger_name`,
+        `p`.`age` AS `passenger_age`
+    FROM
+        (((`booking` `b`
+        JOIN `flight` `f` ON ((`b`.`flight_id` = `f`.`flight_id`)))
+        JOIN `route` `r` ON ((`f`.`route_id` = `r`.`route_id`)))
+        JOIN `passenger` `p` ON ((`b`.`passenger_id` = `p`.`passenger_id`)));
