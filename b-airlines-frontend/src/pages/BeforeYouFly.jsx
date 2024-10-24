@@ -1,11 +1,12 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const BeforeYouFly = () => {
   return (
     <>
-    <Header title="Before You Fly" />
+    <Navbar/>
         <div style={styles.container}>
       <h1 style={styles.title}>Before You Fly</h1>
       <p style={styles.subtitle}>
