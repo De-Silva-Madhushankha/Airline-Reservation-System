@@ -245,7 +245,7 @@ export default FlightSearch;
 //                                     label="Departing - Returning"
 //                                     rules={[{ required: true, message: "Please select travel dates" }]}
 //                                 >
-//                                     <RangePicker size="large" style={{ width: "100%" }} />
+//                                     <cker size="large" style={{ width: "100%" }} />
 //                                 </Form.Item>
 //                             </Col>
 //                         </Row>

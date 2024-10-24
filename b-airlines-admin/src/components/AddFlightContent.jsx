@@ -3,6 +3,9 @@ import { Form, Input, DatePicker, Button, Select, Layout, Typography, message, T
 import { PlusOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons';
 import axios from '../axiosConfig.js';
 import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+
+dayjs.extend(isBetween);
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -55,14 +58,43 @@ const AddFlightContent = () => {
     }
   };
 
+  const checkForConflicts = (flightData) => {
+    const { aircraft_id, departure, arrival } = flightData;
+    const departureTime = dayjs(departure);
+    const arrivalTime = dayjs(arrival);
+
+    for (const flight of flights) {
+      if (flight.aircraft_id === aircraft_id) {
+        const existingDeparture = dayjs(flight.departure);
+        const existingArrival = dayjs(flight.arrival);
+
+        if (
+          (departureTime.isBetween(existingDeparture, existingArrival, null, '[)') ||
+          arrivalTime.isBetween(existingDeparture, existingArrival, null, '(]')) ||
+          (existingDeparture.isBetween(departureTime, arrivalTime, null, '[)') ||
+          existingArrival.isBetween(departureTime, arrivalTime, null, '(]'))
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   const onFinish = async (values) => {
+    const flightData = {
+      ...values,
+      departure: dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'),
+      arrival: dayjs(values.arrival).format('YYYY-MM-DD HH:mm:ss'),
+      delay: false, // Default value
+    };
+
+    if (checkForConflicts(flightData)) {
+      message.error('Conflict detected: The aircraft is already scheduled for another flight during this time.');
+      return;
+    }
+
     try {
-      const flightData = {
-        ...values,
-        departure: dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'),
-        arrival: dayjs(values.arrival).format('YYYY-MM-DD HH:mm:ss'),
-        delay: false, // Default value
-      };
       console.log(flightData);
       await axios.post('/flight/create-flight', flightData);
       message.success('Flight added successfully');
@@ -74,12 +106,18 @@ const AddFlightContent = () => {
   };
 
   const onEditFinish = async (values) => {
+    const flightData = {
+      ...values,
+      departure: dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'),
+      arrival: dayjs(values.arrival).format('YYYY-MM-DD HH:mm:ss'),
+    };
+
+    if (checkForConflicts(flightData)) {
+      message.error('Conflict detected: The aircraft is already scheduled for another flight during this time.');
+      return;
+    }
+
     try {
-      const flightData = {
-        ...values,
-        departure: dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'),
-        arrival: dayjs(values.arrival).format('YYYY-MM-DD HH:mm:ss'),
-      };
       console.log(flightData);
       await axios.put(`/flight/update-flight/${selectedFlight.flight_id}`, flightData);
       message.success('Flight updated successfully');

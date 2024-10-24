@@ -1,0 +1,44 @@
+.flight-schedule-container {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.flight-list {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.flight-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.flight-item:hover {
+  background-color: #1f1f1fc2;
+  color: white;
+}
+
+.flight-item .text-gray-400 {
+  color: #b0b0b0;
+}
+
+.flight-item .text-gray-500 {
+  color: #909090;
+}
+
+.flight-item .text-white {
+  color: #ffffff;
+}
+
+.no-flights {
+  font-size: 1.5rem;
+  margin-top: 50px;
+  align-items: center;
+}

@@ -16,7 +16,9 @@ export default function Report2Content() {
     }
 
     try {
+
       const [startDate, endDate] = dateRange;
+      console.log(startDate);
       const response = await axios.get('/admin/user-count-destination', {
         params: {
           destinationCode,
@@ -25,11 +27,15 @@ export default function Report2Content() {
         },
       });
 
-      setPassengerCount(response.data.passengerCount); // Update the passenger count
-    } catch (err) {
-      console.error("Error fetching passenger count:", err);
-      message.error("Failed to fetch passenger count");
-    }
+  // Access the passenger count from the response
+  const passengerCount = response.data.passengerCount[0]?.passenger_count || 0;
+
+  // Update the passenger count
+  setPassengerCount(passengerCount);
+} catch (err) {
+  console.error("Error fetching passenger count:", err);
+  message.error("Failed to fetch passenger count");
+}
   };
 
   return (
@@ -72,8 +78,8 @@ export default function Report2Content() {
         </button>
 
         {passengerCount !== null && (
-          <div className="mt-4 text-center text-gray-700 dark:text-gray-300">
-            <h2>Passenger Count: {passengerCount}</h2>
+        <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col  items-center">
+            <strong className='p-4'>Passenger Count: {passengerCount}</strong>
           </div>
         )}
       </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DatePicker, Input, message } from 'antd';
+import { DatePicker, Input, message , Flex, Progress} from 'antd';
 import axios from '../axiosConfig.js';
 
 const { RangePicker } = DatePicker;
@@ -60,9 +60,36 @@ export default function Report3Content() {
         </button>
 
         {passengerCount !== null && (
-          <div className="mt-4 text-center text-gray-700 dark:text-gray-300">
-            <h2>Passenger Count: {passengerCount}</h2>
+          <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col  items-center">
+        
+          <div className="flex flex-row gap-12 mt-4">
+          <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col  items-center">
+            <strong className='p-4'>Type 1 Count: {passengerCount.Type1}</strong>
+            <strong className='p-4'>Type 2 Count: {passengerCount.Type2}</strong>
+            <strong className='p-4'>Type 3 Count: {passengerCount.Type3}</strong>
+        </div>
           </div>
+          <div className="mt-4 flex justify-center mb-4">
+            <Flex gap="small" wrap>
+              <Progress
+                type="dashboard"
+                percent={passengerCount.Type1 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
+              />
+              <Progress
+                type="dashboard"
+                percent={passengerCount.Type2 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
+                gapDegree={60}
+              />
+              <Progress
+                type="dashboard"
+                percent={passengerCount.Type3 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
+              />
+            </Flex>
+          </div>
+        </div>
+        
+        
+        
         )}
       </div>
     </div>

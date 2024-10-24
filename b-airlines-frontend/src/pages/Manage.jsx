@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Grid, Card, CardContent, Typography, Button, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Manage = () => {
   const navigate = useNavigate();
@@ -204,6 +205,7 @@ const Manage = () => {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </>
   );
 };
