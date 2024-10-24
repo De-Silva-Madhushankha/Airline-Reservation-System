@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Spin, Alert } from 'antd';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 import Navbar from '../components/Navbar';
 import ProfileCard from '../components/profileComponents/ProfileCard';
 import FlightHistory from '../components/profileComponents/FlightHistory';
-//import ProfileInfo from '../components/profileComponents/ProfileInfo';
 import dayjs from 'dayjs';
 
 const UserProfile = () => {
@@ -24,7 +23,7 @@ const UserProfile = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3001/api/user/profile', {
+        const response = await axios.get('/user/profile', {
           headers: {
             Authorization: `Bearer ${token}`, // Pass token in the Authorization header
           },
@@ -62,7 +61,6 @@ const UserProfile = () => {
           </Col>
           <Col xs={24} sm={24} md={16} lg={18}>
             <FlightHistory flights={user.flights} />
-            {/* <ProfileInfo userInfo={user.profileInfo} /> */}
           </Col>
         </Row>
       </div>

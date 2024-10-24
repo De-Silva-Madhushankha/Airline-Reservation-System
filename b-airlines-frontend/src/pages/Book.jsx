@@ -71,9 +71,7 @@ const BookingPage = () => {
   };
 
   const handleConfirmBooking = () => {
-    // Implement logic to confirm the booking, e.g., sending data to backend
     message.success('Booking confirmed successfully!');
-    // eval this
     setCurrentStep(currentStep + 1); // Move to the confirmation step
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 import {
   Container,
   Table,
@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-// Custom styling for better aesthetics
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 'bold',
   backgroundColor: theme.palette.primary.light,
@@ -52,7 +52,7 @@ const ChangeBooking = () => {
     setLoading(true); // Start loading
 
     try {
-      const response = await axios.get('http://localhost:3001/api/booking/bookings', {
+      const response = await axios.get('/booking/bookings', {
         headers: {
           Authorization: `Bearer ${token}`, // Pass token in the Authorization header
         },
@@ -62,7 +62,6 @@ const ChangeBooking = () => {
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('Unauthorized: Please login again.');
-        // Optionally, redirect user to login page or refresh token here
         localStorage.removeItem('token'); // Remove invalid token
         sessionStorage.removeItem('token');
       } else {
@@ -98,7 +97,7 @@ const ChangeBooking = () => {
     };
 
     try {
-      await axios.put(`http://localhost:3001/api/booking/bookings/${bookingId}`, updatedBooking, {
+      await axios.put(`/booking/bookings/${bookingId}`, updatedBooking, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

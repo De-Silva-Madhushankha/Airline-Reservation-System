@@ -1,16 +1,24 @@
+
 import dotenv from 'dotenv';
 import mysql from 'mysql2'; // Using mysql2 for promise support
 
 dotenv.config()
 
+import mysql from 'mysql2'; // Using mysql2 with promise support
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 // Database connection configuration
 const db = mysql.createConnection({
     host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT, 
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE
-}).promise()
+}).promise();
+
 
 // connect db
 db.connect((err) => {
@@ -28,4 +36,9 @@ db.connect((err) => {
 
 export default db;
 
+
+=======
+const db = pool;
+console.log("Database connected");
+export default db;
 
