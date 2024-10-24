@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 import {
   Container,
   Table,
@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-// Custom styling for better aesthetics
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: 'bold',
   backgroundColor: theme.palette.primary.light,

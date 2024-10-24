@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { List, Button, message, Typography, Row, Col, Card, Tag } from 'antd';
-import axios from 'axios';
+import axios from '../../axiosConfig.js';
 import './BookingConfirmationComponent.css';
 
 const { Title, Text } = Typography;
@@ -18,7 +18,7 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
         // Fetch the cost for each passenger's seat
         for (const passenger of passengers) {
           const seat = passengerSeats[passenger.passport];
-          const response = await axios.post('http://localhost:3001/api/booking/cost', {
+          const response = await axios.post('/booking/cost', {
             flight_id: selectedFlight.flight_id,
             seat,
           });
@@ -58,7 +58,7 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
       };
       console.log(bookingData);
       // Send booking data to the backend
-      const response = await axios.post('http://localhost:3001/api/booking/create', bookingData);
+      const response = await axios.post('/booking/create', bookingData);
       
       if (response.data.success) {
         message.success('Booking confirmed successfully!', 3); // Display success message for 3 seconds
