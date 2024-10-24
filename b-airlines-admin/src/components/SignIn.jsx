@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Checkbox, Alert, Row, Col } from 'antd';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -39,7 +39,7 @@ const SignIn = () => {
     setErrorMessage(null);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/admin/sign-in', {
+      const response = await axios.post('/admin/sign-in', {
         email: values.email,
         password: values.password,
       });

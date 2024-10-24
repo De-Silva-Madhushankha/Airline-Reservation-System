@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DatePicker, Input, message } from 'antd';
-import axios from 'axios'; // Import Axios
+import axios from '../axiosConfig.js'; // Import Axios
 
 const { RangePicker } = DatePicker;
 
@@ -17,7 +17,7 @@ export default function Report1Content() {
 
     try {
       const [startDate, endDate] = dateRange;
-      const response = await axios.get('http://localhost:3001/api/admin/user-count-destination', {
+      const response = await axios.get('/admin/user-count-destination', {
         params: {
           destinationCode,
           startDate: startDate.format('YYYY-MM-DD'),

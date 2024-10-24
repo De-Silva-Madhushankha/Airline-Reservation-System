@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Card, Input, Space, Button, Tag, Avatar, Modal } from 'antd';
 import { SearchOutlined, UserOutlined, EditOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 
 const UserContent = () => {
   const [searchText, setSearchText] = useState('');
@@ -13,7 +13,7 @@ const UserContent = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/admin/users');
+        const response = await axios.get('/admin/users');
         console.log('Fetched users:', response.data);
         setUsers(response.data);
       } catch (error) {
@@ -109,7 +109,7 @@ const UserContent = () => {
 
   const handleRowClick = async (record) => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/admin/users/${record.user_id}`);
+      const response = await axios.get(`/admin/users/${record.user_id}`);
       setUserDetails(response.data);
       setSelectedUser(record);
       setIsModalVisible(true);
