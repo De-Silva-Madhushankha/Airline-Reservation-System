@@ -1,9 +1,9 @@
-import express from 'express'
-import { fileURLToPath } from 'url'
-import path from 'path'
+import bodyParser from 'body-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import bodyParser from 'body-parser'
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -26,14 +26,14 @@ console.log("Environment variables loaded");
 
 
 //import routes
-import userRoutes from './routes/userRoutes.js';
-import flightRoutes from './routes/flightRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
-import modelRoutes from './routes/modelRoutes.js';
-import aircraftRoutes from './routes/aircraftRoutes.js';
-import seatRoutes from './routes/seatRoutes.js';
-import route from './routes/route.js';
-import bookingRoutes from './routes/bookingRoutes.js';
+import adminRoutes from './routes/adminRoutes.js'
+import aircraftRoutes from './routes/aircraftRoutes.js'
+import bookingRoutes from './routes/bookingRoutes.js'
+import flightRoutes from './routes/flightRoutes.js'
+import modelRoutes from './routes/modelRoutes.js'
+import route from './routes/route.js'
+import seatRoutes from './routes/seatRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 console.log("Routes imported");
 
@@ -57,7 +57,7 @@ app.get('/', (req, res) => {
 })
 
 
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

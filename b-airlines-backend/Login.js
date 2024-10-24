@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconfig');
+const db = require('./database/db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
     const { username, password } = req.body;
 
     // Query to find the user by username
-    const sql = 'SELECT * FROM customers WHERE username = ?';
+    const sql = 'SELECT * FROM customers WHERE email = ?';
     db.query(sql, [username], (err, result) => {
         if (err) {
             console.error('Database error:', err); // Added logging
