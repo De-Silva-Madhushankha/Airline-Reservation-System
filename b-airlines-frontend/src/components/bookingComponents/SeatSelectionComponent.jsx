@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, message, Select } from 'antd';
 import './SeatSelectionComponent.css';
-import axios from 'axios';
+import axios from '../../axiosConfig.js';
 
 const { Option } = Select;
 
@@ -21,7 +21,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
         if (!flight_id) return; // Ensure flight_id is present
   
         console.log('Fetching occupied seats for flight_id:', flight_id);
-        const response = await axios.get(`http://localhost:3001/api/seat/occupied/${flight_id}`); // Update with your endpoint
+        const response = await axios.get(`/seat/occupied/${flight_id}`); // Update with your endpoint
         // Assuming response contains an array of occupied seats
         const seatTuples = response.data.map(seat => [seat.seat_row, seat.seat_column]);
         setOccupiedSeats(seatTuples); 
@@ -38,7 +38,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     const fetchModels = async () => {
       try {
         console.log('Fetching model for aircraft_id:', aircraft_id);
-        const response = await axios.get(`http://localhost:3001/api/aircraft/models/${aircraft_id}`);
+        const response = await axios.get(`/aircraft/models/${aircraft_id}`);
         console.log('Aircraft Response:', response.data);
         setModel(response.data.model); // Assuming response contains the model data
       } catch (error) {
@@ -57,7 +57,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
       if (!model) return; // Prevent fetch if model is not set
 
       try {
-        const response = await axios.get(`http://localhost:3001/api/model/${model}`); // Fetch model details from backend
+        const response = await axios.get(`/model/${model}`); // Fetch model details from backend
         const { num_columns, num_economy_rows, num_business_rows, num_platinum_rows } = response.data[0];
         setColumns(num_columns);
         setEconomyRows(num_economy_rows);
