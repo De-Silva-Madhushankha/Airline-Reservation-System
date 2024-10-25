@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Grid, Card, CardContent, Typography, Button, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Manage = () => {
   const navigate = useNavigate();
@@ -15,23 +16,21 @@ const Manage = () => {
       <Navbar />
       <Container sx={{ mt: 5, color: '#000000' }}>
         <Grid container spacing={4}>
-          {/* Manage Booking Card - Highlighted */}
           <Grid item xs={12}>
             <Card
               sx={{
                 backgroundColor: '#f9f9f9',
                 color: '#000000',
-                boxShadow: '0 10px 30px rgba(0, 123, 255, 0.3)',
+                // boxShadow: '0 10px 30px rgba(0, 123, 255, 0.3)',
                 borderRadius: '16px',
                 padding: 3,
-                transition: 'transform 0.3s',
+                // transition: 'transform 0.3s',
                 '&:hover': {
-                  transform: 'scale(1.02)',
+                  // transform: 'scale(1.02)',
                 },
               }}
             >
               <CardContent>
-                {/* Manage Your Booking Title */}
                 <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', mb: 2 }}>
                   Manage Your Booking
                 </Typography>
@@ -173,7 +172,6 @@ const Manage = () => {
             </Card>
           </Grid>
 
-          {/* Visa & Passport Card */}
           <Grid item xs={12} md={6}>
             <Card
               sx={{
@@ -207,6 +205,7 @@ const Manage = () => {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </>
   );
 };

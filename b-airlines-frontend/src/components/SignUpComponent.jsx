@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form,Checkbox, Input, Button, DatePicker, Select, Row, Col } from 'antd';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 // import './Join.css';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +47,7 @@ const Join = () => {
 
 const onFinish = (values) => {
 
-  axios.post('http://localhost:3001/api/user/sign-up', {
+  axios.post('/user/sign-up', {
     title: values.title,
     firstName: values.firstName,
     lastName: values.lastName,

@@ -55,8 +55,6 @@ In the root directory of the project...
 
 Install the node modules in frontend, backend, and admin directories following the above process...
 
-2. Switch to the root directory and Start development server `yarn start` or `npm start`.
-
 ## Next Steps
 
 Next you have to create a .env file in the backend directory and include the following
@@ -75,6 +73,10 @@ replace MYSQL_PASSWORD to your localhost password
 ## Creating Database
 
 to load database, open mysql in terminal in b-airlines-backend\database directory and give `source make` command
+
+## Starting the web app
+
+Switch to the root directory and Start development server `yarn start` or `npm start`.
 
 ## File Structure
 

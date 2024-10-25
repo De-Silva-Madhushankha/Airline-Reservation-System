@@ -1,5 +1,5 @@
 import express from 'express';
-import { getModelById , getAllAircrafts, createAircraft} from '../controllers/aircraftController.js'; // Update import based on your structure
+import { getModelById , createAircraft} from '../controllers/aircraftController.js'; // Update import based on your structure
 
 const router = express.Router();
 

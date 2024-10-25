@@ -22,4 +22,12 @@ export const getModelDetails = async (req, res) => {
     }
 };
 
-// Other CRUD functions for models can be added here
+export const createModel = async (req, res) => {
+    const { model, price_multiplier, num_columns, num_economy_rows, num_business_rows, num_platinum_rows } = req.body;
+    try {
+        const result = await Model.createModel(model, price_multiplier, num_columns, num_economy_rows, num_business_rows, num_platinum_rows);
+        res.json({ id: result });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

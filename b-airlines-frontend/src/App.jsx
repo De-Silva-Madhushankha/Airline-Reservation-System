@@ -13,10 +13,10 @@ import Profile from './pages/Profile';
 import axiosSetup from './axiosSetup';
 import Schedule from './pages/Schedule';
 import NotFound from './pages/NotFound';
-import Manage from './pages/Manage'; // New Pages
-import BeforeYouFly from './pages/BeforeYouFly'; // New Pages
-import Baggage from './pages/Baggage'; // New Pages
-import VisaPassport from './pages/VisaPassport'; // New Pages
+import Manage from './pages/Manage'; 
+import BeforeYouFly from './pages/BeforeYouFly'; 
+import Baggage from './pages/Baggage'; 
+import VisaPassport from './pages/VisaPassport'; 
 import CancelBooking from './pages/CancelBooking';
 import ChangeBooking from './pages/ChangeBooking';
 import ChooseSeat from './pages/ChooseSeat';

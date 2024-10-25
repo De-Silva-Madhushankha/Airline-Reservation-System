@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 
 
 export default function InitialData() {
@@ -14,7 +14,7 @@ export default function InitialData() {
       useEffect(() => {
         const fetchCounts = async () => {
           try {
-            const response = await axios.get('http://localhost:3001/api/admin/load-initial-data');
+            const response = await axios.get('/admin/load-initial-data');
             setCounts(response.data);
           } catch (err) {
             setError('Error fetching counts');
