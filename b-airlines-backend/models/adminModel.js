@@ -19,19 +19,7 @@ export const getCounts = async () => {
 };
 
 
-export const getCountsByDestination = async (destinationCode, startDate, endDate) => {
-  try {
-    const [rows] = await db.query(
-      'CALL passenger_count_by_destination(?, ?, ?)',
-      [destinationCode, startDate, endDate]
-    );
-    
-    // Access the count from the result
-    return rows[0]; // passenger_count is the alias used in the procedure
-  } catch (error) {
-    throw error;
-  }
-};
+
 
 
 
@@ -42,9 +30,7 @@ export const getCountsByTime = async (startDate, endDate) => {
       [startDate, endDate]
     );
     return {
-      Type1: result[0].count ,
-      Type2: result[0].count ,
-      Type3: result[0].count
+      result
     };
   } catch (error) {
     throw error;
@@ -61,10 +47,15 @@ export const getCountsByAge = async (flightNumber) => {
       'SELECT COUNT(*) AS count FROM  flight_passenger_age_report WHERE age <= 18 AND flight_id = ?',
       [flightNumber]
     );
+    const [result] = await db.query(
+      'SELECT first_name, last_name, age, age_group FROM  flight_passenger_age_report WHERE flight_id = ?',
+      [flightNumber]
+    );
 
     return {
       above18: above18[0].count,
       below18: below18[0].count,
+      result,
     };
   } catch (error) {
     throw error;
@@ -138,9 +129,35 @@ export const updateFlightStatus = async (flight_id, status) => {
 export const getRevenueByAircraftType = async () => {
   try {
     const [result] = await db.query(
-      'SELECT aircraft_model, total_revenue FROM Total_Revenue_By_Aircraft_Types'
+      'SELECT * FROM RevenueByAircraftType'
     );
     return result; // Return the revenue data
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+export const getCountsByDestination = async (destinationCode, startDate, endDate) => {
+  try {
+    // Call the stored procedure
+    const [rows] = await db.query(
+      `SELECT COUNT(DISTINCT passenger_id) AS passenger_count FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?`,
+      [destinationCode, startDate, endDate]
+    );
+    
+    // Query to get passenger details (name, age)
+    const [result] = await db.query(
+      'SELECT distinct passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
+      [destinationCode, startDate, endDate]
+    );
+    
+    // Return the count and passenger details
+    return {
+      passenger_count: rows[0]?.passenger_count || 0, // Access the count from the first row or default to 0 if not found
+      passenger_details: result
+    };
   } catch (error) {
     throw error;
   }

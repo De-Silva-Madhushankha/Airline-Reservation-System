@@ -48,7 +48,7 @@ const Adminhome = () => {
     <SildeNav setActiveSection={setActiveSection} />
   </div>
   
-  <div className="flex-1 p-4 bg-gray-100 ">
+  <div className="flex-1 p-4 bg-white ">
     {renderContent()}
   </div>
 </nav>

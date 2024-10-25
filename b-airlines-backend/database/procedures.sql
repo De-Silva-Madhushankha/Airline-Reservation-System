@@ -93,3 +93,35 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE GetReservedSeatCountsByClassAndDateRange(
+    IN startDate TIMESTAMP,
+    IN endDate TIMESTAMP
+)
+BEGIN
+    SELECT sc.seat_class_name, COUNT(s.seat_id) AS reserved_seat_count
+    FROM Seat s
+    JOIN Seat_class sc ON s.seat_class_id = sc.seat_class_id
+    JOIN Flight f ON s.flight_id = f.flight_id
+    WHERE s.is_reserved = true
+    AND f.departure BETWEEN startDate AND endDate
+    GROUP BY sc.seat_class_name;
+END //
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+

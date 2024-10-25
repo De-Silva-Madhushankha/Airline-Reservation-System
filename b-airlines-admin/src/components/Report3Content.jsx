@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DatePicker, Input, message , Flex, Progress} from 'antd';
+import { DatePicker, message, Progress, Row, Col } from 'antd';
 import axios from 'axios';
 
 const { RangePicker } = DatePicker;
@@ -23,7 +23,22 @@ export default function Report3Content() {
         },
       });
 
-      setPassengerCount(response.data.passengerCount); // Update the passenger count
+      // Extract data from the API response
+      const result = response.data.passengerCount.result[0]; // The seat class data
+      const counts = { Type1: 0, Type2: 0, Type3: 0 }; // Initialize default counts
+      
+      // Map the seat class counts from the result array
+      result.forEach(row => {
+        if (row.seat_class_name === 'Economy') {
+          counts.Type1 = row.reserved_seat_count;
+        } else if (row.seat_class_name === 'Business') {
+          counts.Type2 = row.reserved_seat_count;
+        } else if (row.seat_class_name === 'Platinum') {
+          counts.Type3 = row.reserved_seat_count; // Add Type3 if needed
+        }
+      });
+
+      setPassengerCount(counts); // Update the passenger count state
     } catch (err) {
       console.error("Error fetching passenger count:", err);
       message.error("Failed to fetch passenger count");
@@ -36,8 +51,6 @@ export default function Report3Content() {
         <h1 className="text-gray-800 dark:text-white text-center text-xl mb-8">
           Passenger Types Count 
         </h1>
-
-        
 
         <div className="mb-4">
           <label className="block text-gray-700 dark:text-gray-300 mb-2">
@@ -61,35 +74,33 @@ export default function Report3Content() {
 
         {passengerCount !== null && (
           <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col  items-center">
-        
-          <div className="flex flex-row gap-12 mt-4">
-          <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col  items-center">
-            <strong className='p-4'>Type 1 Count: {passengerCount.Type1}</strong>
-            <strong className='p-4'>Type 2 Count: {passengerCount.Type2}</strong>
-            <strong className='p-4'>Type 3 Count: {passengerCount.Type3}</strong>
-        </div>
+            <strong className='p-4'>Economy Count: {passengerCount.Type1}</strong>
+            <strong className='p-4'>Business Count: {passengerCount.Type2}</strong>
+            <strong className='p-4'>Platinum Count: {passengerCount.Type3}</strong>
+
+            <div className="mt-4 flex justify-center mb-4">
+              <Row gutter={[16, 16]}>
+                <Col>
+                  <Progress
+                    type="dashboard"
+                    percent={(passengerCount.Type1 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)).toFixed(2)}
+                  />
+                </Col>
+                <Col>
+                  <Progress
+                    type="dashboard"
+                    percent={(passengerCount.Type2 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)).toFixed(2)}
+                  />
+                </Col>
+                <Col>
+                  <Progress
+                    type="dashboard"
+                    percent={(passengerCount.Type3 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)).toFixed(2)}
+                  />
+                </Col>
+              </Row>
+            </div>
           </div>
-          <div className="mt-4 flex justify-center mb-4">
-            <Flex gap="small" wrap>
-              <Progress
-                type="dashboard"
-                percent={passengerCount.Type1 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
-              />
-              <Progress
-                type="dashboard"
-                percent={passengerCount.Type2 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
-                gapDegree={60}
-              />
-              <Progress
-                type="dashboard"
-                percent={passengerCount.Type3 * 100 / (passengerCount.Type1 + passengerCount.Type2 + passengerCount.Type3)}
-              />
-            </Flex>
-          </div>
-        </div>
-        
-        
-        
         )}
       </div>
     </div>
