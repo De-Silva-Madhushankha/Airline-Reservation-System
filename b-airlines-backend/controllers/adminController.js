@@ -48,13 +48,20 @@ import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, ge
     const { destinationCode, startDate, endDate } = req.query;
   
     try {
-      const counts = await getCountsByDestination(destinationCode, startDate, endDate);
-      res.status(200).json({ passengerCount: counts });
+      // Fetch the passenger count and details
+      const { passenger_count, passenger_details } = await getCountsByDestination(destinationCode, startDate, endDate);
+      
+      // Send the count and details in the response
+      res.status(200).json({
+        passengerCount: passenger_count,   // Send the passenger count
+        passengerDetails: passenger_details // Send the passenger details
+      });
     } catch (error) {
+      // Handle error by sending a 500 status code and an error message
       res.status(500).json({ message: 'Error fetching counts', error });
     }
   };
-
+  
 
   export const getCountbyTime = async (req, res) => {
     const { startDate, endDate } = req.query;
