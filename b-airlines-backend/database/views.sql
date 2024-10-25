@@ -72,4 +72,4 @@ CREATE VIEW passenger_details_by_destination_view AS
         Booking b
         JOIN Flight f ON b.flight_id = f.flight_id
         JOIN Route r ON f.route_id = r.route_id
-        JOIN passenger p ON b.passenger_id = p.passenger_id;
+        JOIN Passenger p ON b.passenger_id = p.passenger_id;
