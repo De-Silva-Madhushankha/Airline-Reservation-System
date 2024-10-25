@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Grid, Card, CardContent, Typography, Button, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Manage = () => {
   const navigate = useNavigate();
@@ -21,12 +22,12 @@ const Manage = () => {
               sx={{
                 backgroundColor: '#f9f9f9',
                 color: '#000000',
-                boxShadow: '0 10px 30px rgba(0, 123, 255, 0.3)',
+                // boxShadow: '0 10px 30px rgba(0, 123, 255, 0.3)',
                 borderRadius: '16px',
                 padding: 3,
-                transition: 'transform 0.3s',
+                // transition: 'transform 0.3s',
                 '&:hover': {
-                  transform: 'scale(1.02)',
+                  // transform: 'scale(1.02)',
                 },
               }}
             >
@@ -207,6 +208,7 @@ const Manage = () => {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </>
   );
 };
