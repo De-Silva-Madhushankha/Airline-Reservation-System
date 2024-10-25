@@ -42,6 +42,13 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
 
   const handleConfirmBooking = async () => {
     try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      if (!token) {
+        setError('User is not authenticated');
+        setLoading(false);
+        return;
+      }
+      
       // Prepare booking data
       const bookingData = {
         flight_id: selectedFlight.flight_id,
@@ -58,7 +65,11 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
       };
       console.log(bookingData);
       // Send booking data to the backend
-      const response = await axios.post('/booking/create', bookingData);
+      const response = await axios.post('/booking/create', bookingData,{
+        headers: {
+          Authorization: `Bearer ${token}`, // Pass token in the Authorization header
+        },
+      });
       
       if (response.data.success) {
         message.success('Booking confirmed successfully!', 3); // Display success message for 3 seconds
