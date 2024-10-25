@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, DatePicker, Button, Select, Layout, Typography, message, Table, Modal, Switch, Space, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import axios from '../axiosConfig.js';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 
@@ -30,7 +30,7 @@ const AddFlightContent = () => {
 
   const fetchRoutes = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/route/routes');
+      const response = await axios.get('/route/routes');
       setRoutes(response.data);
       console.log(response.data);
     } catch (error) {
@@ -40,7 +40,7 @@ const AddFlightContent = () => {
 
   const fetchAircraft = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/admin/aircrafts');
+      const response = await axios.get('/admin/aircrafts');
       setAircraft(response.data);
       console.log(response.data);
     } catch (error) {
@@ -50,7 +50,7 @@ const AddFlightContent = () => {
 
   const fetchFlights = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/flight/flights');
+      const response = await axios.get('/flight/flights');
       setFlights(response.data);
       console.log(response.data);
     } catch (error) {
@@ -96,7 +96,7 @@ const AddFlightContent = () => {
 
     try {
       console.log(flightData);
-      await axios.post('http://localhost:3001/api/flight/create-flight', flightData);
+      await axios.post('/flight/create-flight', flightData);
       message.success('Flight added successfully');
       form.resetFields();
       fetchFlights(); // Refresh the flights list
@@ -119,7 +119,7 @@ const AddFlightContent = () => {
 
     try {
       console.log(flightData);
-      await axios.put(`http://localhost:3001/api/flight/update-flight/${selectedFlight.flight_id}`, flightData);
+      await axios.put(`/flight/update-flight/${selectedFlight.flight_id}`, flightData);
       message.success('Flight updated successfully');
       setIsModalVisible(false);
       fetchFlights(); // Refresh the flights list
