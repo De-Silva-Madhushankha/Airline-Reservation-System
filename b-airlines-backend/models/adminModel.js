@@ -19,32 +19,7 @@ export const getCounts = async () => {
 };
 
 
-// export const getCountsByDestination = async (destinationCode, startDate, endDate) => {
-//   try {
-//     // Query to get passenger count
-//     const [rows] = await db.query(
-//       'SELECT COUNT(DISTINCT passenger_id) AS passenger_count FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
-//       [destinationCode, startDate, endDate]
-//     );
-    
-//     // Query to get passenger details (name, age)
-//     const [result] = await db.query(
-//       'SELECT passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
-//       [destinationCode, startDate, endDate]
-//     );
-    
-//     // Access the count from the first row
-//     const passengerCount = rows[0]?.passenger_count || 0; // Handle if there are no rows
 
-//     // Return the count and passenger details
-//     return {
-//       passenger_count: passengerCount,
-//       passenger_details: result
-//     };
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 
 
