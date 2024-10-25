@@ -110,9 +110,10 @@ const AddFlightContent = () => {
       ...values,
       departure: dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'),
       arrival: dayjs(values.arrival).format('YYYY-MM-DD HH:mm:ss'),
+      delay: values.delay || false, // Ensure delay is included
     };
 
-    if (checkForConflicts(flightData)) {
+    if (!flightData.delay && checkForConflicts(flightData)) {
       message.error('Conflict detected: The aircraft is already scheduled for another flight during this time.');
       return;
     }
@@ -142,6 +143,7 @@ const AddFlightContent = () => {
       ...record,
       departure: dayjs(record.departure),
       arrival: dayjs(record.arrival),
+      delay: record.delay,
     });
     setIsModalVisible(true);
   };
