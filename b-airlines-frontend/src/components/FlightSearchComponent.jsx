@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Layout, Button, message, DatePicker, Select, Row, Col, Form } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import axios from "axios";
+import axios from "../axiosConfig.js";
 import "./FlightSearchComponent.css";
 import dayjs from "dayjs";
 
@@ -24,7 +24,7 @@ const FlightSearch = ({ onSearch }) => {
     console.log("Search values: ", values);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/flight/flight-search', values);
+      const response = await axios.post('/flight/flight-search', values);
       console.log("Search results: ", response.data);
       message.success("Flights found!");
 
@@ -165,7 +165,7 @@ export default FlightSearch;
 //         setLoading(true);
 //         console.log("Search values: ", values);
 //         try {
-//           const response = await axios.post('http://localhost:3001/api/flight/flight-search', values);
+//           const response = await axios.post('/flight/flight-search', values);
 //           console.log("Search results: ", response.data);
 //         //   console.log("Search results: ", response.data.flights);
 //           message.success("Flights found!");

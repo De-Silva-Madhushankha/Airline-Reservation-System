@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Form, Input, Select, Button } from 'antd';
-import Header from '../components/Header';  // assuming you have a Header component
+import Header from '../components/Header';
 
 const { Content, Footer } = Layout;
 const { Option } = Select;
@@ -8,12 +8,11 @@ const { Option } = Select;
 const PassengerForm = () => {
   const handleFormSubmit = (values) => {
     console.log('Form Data:', values);
-    // Handle form submission, possibly save or move to the next step
   };
 
   return (
     <Layout>
-      <Header />  {/* your custom header */}
+      <Header />  
       <Content style={{ padding: '20px 50px', paddingTop: '100px' }}>
         <Form layout="vertical" onFinish={handleFormSubmit}>
           <h2>Passenger 1 (Adult)</h2>
@@ -40,7 +39,6 @@ const PassengerForm = () => {
               <Option value="Emirates">Emirates</Option>
               <Option value="Qatar Airways">Qatar Airways</Option>
               <Option value="British Airways">British Airways</Option>
-              {/* Add more options as needed */}
             </Select>
           </Form.Item>
 
