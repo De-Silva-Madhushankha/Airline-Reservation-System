@@ -129,18 +129,15 @@ CREATE TABLE Seat (
 );
 
 CREATE TABLE Booking (
-    booking_id CHAR(36) PRIMARY KEY,
     flight_id CHAR(36) NOT NULL ,
-    passenger_id CHAR(36) NOT NULL ,
-    seat_id CHAR(36) NOT NULL ,
-    user_id CHAR(36) ,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
     booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_amount DOUBLE,
-    payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed') ),
+    payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed', 'Booking-Cancel') ),
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON UPDATE CASCADE ,
-    FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id) ON UPDATE CASCADE ,
-    FOREIGN KEY (seat_id) REFERENCES Seat(seat_id) ON UPDATE CASCADE ,
-    FOREIGN KEY (user_id) REFERENCES User(user_id) ON UPDATE CASCADE
+    
+
 );
 
 -- must add privileged access
