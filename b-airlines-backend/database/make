@@ -3,13 +3,20 @@
 
 -- ddl
 source schema.sql
+SELECT 'schema done' AS message;
 source indexes.sql
+SELECT 'index done' AS message;
+
 source views.sql
+SELECT 'views done' AS message;
 
 source functions.sql
+SELECT 'functions done' AS message;
 source procedures.sql
+SELECT 'procedures done' AS message;
 source triggers.sql
+SELECT 'triggers done' AS message;
 
 -- data
 source insert.sql
-
+SELECT 'instert done' AS message;

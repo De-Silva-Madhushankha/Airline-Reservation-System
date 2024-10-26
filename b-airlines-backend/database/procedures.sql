@@ -95,7 +95,7 @@ END //
 DELIMITER ;
 
 
-
+DELIMITER //
 
 
 DELIMITER //
@@ -120,8 +120,5 @@ DELIMITER ;
 
 
 
-
-
-
-
+DELIMITER ;
 
