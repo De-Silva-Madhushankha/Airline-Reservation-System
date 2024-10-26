@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Card, Avatar, Typography, Divider, Button, Progress, Input, Form, Spin, Alert } from 'antd';
 import { EditOutlined, UploadOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './ProfileCard.css';
-
 
 const { Title, Text } = Typography;
 
@@ -22,6 +22,7 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
     birthDay
   });
 
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -69,6 +70,10 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
     setIsEditing(false);
   };
 
+  const handleRedeemPointsClick = () => {
+    navigate('/book'); // Navigate to the book page
+  };
+
   if (loading) {
     return <Spin tip="Loading..." />;
   }
@@ -84,7 +89,7 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
       cover={
         <Avatar
           size={120}
-          src="https://via.placeholder.com/120"
+          src="../../assets/profile.jpg"
           style={{ margin: '24px auto' }}
         />
       }
@@ -145,7 +150,7 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
           <Divider />
           <Text>Loyalty Points: {profileData.loyaltyPoints}</Text>
           <Progress percent={(profileData.loyaltyPoints / 100) * 100} showInfo={false} />
-          <Button type="primary" style={{ marginTop: '12px' }}>Redeem Points</Button>
+          <Button type="primary" style={{ marginTop: '12px' }} onClick={handleRedeemPointsClick}>Redeem Points</Button>
         </>
       )}
     </Card>
