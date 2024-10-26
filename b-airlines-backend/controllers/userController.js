@@ -37,7 +37,11 @@ export const registerUser = async (req, res) => {
     res.status(201).json({ insert_id, success: true, message: 'User registered successfully' });
 
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    if (error.code === 'ER_CHECK_CONSTRAINT_VIOLATED' && error.sqlMessage.includes("User_chk_1")) {
+      res.status(400).json({ success: false, message: 'Please enter a valid birthday' });
+    } else {
+      res.status(500).json({ success: false, message: 'An error occurred while registering the user' });
+    }
   }
 }
 
