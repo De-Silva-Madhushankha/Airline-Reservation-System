@@ -11,36 +11,35 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
   const [passengerCosts, setLocalPassengerCosts] = useState({});
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const fetchPassengerCosts = async () => {
       try {
-        let total = 0;
-        const costs = {};
 
-        // Fetch the cost for each passenger's seat
-        for (const passenger of passengers) {
-          const seat = passengerSeats[passenger.passport];
-          const response = await axios.post('/booking/cost', {
-            flight_id: selectedFlight.flight_id,
-            seat,
-          });
-
-          const cost = response.data.totalCost;
-          costs[passenger.passport] = cost;
-          total += cost;
-        }
-
-        setLocalPassengerCosts(costs);  // Store costs locally for display
-        setPassengerCosts(costs); // Update the parent component with passenger costs
-        setTotalCost(total); // Update the total cost
+        const passengerSeatsData = passengers.map(passenger => ({
+          // passengerSeats - { passport, seat } , seat - { row, column}
+          passport: passenger.passport,
+          seat: passengerSeats[passenger.passport],
+        }));
+  
+        const response = await axios.post('/booking/cost', {
+          flight_id: selectedFlight.flight_id,
+          passengerSeats: passengerSeatsData,
+        });
+  
+        const { costs, totalCost } = response.data;
+  
+        setLocalPassengerCosts(costs);
+        setPassengerCosts(costs);
+        setTotalCost(totalCost);
       } catch (error) {
         message.error('Failed to retrieve booking costs');
         console.error(error);
       }
     };
-
+  
     fetchPassengerCosts();
-  }, [passengers, passengerSeats, selectedFlight, setPassengerCosts]);
+  }, [passengers, passengerSeats, selectedFlight, setPassengerCosts]);  
 
   const handleConfirmBooking = async () => {
     try {
@@ -51,7 +50,6 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
         return;
       }
       
-      // Prepare booking data
       const bookingData = {
         flight_id: selectedFlight.flight_id,
         passengers: passengers.map(passenger => ({
@@ -61,22 +59,21 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
           phoneNumber: passenger.phoneNumber,
           passport: passenger.passport,
           email: passenger.email,
-          seatRow: passengerSeats[passenger.passport].row, // Separate seatRow
+          seatRow: passengerSeats[passenger.passport].row,
           seatColumn: passengerSeats[passenger.passport].column,
         })),
       };
-      console.log(bookingData);
-      // Send booking data to the backend
+      
       const response = await axios.post('/booking/create', bookingData, {
         headers: {
-          Authorization: `Bearer ${token}`, // Pass token in the Authorization header
+          Authorization: `Bearer ${token}`, //Authorization header
         },
       });
       
       if (response.data.success) {
-        message.success('Booking confirmed successfully!', 1); // Display success message for 3 seconds
+        message.success('Booking confirmed successfully!', 1); 
         setTimeout(() => {
-          navigate('/'); // Navigate to home page after 1 seconds
+          navigate('/'); // Navigate to home
         }, 1000);
       } else {
         message.error('Failed to confirm booking. Please try again.');
@@ -86,6 +83,7 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
       console.error(error);
     }
   };
+
 
   return (
     <div className="booking-confirmation-layout">
