@@ -41,7 +41,54 @@
 }
 
 .ant-btn-primary:focus {
-    background-color: #060606; /* Darker green on focus */
+    background-color: #060606; 
     border: none; /* Remove borders */
     box-shadow: none; /* Remove focus shadow */
+}
+
+
+form {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #fff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
+form .ant-form-item {
+    margin-bottom: 16px;
+}
+
+form .ant-form-item-label > label {
+    font-weight: bold;
+    color: #333; /* Dark gray color */
+}
+
+form .ant-form-item-control-input input,
+form .ant-form-item-control-input textarea,
+form .ant-form-item-control-input select {
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 4px;
+
+}
+
+form button {
+    background-color: #000; /* Black background */
+    border-color: #000; /* Black border */
+    color: #fff; /* White text color */
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #333; /* Dark gray background on hover */
+    border-color: #333; /* Dark gray border on hover */
+}
+
+form button:focus {
+    background-color: #060606; /* Darker black on focus */
+    border-color: #060606; /* Darker black border on focus */
+    box-shadow: none; /* Remove focus shadow */
+    outline: none; /* Remove default outline */
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form,Checkbox, Input, Button, DatePicker, Select, Row, Col } from 'antd';
+import { Form,Checkbox, Input, Button, DatePicker, Select, Row, Col, message } from 'antd';
 import axios from '../axiosConfig.js';
 // import './Join.css';
 import styled from 'styled-components';
@@ -59,10 +59,14 @@ const onFinish = (values) => {
   })
   .then((response) => {
     if (response.data.success) {
-      alert(response.data.message);
-      navigate('/'); // Navigate to home page
+      //alert(response.data.message);
+      message.success(response.data.message);
+      setTimeout(() => {
+        navigate('/'); // Navigate to home page after 2 seconds
+      }, 1000);
     } else if(!response.data.success) {
-      alert(response.data.message);
+      // alert(response.data.message);
+      message.error(response.data.message);
     }
   })
   .catch((error) => {
