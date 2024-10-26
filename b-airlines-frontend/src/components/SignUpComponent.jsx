@@ -59,23 +59,23 @@ const onFinish = (values) => {
   })
   .then((response) => {
     if (response.data.success) {
-      //alert(response.data.message);
       message.success(response.data.message);
       setTimeout(() => {
-        navigate('/'); // Navigate to home page after 2 seconds
+        navigate('/'); // Navigate to home page after 1 seconds
       }, 1000);
     } else if(!response.data.success) {
-      // alert(response.data.message);
       message.error(response.data.message);
     }
   })
   .catch((error) => {
-    if(error.response.status === 400) {
-      alert('User already exists. Enter a different email address.');
-      navigate('/sign-up');
-      // window.location.reload();
-    }
-    else{
+    if (error.response && error.response.status === 400) {
+      if (error.response.data.message === 'Please enter a valid birthday') {
+        message.error('Please enter a valid birthday');
+      } else {
+        message.error('User already exists. Enter a different email address.');
+        navigate('/sign-up');
+      }
+    } else {
       console.log(error);
     }
 
