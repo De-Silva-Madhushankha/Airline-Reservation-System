@@ -68,7 +68,6 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
       console.log(bookingData);
       // Send booking data to the backend
       const response = await axios.post('/booking/create', bookingData, {
-
         headers: {
           Authorization: `Bearer ${token}`, // Pass token in the Authorization header
         },
