@@ -122,3 +122,49 @@ DELIMITER ;
 
 DELIMITER ;
 
+DELIMITER //
+
+CREATE PROCEDURE createBooking(
+    IN p_flight_id CHAR(36),
+    IN p_firstName VARCHAR(50),
+    IN p_lastName VARCHAR(50),
+    IN p_age INT,
+    IN p_phoneNumber VARCHAR(20),
+    IN p_passport VARCHAR(20),
+    IN p_email VARCHAR(100),
+    IN p_seatRow INT,
+    IN p_seatColumn INT,
+    IN p_user_id CHAR(36)
+)
+BEGIN
+    DECLARE p_passenger_id CHAR(36);
+    DECLARE p_seat_id CHAR(36);
+    DECLARE p_total_amount DECIMAL(10, 2);
+    DECLARE new_booking_id CHAR(36);
+
+    -- is this transaction really needed
+    START TRANSACTION;
+
+    CALL AddOrGetPassenger(p_firstName, p_lastName, p_passport, p_age, p_phoneNumber, p_email);
+
+    SET p_passenger_id = (SELECT passenger_id AS p_passenger_id FROM Passenger WHERE passport_id = p_passport);
+
+    SET p_seat_id = (SELECT seat_id AS p_seat_id FROM Seat WHERE flight_id = p_flight_id AND seat_row = p_seatRow AND seat_column = p_seatColumn);
+
+    -- we assume seat is not taken, # manage that
+    UPDATE Seat SET is_reserved = 1 WHERE seat_id = p_seat_id;
+
+    SET p_total_amount = (SELECT calculate_seat_price(p_flight_id, p_seatRow, p_seatColumn));
+
+    SET new_booking_id = UUID();
+
+    INSERT INTO Booking (booking_id, flight_id, passenger_id, seat_id, user_id, total_amount, payment_status)
+    VALUES (new_booking_id, p_flight_id, p_passenger_id, p_seat_id, p_user_id, p_total_amount, 'Paid');
+
+    COMMIT;
+
+    SELECT new_booking_id AS booking_id;
+END //
+
+DELIMITER ;
+

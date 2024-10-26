@@ -34,24 +34,10 @@ export const getBookingCost = async (req, res) => {
 // insert a new booking 
 export const createBookingController = async (req, res) => {
     const user_id = req.user.id;
-
     const { flight_id, passengers } = req.body;
 
     try {
-        const bookingIds = [];
-
-        for (const passenger of passengers) {
-            const { firstName, lastName, age, phoneNumber, passport, email, seatRow, seatColumn } = passenger;
-
-            const total_amount = await Booking.calculateSeatPrice(flight_id, seatRow, seatColumn);
-            const passengerId = await Passenger.createPassenger(firstName, lastName, age, phoneNumber, passport, email);
-            const seat_id = await Seat.getSeatId(flight_id, seatRow, seatColumn);            
-            const done = await Seat.occupySeat(seat_id);
-            const bookingId = await Booking.createBooking(flight_id, passengerId, seat_id, user_id, total_amount);
-
-            bookingIds.push(bookingId);
-        }
-
+        const bookingIds = await Booking.createBookingWithTransaction(flight_id, passengers, user_id);
         res.status(201).json({ success: true, bookingIds });
     } catch (error) {
         console.error(error);
