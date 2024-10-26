@@ -35,16 +35,17 @@
   }
   
   .footer-input {
-    padding: 8px 20px;
-    border-radius: 2px;
-    margin-right: 10px;
+    padding: 12px 20px; /* Increased padding for better touch targets */
+    border-radius: 4px; /* Slightly rounded corners */
     outline: none;
     border: none;
-    font-size: 18px;
-    margin-bottom: 16px;
-    border: 1px solid #fff;
+    font-size: 16px; /* Adjusted font size */
+    border: 1px solid #ccc; /* Light gray border */
+    background-color: #f9f9f9; /* Light gray background */
+    color: #333; /* Dark gray text color */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for focus state */
   }
-  
+
   .footer-links {
     width: 100%;
     max-width: 1000px;
