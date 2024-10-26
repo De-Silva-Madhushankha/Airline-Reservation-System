@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from '../axiosConfig.js';
 import {
+  Button,
   Container,
+  Paper,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Button,
   Typography,
-  Paper,
-  TableContainer,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import axios from '../axiosConfig.js';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -91,50 +91,47 @@ const CancelBooking = () => {
         Manage Your Bookings
       </Typography>
 
-      {bookings.length > 0 ? (
+      
         <TableContainer component={Paper} sx={{ mb: 3 }}>
           <Table>
             <TableHead>
               <TableRow>
-                <StyledTableCell>Booking ID</StyledTableCell>
                 <StyledTableCell>Flight ID</StyledTableCell>
-                <StyledTableCell>Passenger ID</StyledTableCell>
-                <StyledTableCell>Seat ID</StyledTableCell>
-                <StyledTableCell>User ID</StyledTableCell>
+                <StyledTableCell>Passenger Firstname</StyledTableCell>
+                <StyledTableCell>Passenger Lastname</StyledTableCell>
                 <StyledTableCell>Booking Date</StyledTableCell>
                 <StyledTableCell>Total Amount</StyledTableCell>
                 <StyledTableCell>Payment Status</StyledTableCell>
                 <StyledTableCell>Actions</StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {bookings.map((booking) => (
-                <StyledTableRow key={booking.booking_id}>
-                  <TableCell align="center">{booking.booking_id}</TableCell>
-                  <TableCell align="center">{booking.flight_id}</TableCell>
-                  <TableCell align="center">{booking.passenger_id}</TableCell>
-                  <TableCell align="center">{booking.seat_id}</TableCell>
-                  <TableCell align="center">{booking.user_id}</TableCell>
-                  <TableCell align="center">{new Date(booking.booking_date).toLocaleString()}</TableCell>
-                  <TableCell align="center">${booking.total_amount}</TableCell>
-                  <TableCell align="center">{booking.payment_status}</TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => handleDelete(booking.booking_id)}
-                    >
-                      Cancel Booking
-                    </Button>
-                  </TableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <Typography align="center">No bookings available.</Typography>
-      )}
+              {bookings.length > 0 ? (
+                <TableBody>
+                  {bookings.map((booking) => (
+                    <StyledTableRow key={booking.booking_id}>
+                      <TableCell align="center">{booking.flight_id}</TableCell>
+                      <TableCell align="center">{booking.first_name}</TableCell>
+                      <TableCell align="center">{booking.last_name}</TableCell>
+                      <TableCell align="center">{new Date(booking.booking_date).toLocaleString()}</TableCell>
+                      <TableCell align="center">${booking.total_amount}</TableCell>
+                      <TableCell align="center">{booking.payment_status}</TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => handleDelete(booking.booking_id)}
+                        >
+                          Cancel Booking
+                        </Button>
+                      </TableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>  ) :   (
+            <Typography align="center">No bookings available.</Typography>
+          )}
+          
+              </Table>
+            </TableContainer>
     </Container>
   );
 };
