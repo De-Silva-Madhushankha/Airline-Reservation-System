@@ -95,7 +95,7 @@ END //
 DELIMITER ;
 
 
-
+DELIMITER //
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetReservedSeatCountsByClassAndDateRange`(
     IN startDate TIMESTAMP,
@@ -109,12 +109,12 @@ BEGIN
     WHERE s.is_reserved = true
     AND f.departure BETWEEN startDate AND endDate
     GROUP BY sc.seat_class_name;
-END;
+END //
+
+DELIMITER ;
 
 
-
-
-
+DELIMITER //
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `passenger_count_by_destination`(
     IN p_destination_code CHAR(3),
@@ -128,10 +128,7 @@ BEGIN
     JOIN Route r ON f.route_id = r.route_id
     WHERE r.destination_code = p_destination_code
       AND f.departure BETWEEN p_start_date AND p_end_date;
-END;
+END //
 
-
-
-
-
+DELIMITER ;
 

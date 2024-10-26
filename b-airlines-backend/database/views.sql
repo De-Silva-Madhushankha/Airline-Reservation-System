@@ -20,31 +20,6 @@ CREATE VIEW user_bookings AS
 
 -- reports -  Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18
 
-CREATE VIEW flight_passenger_age_report AS
-SELECT
-    f.flight_id,
-    p.passenger_id,
-    p.first_name,
-    p.last_name,
-    p.age,
-    CASE
-        WHEN p.age < 18 THEN 'Below 18'
-        ELSE 'Above 18'
-    END AS age_group
-FROM
-    Flight f
-JOIN
-    Booking b ON f.flight_id = b.flight_id
-JOIN
-    Passenger p ON b.passenger_id = p.passenger_id
-WHERE
-    f.departure > CURRENT_TIMESTAMP
-ORDER BY
-    f.flight_id, p.age;
-
-
-
-
 CREATE 
     ALGORITHM = UNDEFINED 
     DEFINER = `root`@`localhost` 
@@ -54,10 +29,10 @@ VIEW `revenuebyaircrafttype` AS
         `ac`.`model` AS `aircraft_model`,
         SUM(`b`.`total_amount`) AS `total_revenue`
     FROM
-        (((`booking` `b`
-        JOIN `flight` `f` ON ((`b`.`flight_id` = `f`.`flight_id`)))
-        JOIN `aircraft` `ac` ON ((`f`.`aircraft_id` = `ac`.`aircraft_id`)))
-        JOIN `model` `m` ON ((`ac`.`model` = `m`.`model`)))
+        (((`Booking` `b`
+        JOIN `Flight` `f` ON ((`b`.`flight_id` = `f`.`flight_id`)))
+        JOIN `Aircraft` `ac` ON ((`f`.`aircraft_id` = `ac`.`aircraft_id`)))
+        JOIN `Model` `m` ON ((`ac`.`model` = `m`.`model`)))
     GROUP BY `ac`.`model` , `m`.`price_multiplier`;
 
 
@@ -80,9 +55,9 @@ VIEW `flight_passenger_age_report` AS
             ELSE 'Above 18'
         END) AS `age_group`
     FROM
-        ((`flight` `f`
-        JOIN `booking` `b` ON ((`f`.`flight_id` = `b`.`flight_id`)))
-        JOIN `passenger` `p` ON ((`b`.`passenger_id` = `p`.`passenger_id`)))
+        ((`Flight` `f`
+        JOIN `Booking` `b` ON ((`f`.`flight_id` = `b`.`flight_id`)))
+        JOIN `Passenger` `p` ON ((`b`.`passenger_id` = `p`.`passenger_id`)))
     WHERE
         (`f`.`departure` > NOW())
     ORDER BY `f`.`flight_id` , `p`.`age`;
@@ -105,7 +80,8 @@ VIEW `passenger_details_by_destination_view` AS
         `p`.`first_name` AS `passenger_name`,
         `p`.`age` AS `passenger_age`
     FROM
-        (((`booking` `b`
-        JOIN `flight` `f` ON ((`b`.`flight_id` = `f`.`flight_id`)))
-        JOIN `route` `r` ON ((`f`.`route_id` = `r`.`route_id`)))
-        JOIN `passenger` `p` ON ((`b`.`passenger_id` = `p`.`passenger_id`)));
+        (((`Booking` `b`
+        JOIN `Flight` `f` ON ((`b`.`flight_id` = `f`.`flight_id`)))
+        JOIN `Route` `r` ON ((`f`.`route_id` = `r`.`route_id`)))
+        JOIN `Passenger` `p` ON ((`b`.`passenger_id` = `p`.`passenger_id`)));
+      
