@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { DatePicker, Input, message } from 'antd';
 import axios from '../axiosConfig.js'; // Import Axios
 
+
+
+import { DatePicker, Input, message, Flex, Progress, Table } from 'antd';
+
 const { RangePicker } = DatePicker;
+
 
 export default function Report1Content() {
   const [flightNumber, setFlightNumber] = useState('');

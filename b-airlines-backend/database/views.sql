@@ -73,3 +73,26 @@ CREATE VIEW passenger_details_by_destination_view AS
         JOIN Flight f ON b.flight_id = f.flight_id
         JOIN Route r ON f.route_id = r.route_id
         JOIN Passenger p ON b.passenger_id = p.passenger_id;
+
+
+CREATE VIEW PastFlightsAndPassengerCountView AS
+SELECT 
+    f.flight_id,
+    f.aircraft_id,
+    r.origin_code,
+    r.destination_code,
+    f.departure,
+    f.arrival,
+    CASE 
+        WHEN f.delay = TRUE THEN 'Delayed'
+        ELSE 'On Time'
+    END AS status,
+    COUNT(b.passenger_id) AS passenger_count
+FROM 
+    Flight f
+JOIN 
+    Route r ON f.route_id = r.route_id
+LEFT JOIN 
+    Booking b ON f.flight_id = b.flight_id
+GROUP BY 
+    f.flight_id, f.aircraft_id, r.origin_code, r.destination_code, f.departure, f.arrival, f.delay;

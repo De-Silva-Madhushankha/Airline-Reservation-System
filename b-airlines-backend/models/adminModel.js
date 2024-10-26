@@ -65,42 +65,21 @@ export const getCountsByAge = async (flightNumber) => {
 export const getPastFlightModel = async (originCode, destinationCode, startDate, endDate) => {
   try {
     const [flights] = await db.query(`
-      SELECT 
-        f.flight_id,
-        f.aircraft_id,
-        r.origin_code,
-        r.destination_code,
-        f.departure,
-        f.arrival,
-        CASE 
-            WHEN f.delay = TRUE THEN 'Delayed'
-            ELSE 'On Time'
-        END AS status,
-        COUNT(b.passenger_id) AS passenger_count
-      FROM 
-        Flight f
-      JOIN 
-        Route r ON f.route_id = r.route_id
-      LEFT JOIN 
-        Booking b ON f.flight_id = b.flight_id
-      WHERE 
-        r.origin_code = ? 
-        AND r.destination_code = ? 
-        AND f.departure BETWEEN ? AND ?
-      GROUP BY 
-        f.flight_id, f.aircraft_id, r.origin_code, r.destination_code, f.departure, f.arrival, f.delay
-      ORDER BY 
-        f.departure DESC;
+      SELECT * FROM PastFlightsAndPassengerCountView 
+      WHERE origin_code = ? 
+        AND destination_code = ? 
+        AND departure BETWEEN ? AND ?;
     `, [originCode, destinationCode, startDate, endDate]);
 
-    return {
-      flights,  // Return the fetched flight data
-    };
+    return { flights };
   } catch (error) {
     console.error('Error fetching past flight data:', error);
     throw error;
   }
 };
+
+
+
 
 
 export const updateFlightStatus = async (flight_id, status) => {
