@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { List, Button, message, Typography, Row, Col, Card, Tag } from 'antd';
 import axios from '../../axiosConfig.js';
+import { useNavigate } from 'react-router-dom';
 import './BookingConfirmationComponent.css';
 
 const { Title, Text } = Typography;
@@ -8,6 +9,7 @@ const { Title, Text } = Typography;
 const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlight, setPassengerCosts }) => {
   const [totalCost, setTotalCost] = useState(0);
   const [passengerCosts, setLocalPassengerCosts] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPassengerCosts = async () => {
@@ -65,14 +67,17 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
       };
       console.log(bookingData);
       // Send booking data to the backend
-      const response = await axios.post('/booking/create', bookingData,{
+      const response = await axios.post('/booking/create', bookingData, {
         headers: {
           Authorization: `Bearer ${token}`, // Pass token in the Authorization header
         },
       });
       
       if (response.data.success) {
-        message.success('Booking confirmed successfully!', 3); // Display success message for 3 seconds
+        message.success('Booking confirmed successfully!', 1); // Display success message for 3 seconds
+        setTimeout(() => {
+          navigate('/'); // Navigate to home page after 1 seconds
+        }, 1000);
       } else {
         message.error('Failed to confirm booking. Please try again.');
       }
