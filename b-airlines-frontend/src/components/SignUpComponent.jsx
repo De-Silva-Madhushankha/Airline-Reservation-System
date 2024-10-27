@@ -61,7 +61,7 @@ const onFinish = (values) => {
     if (response.data.success) {
       message.success(response.data.message);
       setTimeout(() => {
-        navigate('/'); // Navigate to home page after 1 seconds
+        navigate('/sign-in'); // Navigate to sign in page after 1 seconds
       }, 1000);
     } else if(!response.data.success) {
       message.error(response.data.message);
