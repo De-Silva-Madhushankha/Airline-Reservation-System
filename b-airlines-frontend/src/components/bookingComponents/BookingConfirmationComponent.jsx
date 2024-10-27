@@ -74,7 +74,7 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
         message.success('Booking confirmed successfully!', 1); 
         setTimeout(() => {
           navigate('/'); // Navigate to home
-        }, 1000);
+        }, 2000);
       } else {
         message.error('Failed to confirm booking. Please try again.');
       }
