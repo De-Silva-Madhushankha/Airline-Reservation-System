@@ -66,7 +66,7 @@ const BookingPage = () => {
 
   const handleSeatsSelected = (seats) => {
     setPassengerSeats(seats);
-    // nextStep();
+    nextStep();
   };
 
   const handleConfirmBooking = () => {
