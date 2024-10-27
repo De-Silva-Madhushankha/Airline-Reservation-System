@@ -133,13 +133,12 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     console.log('passengers seats', passengerSeats)
     try {
         const response = await axios.post('/seat/lock', seatData);
+        onSeatsSelected(passengerSeats); // Return selected seats for each passenger
+        message.success('Seats selected successfully!');
     } catch (error) {
         console.error('Failed to lock seats:', error.message);
-        throw error; // Re-throw the error for further handling if necessary
+        message.error(error.response.data.error);
     }
-
-    onSeatsSelected(passengerSeats); // Return selected seats for each passenger
-    message.success('Seats selected successfully!');
   };
 
   // Render seat rows based on class
