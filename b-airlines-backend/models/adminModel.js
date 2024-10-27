@@ -128,7 +128,7 @@ export const getCountsByDestination = async (destinationCode, startDate, endDate
     
     // Query to get passenger details (name, age)
     const [result] = await db.query(
-      'SELECT distinct passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
+      'SELECT passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
       [destinationCode, startDate, endDate]
     );
     
