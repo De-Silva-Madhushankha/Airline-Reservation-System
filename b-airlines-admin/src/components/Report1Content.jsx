@@ -1,25 +1,49 @@
-import React, { useState } from 'react';
-import { DatePicker, Input, message, Flex, Progress, Table } from 'antd';
-import axios from '../axiosConfig.js'; 
+import React, { useEffect, useState } from 'react';
+import { Select, message, Table, Progress, Typography } from 'antd';
+import axios from '../axiosConfig.js';
+import dayjs from 'dayjs';
 
-export default function Report1Content() {
-  const [flightNumber, setFlightNumber] = useState('');
+const { Title } = Typography;
+const { Option } = Select;
+
+const Report1Content = () => {
+  const [flights, setFlights] = useState([]);
+  const [selectedFlight, setSelectedFlight] = useState(null);
   const [passengerCount, setPassengerCount] = useState(null);
 
-  const handleSubmit = async () => {
-    if (!flightNumber) {
-      message.error("Please enter a Flight Number");
-      return;
+  // Fetch all flights on component mount
+  const fetchFlights = async () => {
+    try {
+      const response = await axios.get('/flight/flights');
+      setFlights(response.data);
+      console.log("Flights fetched successfully:", response.data);
+    } catch (error) {
+      console.error("Failed to fetch flights:", error);
+      message.error('Failed to fetch flights');
     }
+  };
+
+  useEffect(() => {
+    fetchFlights();
+  }, []);
+
+  // Handle flight selection and fetch passenger count for selected flight
+  const handleFlightSelect = async (flightId) => {
+    const flight = flights.find(f => f.flight_id === flightId);
+    setSelectedFlight(flight);
+    setPassengerCount(null);  // Reset passenger count when selecting a new flight
 
     try {
       const response = await axios.get('/admin/user-count-age', {
-        params: {
-          flightNumber
-        },
+        params: { flightNumber: flightId },
       });
-
-      setPassengerCount(response.data.passengerCount);
+      
+      // Check if the response data has the expected structure
+      if (response.data && response.data.passengerCount) {
+        setPassengerCount(response.data.passengerCount);
+      } else {
+        message.error("No passenger count data available.");
+      }
     } catch (err) {
       console.error("Error fetching passenger count:", err);
       message.error("Failed to fetch passenger count");
@@ -27,88 +51,63 @@ export default function Report1Content() {
   };
 
   const columns = [
-    {
-      title: 'First Name',
-      dataIndex: 'first_name',
-      key: 'first_name',
-    },
-    {
-      title: 'Last Name',
-      dataIndex: 'last_name',
-      key: 'last_name',
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Age Group',
-      dataIndex: 'age_group',
-      key: 'age_group',
-    },
+    { title: 'First Name', dataIndex: 'first_name', key: 'first_name' },
+    { title: 'Last Name', dataIndex: 'last_name', key: 'last_name' },
+    { title: 'Age', dataIndex: 'age', key: 'age' },
+    { title: 'Age Group', dataIndex: 'age_group', key: 'age_group' },
   ];
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <h1 className="text-gray-800 dark:text-white text-center text-xl mb-8">
-          Above age 18 / Below age 18
-        </h1>
+      <h1 className='text-white text-2xl mb-5'>Flight Report: Above 18 / Below 18</h1>
 
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
-            Enter Flight Number
-          </label>
-          <Input 
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-            value={flightNumber}
-            onChange={(e) => setFlightNumber(e.target.value)}
-          />
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">Select a Flight</label>
+          <Select
+            className="w-full"
+            placeholder="Select a flight"
+            onChange={handleFlightSelect}
+            value={selectedFlight ? selectedFlight.flight_id : undefined}
+          >
+            {flights.map((flight) => (
+              <Option key={flight.flight_id} value={flight.flight_id}>
+                {flight.flight_id}
+              </Option>
+            ))}
+          </Select>
         </div>
 
-        <button 
-          type="button" 
-          className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-
-        {passengerCount != null && (
+        {selectedFlight && passengerCount && (
           <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col items-center">
+            <h2 className="mb-2">Report for Flight: {selectedFlight.flight_id}</h2>
             <div className="flex flex-row gap-12 mt-4">
               <div className="basis-1/2">
-                <h2>Above_18</h2>
-                <strong>{passengerCount.above18}</strong>
+                <h2>Above 18</h2>
+                <strong>{passengerCount.above18 || 0}</strong>
               </div>
               <div className="basis-1/2">
-                <h2>Below_18</h2>
-                <strong>{passengerCount.below18}</strong>
+                <h2>Below 18</h2>
+                <strong>{passengerCount.below18 || 0}</strong>
               </div>
             </div>
             <div className="mt-4 flex justify-center mb-4">
-              <Flex gap="small" wrap>
-                <Progress
-                  type="dashboard"
-                  percent={((passengerCount.above18 * 100) / (passengerCount.above18 + passengerCount.below18)).toFixed(2)}
-                />
-                <Progress
-                  type="dashboard"
-                  percent={((passengerCount.below18 * 100) / (passengerCount.above18 + passengerCount.below18)).toFixed(2)}
-                  gapDegree={60}
-                />
-              </Flex>
+              <Progress 
+                type="dashboard" 
+                percent={((passengerCount.above18 * 100) / (passengerCount.above18 + passengerCount.below18) || 0).toFixed(2)} 
+              />
+              <Progress 
+                type="dashboard" 
+                percent={((passengerCount.below18 * 100) / (passengerCount.above18 + passengerCount.below18) || 0).toFixed(2)} 
+              />
             </div>
-
-            {/* Table to display passenger details */}
             <div className="mt-4">
-              <h2 className='mb-2'>Passenger Details</h2>
+              <h2 className="mb-2">Passenger Details</h2>
               <Table 
                 columns={columns} 
-                dataSource={passengerCount.result} 
+                dataSource={passengerCount.result || []} 
                 rowKey="first_name" 
-                pagination={false}
+                pagination={false} 
               />
             </div>
           </div>
@@ -116,4 +115,6 @@ export default function Report1Content() {
       </div>
     </div>
   );
-}
+};
+
+export default Report1Content;
