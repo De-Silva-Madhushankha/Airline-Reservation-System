@@ -32,8 +32,8 @@ traveler class (Economy, Business or Platinum).
 
 ## Features
 
-- Light/dark mode toggle
-- Live previews
+- Flight Booking
+- Exclusive Loyalty Offers
 - Fullscreen mode
 
 
@@ -44,6 +44,8 @@ traveler class (Economy, Business or Platinum).
 ## Screenshots
 
 ![App Screenshot](b-airlines-frontend/public/images/bairwayshome.jpeg)
+
+
 
 ## Getting Started
 
