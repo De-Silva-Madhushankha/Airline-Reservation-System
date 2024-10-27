@@ -1,4 +1,5 @@
 import db from '../database/db.js'
+import Passenger from './passengerModel.js'
 
 const Seat = {
 
@@ -39,8 +40,29 @@ const Seat = {
     },
 
     getOccupiedByFlightId: async (flight_id) => {
-        const [rows] = await db.query(`SELECT seat_row, seat_column FROM Seat WHERE flight_id = ? and is_reserved = 1`, [flight_id])
-        return rows
+        // occupied first
+        const [result] = await db.query(
+            `CALL GetSeatsByFlightId(?)`, 
+            [flight_id]
+        );
+
+        const occupiedRows  = result[0]
+        const lockedRows = result[1]
+
+        const occupiedSeats = occupiedRows.map(row => ({
+            row: row.seat_row,
+            column: row.seat_column
+        }));
+ 
+        const lockedSeats = lockedRows.map(row => ({
+            row: row.seat_row,
+            column: row.seat_column
+        }));
+        console.log(occupiedSeats)
+        return {
+            occupiedSeats,
+            lockedSeats,
+        };
     },
 
     getSeatBySeatNumber: async (seat_number) => {
@@ -63,12 +85,41 @@ const Seat = {
         return rows
     },
 
-    // New method to occupy a seat
     occupySeat: async (seat_id) => {
         const [result] = await db.query(`UPDATE Seat SET is_reserved = 1 WHERE seat_id = ?`, [seat_id]);
         return result.affectedRows; // Return the number of affected rows (should be 1 if successful)
     },
 
+    lockSeatTransaction: async (flight_id, seats) => {
+        const connection = await db.getConnection();
+        try {
+            await connection.beginTransaction();
+    
+            const results = [];
+            console.log('seeats is', seats)
+    
+            Object.keys(seats).forEach(async key => {
+                const { row, column, className } = seats[key];
+                console.log("in the trans" , row, column)
+    
+                const [result] = await connection.query(`CALL LockSeat(?, ?, ?)`, 
+                    [flight_id, row, column]);
+    
+                results.push(result);
+            })
+    
+            await connection.commit();
+            return results; 
+    
+        } catch (error) {
+            await connection.rollback();
+            console.error('Error locking seats:', error);
+            throw error;
+        } finally {
+            connection.release();
+        }
+    },
+    
 }
 
 export default Seat;
