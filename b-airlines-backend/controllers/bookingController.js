@@ -2,53 +2,46 @@ import Booking from '../models/bookingModel.js';
 import Passenger from '../models/passengerModel.js';
 import Seat from '../models/seatModel.js';
 
-// Controller to calculate booking cost
+
 export const getBookingCost = async (req, res) => {
     try {
-        const { flight_id, seat } = req.body;
-        const { row, column } = seat; // Assuming seat has row and column properties
-        // Call the model to calculate the seat price using the stored function
-        const totalCost = await Booking.calculateSeatPrice(flight_id, row, column);
+        const { flight_id, passengerSeats } = req.body; // passengerSeats - { passport, seat } , seat - { row, column}
+        let totalCost = 0;
+        const costs = {};
 
-        if (totalCost === null) {
-            return res.status(400).json({ message: 'Unable to calculate seat price' });
+        for (const passenger of passengerSeats) {
+            const { passport, seat } = passenger;
+            const { row, column } = seat;
+
+            const seatCost = await Booking.calculateSeatPrice(flight_id, row, column);
+
+            if (seatCost === null) {
+                return res.status(400).json({ message: `Unable to calculate seat price for passport ${passport}` });
+            }
+
+            costs[passport] = seatCost;
+            totalCost += seatCost;
         }
 
-        // Return the calculated price in the response
-        res.status(200).json({ totalCost });
+        res.status(200).json({ costs, totalCost });
+        
     } catch (error) {
-        // Handle any server errors
         res.status(500).json({ error: error.message });
     }
 };
 
-// Function to insert a new booking into the database
+
+// insert a new booking 
 export const createBookingController = async (req, res) => {
     const user_id = req.user.id;
-
-    const { flight_id, passengers } = req.body; // Extract flight_id and passengers array
+    const { flight_id, passengers } = req.body;
 
     try {
-        // Iterate over each passenger and create a booking for each
-        const bookingIds = [];
-        for (const passenger of passengers) {
-            const { firstName, lastName, age, phoneNumber, passport, email, seatRow, seatColumn } = passenger;
-
-            // Calculate the total amount for each passenger's seat (you might want to adjust this based on your logic)
-            const total_amount = await Booking.calculateSeatPrice(flight_id, seatRow, seatColumn);
-            const passengerId = await Passenger.createPassenger(firstName, lastName, age, phoneNumber, passport, email);
-            // need to handle uniqueness of passengers
-            const seat_id = await Seat.getSeatId(flight_id, seatRow, seatColumn);            
-            const done = await Seat.occupySeat(seat_id);
-            // Create the booking and collect the ID
-            const bookingId = await Booking.createBooking(flight_id, passengerId, seat_id, user_id, total_amount);
-            bookingIds.push(bookingId); // Store the created booking ID
-        }
-
-        res.status(201).json({ success: true, bookingIds }); // Send back the list of booking IDs
+        const bookingIds = await Booking.createBookingWithTransaction(flight_id, passengers, user_id);
+        res.status(201).json({ success: true, bookingIds });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, error: 'Failed to create booking' }); // Error handling
+        res.status(500).json({ success: false, error: 'Failed to create booking' });
     }
 };
 
@@ -64,7 +57,6 @@ export const getAllBookings = async (req, res) => {
 export const getBookingById = async (req, res) => {
     const id = req.user.id;
     console.log( id);
-    console.log("hey")
     try {
         const [booking] = await Booking.getBookingByUserId(id);
         console.log(booking);

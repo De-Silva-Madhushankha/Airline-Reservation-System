@@ -25,6 +25,39 @@ const Booking = {
         return result.insertId;
     },
 
+    createBookingWithTransaction: async (flight_id, passengers, user_id) => {
+
+        const bookingIds = [];
+        // * //
+        const connection = await db.getConnection();
+
+        try {
+            await connection.beginTransaction();
+
+            for (const passenger of passengers) {
+                const { firstName, lastName, age, phoneNumber, passport, email, seatRow, seatColumn } = passenger;
+    
+                const [results] = await connection.query(
+                    'CALL createBooking(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+                    [flight_id, firstName, lastName, age, phoneNumber, passport, email, seatRow, seatColumn, user_id]
+                );
+    
+                // second element because first element returns passenger_id
+                const bookingId = results[1][0].booking_id;
+    
+                bookingIds.push(bookingId);
+            }
+    
+            await connection.commit();
+    
+            return bookingIds;
+        } catch (error) {
+            await connection.rollback();
+            throw error; 
+        } finally {
+            connection.release();
+        }
+    },    
     
 
     updateBooking: async (booking_id, flight_id, passenger_id, total_amount, booking_date) =>{
