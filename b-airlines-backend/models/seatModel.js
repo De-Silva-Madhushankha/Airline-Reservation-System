@@ -98,22 +98,27 @@ const Seat = {
             const results = [];
             console.log('seeats is', seats)
     
-            Object.keys(seats).forEach(async key => {
+            for (const key of Object.keys(seats)) {
                 const { row, column, className } = seats[key];
-                console.log("in the trans" , row, column)
+                console.log("Locking seat - Row:", row, "Column:", column);
     
-                const [result] = await connection.query(`CALL LockSeat(?, ?, ?)`, 
-                    [flight_id, row, column]);
-    
-                results.push(result);
-            })
+                try {
+                    const [result] = await connection.query(`CALL LockSeat(?, ?, ?)`, 
+                        [flight_id, row, column]);
+                    results.push(result);
+
+                } catch (innerError) {
+                    // console.error('Error locking seat:', innerError.message);
+                    await connection.rollback();
+                    throw new Error(`Failed to lock seat at row ${row}, column ${column}: ${innerError.message}`);
+                }
+            }
     
             await connection.commit();
             return results; 
     
         } catch (error) {
             await connection.rollback();
-            console.error('Error locking seats:', error);
             throw error;
         } finally {
             connection.release();
