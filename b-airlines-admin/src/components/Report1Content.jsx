@@ -66,7 +66,7 @@ const Report1Content = () => {
       <h1 className='text-black text-2xl mb-5 font-bold'> Above 18 / Below 18</h1>
 
         <div className="mb-4">
-          <label className="block  text-gray-400 mb-2">Select Flight For Report</label>
+          <label className="block  text-gray-800 mb-2">Select Flight For Report</label>
           <Select
             className="w-full"
             placeholder="Select a flight"
