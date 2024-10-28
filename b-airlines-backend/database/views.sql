@@ -16,7 +16,58 @@ CREATE VIEW user_bookings AS
     SELECT Booking.user_id, Booking.booking_id, Booking.flight_id, Booking.seat_id, Booking.booking_date, Booking.total_amount, Booking.payment_status
     FROM Booking;
 
+-- comprehensive booking details
 
+
+CREATE VIEW v_booking_details AS
+SELECT 
+    b.booking_id,
+    b.booking_date,
+    b.total_amount,
+    b.payment_status,
+    
+    -- Passenger details
+    p.passenger_id,
+    p.first_name AS passenger_first_name,
+    p.last_name AS passenger_last_name,
+    p.passport_id,
+    p.age,
+    p.phone_number,
+    p.email AS passenger_email,
+    
+    -- Flight details
+    f.flight_id,
+    f.departure,
+    f.arrival,
+    f.delay,
+    
+    -- Route details
+    r.origin_code,
+    r.destination_code,
+    r.distance,
+    
+    -- Seat details
+    s.seat_id,
+    s.seat_row,
+    s.seat_column,
+    sc.seat_class_name,
+    
+    -- User details (booker)
+    u.user_id AS booked_by_user_id,
+    u.first_name AS booked_by_first_name,
+    u.last_name AS booked_by_last_name,
+    u.email AS booked_by_email,
+    lp.program_name AS loyalty_program
+FROM 
+    Booking b
+    INNER JOIN Passenger p ON b.passenger_id = p.passenger_id
+    INNER JOIN Flight f ON b.flight_id = f.flight_id
+    INNER JOIN Route r ON f.route_id = r.route_id
+    INNER JOIN Seat s ON b.seat_id = s.seat_id
+    INNER JOIN Seat_class sc ON s.seat_class_id = sc.seat_class_id
+    LEFT JOIN User u ON b.user_id = u.user_id
+    LEFT JOIN Loyalty_program lp ON u.program_id = lp.program_id;
+    
 
 -- reports -  Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18
 
