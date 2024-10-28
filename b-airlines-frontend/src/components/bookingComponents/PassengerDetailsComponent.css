@@ -62,6 +62,30 @@
   background-color: #45a049;
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 10px; /* Space between buttons when they wrap */
+}
+
+.action-button {
+  flex: 1; /* Allows buttons to take equal space */
+  min-width: 120px; /* Minimum width for consistency */
+  padding: 0 16px; /* Padding for more space around text */
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    justify-content: center; /* Center buttons on smaller screens */
+  }
+  .action-button {
+    width: 100%; /* Full-width buttons on smaller screens */
+    max-width: none;
+  }
+}
+
 @media (max-width: 768px) {
   .passenger-details-background {
     padding: 20px;

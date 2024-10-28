@@ -8,7 +8,6 @@ const { Option } = Select;
 const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSelected, passengerSeats, globalSelectedSeats, setGlobalSelectedSeats, setPassengerSeats }) => { // Accept global states and functions as props
   const [occupiedSeats, setOccupiedSeats] = useState([]);
   const [lockedSeats, setLockedSeats] = useState([]);
-  const [rows, setRows] = useState(0);
   const [columns, setColumns] = useState(0);
   const [model, setModel] = useState(null);
   const [economyRows, setEconomyRows] = useState(0);
@@ -19,7 +18,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
   useEffect(() => {
     const fetchOccupiedSeats = async () => {
       try {
-        if (!flight_id) return; // Ensure flight_id is present
+        if (!flight_id) return;
   
         console.log('Fetching occupied seats for flight_id:', flight_id);
         const response = await axios.get(`/seat/occupied/${flight_id}`);
@@ -38,7 +37,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     };
     
     fetchOccupiedSeats();
-  }, [flight_id]); // Re-run when flight_id changes
+  }, [flight_id]);
   
   useEffect(() => {
     const fetchModels = async () => {
@@ -46,7 +45,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
         console.log('Fetching model for aircraft_id:', aircraft_id);
         const response = await axios.get(`/aircraft/models/${aircraft_id}`);
         console.log('Aircraft Response:', response.data);
-        setModel(response.data.model); // Assuming response contains the model data
+        setModel(response.data.model);
       } catch (error) {
         message.error('Failed to fetch aircraft model');
         console.error(error);
@@ -60,10 +59,10 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
 
   useEffect(() => {
     const fetchModelDetails = async () => {
-      if (!model) return; // Prevent fetch if model is not set
+      if (!model) return; 
 
       try {
-        const response = await axios.get(`/model/${model}`); // Fetch model details from backend
+        const response = await axios.get(`/model/${model}`); // Fetch model
         const { num_columns, num_economy_rows, num_business_rows, num_platinum_rows } = response.data[0];
         setColumns(num_columns);
         setEconomyRows(num_economy_rows);
@@ -79,45 +78,43 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
   }, [aircraft_id, model]);
 
   const handleSeatClick = (rowIndex, columnIndex, className) => {
-    const seatPair = { row: rowIndex + 1, column: columnIndex + 1, className}; // Store as row-column pair
+    const seatPair = { row: rowIndex + 1, column: columnIndex + 1, className};
 
     // Check if the seat is already selected globally
     const seatLabel = `R${seatPair.row}C${seatPair.column}`;
     if (globalSelectedSeats[seatLabel] && globalSelectedSeats[seatLabel] !== selectedPassenger) {
-      message.error('This seat has already been selected by another passenger!');
+      message.error('This seat has already been selected for another passenger!');
       return;
     }
 
-    // If the seat is currently selected by the passenger, deselect it
     const currentPassengerSeat = passengerSeats[selectedPassenger];
 
+    // If the seat is currently selected by the passenger, deselect it
     if (currentPassengerSeat && currentPassengerSeat.row === seatPair.row && currentPassengerSeat.column === seatPair.column) {
-      // Deselect the seat
-      const updatedGlobalSelectedSeats = { ...globalSelectedSeats };
-      delete updatedGlobalSelectedSeats[seatLabel]; // Remove from global selection
+      const updatedGlobalSelectedSeats = { ...globalSelectedSeats };  // duplicate globalseats
+      delete updatedGlobalSelectedSeats[seatLabel];
       setPassengerSeats({
         ...passengerSeats,
-        [selectedPassenger]: null, // Remove passenger's selection
+        [selectedPassenger]: null,
       });
-      setGlobalSelectedSeats(updatedGlobalSelectedSeats); // Update global selection state
-      return; // Exit the function
+      setGlobalSelectedSeats(updatedGlobalSelectedSeats);
+      return;
     }
 
     // If not selected, select the new seat and deselect the previous seat if any
     const updatedGlobalSelectedSeats = { ...globalSelectedSeats };
 
     if (currentPassengerSeat) {
-      // Remove the previously selected seat from global selection
       const previousSeatLabel = `R${currentPassengerSeat.row}C${currentPassengerSeat.column}`;
       delete updatedGlobalSelectedSeats[previousSeatLabel];
     }
 
-    updatedGlobalSelectedSeats[seatLabel] = selectedPassenger; // Mark globally selected
+    updatedGlobalSelectedSeats[seatLabel] = selectedPassenger;
     setPassengerSeats({
       ...passengerSeats,
-      [selectedPassenger]: seatPair, // Add new selection for passenger as row-column pair
+      [selectedPassenger]: seatPair,
     });
-    setGlobalSelectedSeats(updatedGlobalSelectedSeats); // Update global selection state
+    setGlobalSelectedSeats(updatedGlobalSelectedSeats);
   };
 
   const handleConfirmSelection = async () => {
@@ -128,12 +125,12 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
 
     const seatData = {
       flight_id: flight_id,
-      passengerSeats, // Array of seat objects
+      passengerSeats,
     };
     console.log('passengers seats', passengerSeats)
     try {
         const response = await axios.post('/seat/lock', seatData);
-        onSeatsSelected(passengerSeats); // Return selected seats for each passenger
+        onSeatsSelected(passengerSeats);
         message.success('Seats selected successfully!');
     } catch (error) {
         console.error('Failed to lock seats:', error.message);
@@ -150,6 +147,8 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
           {[...Array(columns)].map((_, columnIndex) => {
             const seatPair = { row: startRow + rowIndex + 1, column: columnIndex + 1, className: className };
             const seatLabel = `R${seatPair.row}C${seatPair.column}`;
+            // isSelected - selected by current passenger
+            // is global selected - selected by any passenger
             const isSelected = passengerSeats[selectedPassenger]?.row === seatPair.row && passengerSeats[selectedPassenger]?.column === seatPair.column;
             const isOccupied = occupiedSeats.some(seat => seat[0] === seatPair.row && seat[1] === seatPair.column);
             const isLocked = lockedSeats.some(seat => seat[0] === seatPair.row && seat[1] === seatPair.column);
@@ -158,7 +157,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
             return (
               <Button
                 key={columnIndex}
-                className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''} ${isGlobalSelected ? 'global-selected' : ''}`}
+                className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''} ${isLocked ? 'locked' : ''} ${isGlobalSelected ? 'global-selected' : ''}`}
                 onClick={() => handleSeatClick(startRow + rowIndex, columnIndex, className)}
                 disabled={(isOccupied || isLocked) && !isSelected} // Disable button if occupied (but allow selection for the current passenger)
                 style={{
