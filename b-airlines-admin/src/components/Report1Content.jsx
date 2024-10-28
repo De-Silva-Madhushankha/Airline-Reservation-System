@@ -62,11 +62,11 @@ const Report1Content = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-0">
-      <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <h1 className='text-white text-2xl mb-5'>Flight Report: Above 18 / Below 18</h1>
+      <div className="w-full max-w-md p-6 border border-gray-200 rounded-lg shadow-md bg-gray-200 border-gray-700">
+      <h1 className='text-black text-2xl mb-5 font-bold'> Above 18 / Below 18</h1>
 
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">Select a Flight</label>
+          <label className="block  text-gray-400 mb-2">Select Flight For Report</label>
           <Select
             className="w-full"
             placeholder="Select a flight"
