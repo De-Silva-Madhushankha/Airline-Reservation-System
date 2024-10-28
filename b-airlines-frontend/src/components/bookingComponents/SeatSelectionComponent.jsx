@@ -7,6 +7,7 @@ const { Option } = Select;
 
 const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSelected, passengerSeats, globalSelectedSeats, setGlobalSelectedSeats, setPassengerSeats }) => { // Accept global states and functions as props
   const [occupiedSeats, setOccupiedSeats] = useState([]);
+  const [lockedSeats, setLockedSeats] = useState([]);
   const [rows, setRows] = useState(0);
   const [columns, setColumns] = useState(0);
   const [model, setModel] = useState(null);
@@ -21,10 +22,15 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
         if (!flight_id) return; // Ensure flight_id is present
   
         console.log('Fetching occupied seats for flight_id:', flight_id);
-        const response = await axios.get(`/seat/occupied/${flight_id}`); // Update with your endpoint
-        // Assuming response contains an array of occupied seats
-        const seatTuples = response.data.map(seat => [seat.seat_row, seat.seat_column]);
-        setOccupiedSeats(seatTuples); 
+        const response = await axios.get(`/seat/occupied/${flight_id}`);
+
+        const seatTuples = response.data.occupiedSeats.map(seat => [seat.row, seat.column]);
+        const lockedSeatTuples = response.data.lockedSeats.map(seat => [seat.row, seat.column]);
+        
+
+        setOccupiedSeats(seatTuples);
+        setLockedSeats(lockedSeatTuples);
+
       } catch (error) {
         message.error('Failed to fetch occupied seats');
         console.error(error);
@@ -114,14 +120,25 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     setGlobalSelectedSeats(updatedGlobalSelectedSeats); // Update global selection state
   };
 
-  const handleConfirmSelection = () => {
+  const handleConfirmSelection = async () => {
     if (Object.keys(passengerSeats).length < passengers.length) {
       message.error('Please assign seats to all passengers.');
       return;
     }
 
-    onSeatsSelected(passengerSeats); // Return selected seats for each passenger
-    message.success('Seats selected successfully!');
+    const seatData = {
+      flight_id: flight_id,
+      passengerSeats, // Array of seat objects
+    };
+    console.log('passengers seats', passengerSeats)
+    try {
+        const response = await axios.post('/seat/lock', seatData);
+        onSeatsSelected(passengerSeats); // Return selected seats for each passenger
+        message.success('Seats selected successfully!');
+    } catch (error) {
+        console.error('Failed to lock seats:', error.message);
+        message.error(error.response.data.error);
+    }
   };
 
   // Render seat rows based on class
@@ -135,6 +152,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
             const seatLabel = `R${seatPair.row}C${seatPair.column}`;
             const isSelected = passengerSeats[selectedPassenger]?.row === seatPair.row && passengerSeats[selectedPassenger]?.column === seatPair.column;
             const isOccupied = occupiedSeats.some(seat => seat[0] === seatPair.row && seat[1] === seatPair.column);
+            const isLocked = lockedSeats.some(seat => seat[0] === seatPair.row && seat[1] === seatPair.column);
             const isGlobalSelected = globalSelectedSeats[seatLabel];
 
             return (
@@ -142,10 +160,10 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
                 key={columnIndex}
                 className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''} ${isGlobalSelected ? 'global-selected' : ''}`}
                 onClick={() => handleSeatClick(startRow + rowIndex, columnIndex, className)}
-                disabled={isOccupied && !isSelected} // Disable button if occupied (but allow selection for the current passenger)
+                disabled={(isOccupied || isLocked) && !isSelected} // Disable button if occupied (but allow selection for the current passenger)
                 style={{
-                  backgroundColor: isOccupied ? '#ff4d4d' : (isGlobalSelected ? 'lightgreen' : ''), // Set color for occupied seats
-                  color: isOccupied ? '#a9a9a9' : '', // Change text color for occupied seats
+                  backgroundColor: isOccupied ? '#ff4d4d' : isLocked ? 'gray':  (isGlobalSelected ? 'lightgreen' : ''), // Set color for occupied seats
+                  color: isOccupied || isLocked ? '#a9a9a9' : '', // Change text color for occupied seats
                 }}
               >
                 {seatLabel} {/* Seat Label */}

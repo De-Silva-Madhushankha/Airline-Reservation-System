@@ -123,6 +123,7 @@ CREATE TABLE Seat (
     model VARCHAR(50),
     flight_id CHAR(36) NOT NULL,
     seat_class_id INT NOT NULL,  -- Foreign key to SeatClass
+    lock_until DATETIME DEFAULT NULL,
     FOREIGN KEY (seat_class_id) REFERENCES Seat_class(seat_class_id) ON DELETE CASCADE,
     FOREIGN KEY (model) REFERENCES Model(model) ON DELETE CASCADE,
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON DELETE CASCADE
