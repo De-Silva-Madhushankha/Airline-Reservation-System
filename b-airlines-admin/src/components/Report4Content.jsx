@@ -115,11 +115,11 @@ export default function Report4Content() {
 
   {/* Input Form */}
   <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-    <h1 className="text-center text-xl mb-8 text-white">Admin Flight Report</h1>
+    <h1 className="text-center text-2xl mb-8 text-black font-bold">Admin Flight Report</h1>
 
     {/* Date Range Picker */}
     <div className="mb-4">
-      <label className="block mb-2 text-white">Select Date Range</label>
+      <label className="block mb-2 text-gray-500">Select Date Range</label>
       <RangePicker
         className="w-full"
         onChange={(dates) => setDateRange(dates)}
@@ -129,7 +129,7 @@ export default function Report4Content() {
 
     {/* Route Selection */}
     <div className="mb-4">
-      <label className="block mb-2 text-white">Select a Route</label>
+      <label className="block mb-2 text-gray-500">Select a Route</label>
       <Select
         placeholder="Select a route"
         className="w-full"
@@ -152,7 +152,7 @@ export default function Report4Content() {
     {/* Submit Button */}
     <button
       type="button"
-      className="w-full bg-blue-700 text-white py-2 rounded"
+      className="w-full bg-gray-700 text-white py-2 rounded"
       onClick={fetchReportData}
     >
       Fetch Report

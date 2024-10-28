@@ -159,3 +159,57 @@ END //
 
 DELIMITER ;
 
+
+DELIMITER //
+
+CREATE PROCEDURE LockSeat(
+    IN p_flight_id CHAR(36),
+    IN p_seat_row INT,
+    IN p_seat_column INT
+)
+BEGIN
+    DECLARE seat_locked INT;
+    DECLARE p_seat_id CHAR(36);
+
+    -- Get the seat_id and check if the seat is not locked
+    SELECT seat_id INTO p_seat_id
+    FROM Seat
+    WHERE flight_id = p_flight_id 
+      AND seat_row = p_seat_row 
+      AND seat_column = p_seat_column
+      AND (lock_until IS  NULL OR lock_until < NOW());
+    
+    -- If the seat is locked, signal an error
+    IF p_seat_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The seat is currently locked. Please try again later.';
+    ELSE
+        UPDATE Seat
+        SET lock_until = NOW() + INTERVAL 10 MINUTE
+        WHERE seat_id = p_seat_id;
+    END IF;
+END //
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE PROCEDURE GetSeatsByFlightId(
+    IN p_flight_id CHAR(36)
+)
+BEGIN
+    -- Select occupied seats
+    SELECT seat_row, seat_column 
+    FROM Seat 
+    WHERE flight_id = p_flight_id 
+      AND is_reserved = 1;
+
+    -- Select locked but not occupied seats
+    SELECT seat_row, seat_column 
+    FROM Seat 
+    WHERE flight_id = p_flight_id 
+      AND is_reserved = 0 
+      AND lock_until > NOW();
+END //
+
+DELIMITER ;

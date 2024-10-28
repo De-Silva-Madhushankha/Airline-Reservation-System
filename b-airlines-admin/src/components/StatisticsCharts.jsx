@@ -31,6 +31,28 @@ const StatisticsCharts = () => {
   const [userGrowth, setUserGrowth] = useState([]);
   const [bookings, setBookings] = useState([]);
 
+  const [counts, setCounts] = useState({
+    passenger: 0,
+    user: 0,
+    booking: 0,
+  });
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const response = await axios.get('/admin/load-charts');
+        setCounts(response.data);
+      } catch (err) {
+        setError('Error fetching counts');
+      }
+    };
+
+    fetchCounts();
+  }, []);
+
+
+
   useEffect(() => {
     // Practical data for the current year
     const currentYear = new Date().getFullYear();

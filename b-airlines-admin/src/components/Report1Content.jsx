@@ -63,10 +63,10 @@ const Report1Content = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <h1 className='text-white text-2xl mb-5'>Flight Report: Above 18 / Below 18</h1>
+      <h1 className='text-black text-2xl mb-5 font-bold'> Above 18 / Below 18</h1>
 
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">Select a Flight</label>
+          <label className="block  text-gray-400 mb-2">Select Flight For Report</label>
           <Select
             className="w-full"
             placeholder="Select a flight"
@@ -83,8 +83,7 @@ const Report1Content = () => {
 
         {selectedFlight && passengerCount && (
           <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col items-center">
-            <h2 className="mb-2">Report for Flight: {selectedFlight.flight_id}</h2>
-            <div className="flex flex-row gap-12 mt-4">
+            <div className="flex flex-row gap-24 mt-4">
               <div className="basis-1/2">
                 <h2>Above 18</h2>
                 <strong>{passengerCount.above18 || 0}</strong>
@@ -94,7 +93,7 @@ const Report1Content = () => {
                 <strong>{passengerCount.below18 || 0}</strong>
               </div>
             </div>
-            <div className="mt-4 flex justify-center mb-4">
+            <div className="mt-4 flex justify-center mb-4 gap-6">
               <Progress 
                 type="dashboard" 
                 percent={((passengerCount.above18 * 100) / (passengerCount.above18 + passengerCount.below18) || 0).toFixed(2)} 
@@ -105,7 +104,7 @@ const Report1Content = () => {
               />
             </div>
             <div className="mt-4">
-              <h2 className="mb-2">Passenger Details</h2>
+              <h2 className="mb-2 font-bold">Passenger Details</h2>
               <Table 
                 columns={columns} 
                 dataSource={passengerCount.result || []} 

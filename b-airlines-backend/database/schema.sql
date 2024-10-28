@@ -123,6 +123,7 @@ CREATE TABLE Seat (
     model VARCHAR(50),
     flight_id CHAR(36) NOT NULL,
     seat_class_id INT NOT NULL,  -- Foreign key to SeatClass
+    lock_until DATETIME DEFAULT NULL,
     FOREIGN KEY (seat_class_id) REFERENCES Seat_class(seat_class_id) ON DELETE CASCADE,
     FOREIGN KEY (model) REFERENCES Model(model) ON DELETE CASCADE,
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON DELETE CASCADE
@@ -136,7 +137,7 @@ CREATE TABLE Booking (
     user_id CHAR(36) ,
     booking_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_amount DOUBLE,
-    payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed') ),
+    payment_status VARCHAR(20) CHECK ( payment_status IN ('Pending', 'Paid', 'Failed', 'Cancelled') ),
     FOREIGN KEY (flight_id) REFERENCES Flight(flight_id) ON UPDATE CASCADE ,
     FOREIGN KEY (passenger_id) REFERENCES Passenger(passenger_id) ON UPDATE CASCADE ,
     FOREIGN KEY (seat_id) REFERENCES Seat(seat_id) ON UPDATE CASCADE ,

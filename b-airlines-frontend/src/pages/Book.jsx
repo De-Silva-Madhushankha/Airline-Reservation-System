@@ -66,7 +66,6 @@ const BookingPage = () => {
 
   const handleSeatsSelected = (seats) => {
     setPassengerSeats(seats);
-    console.log(passengerSeats)
     nextStep();
   };
 
@@ -142,7 +141,7 @@ const BookingPage = () => {
 
         <div style={{ marginTop: '20px' }}>
           {currentStep > 0 && <Button onClick={prevStep}>Previous</Button>}
-          {currentStep < steps.length - 1 && (
+          {0 < currentStep && currentStep < steps.length - 1 && (
             <Button type="primary" onClick={nextStep} disabled={currentStep === 1 && !isPassengerConfirmed}>
               Next
             </Button>

@@ -10,6 +10,28 @@ export const getAllSeats = async (req, res) => {
     }
 };
 
+// lock seats when selected
+export const lockSeats = async (req, res) => {
+    console.log('body', req.body)
+    const { flight_id, passengerSeats } = req.body;
+
+    if (!flight_id || !passengerSeats || Object.keys(passengerSeats).length === 0) {
+        return res.status(400).json({ success: false, error: 'Flight ID and passenger seats are required' });
+    }
+
+    try {
+        const result = await Seat.lockSeatTransaction(flight_id, passengerSeats);
+        res.status(201).json({ success: true, data: result });
+
+    } catch (error) {
+        console.error('Error locking seats:', error.message);
+        
+        if (error.message.includes('locked')) {
+            return res.status(409).json({ success: false, error: error.message });
+        }
+        res.status(500).json({ success: false, error: 'Seat selection failed. Please try again later.' });    }
+};
+
 export const getOccupiedByFlightId = async (req, res) => {
     try {
         const { flight_id } = req.params;  // Assuming flight_id is passed as a route parameter
