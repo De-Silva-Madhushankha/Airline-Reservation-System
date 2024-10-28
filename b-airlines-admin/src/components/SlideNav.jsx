@@ -28,7 +28,7 @@ export default function SideNav({ setActiveSection }) {
                                 <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Reports</span>
                                 <MdOutlineKeyboardArrowDown />
                             </button>
-                            <ul id="dropdown-example" className="hidden group-hover:block space-y-1 text-sm">
+                            <ul id="dropdown-example" className="group-hover:block space-y-1 text-sm">
                                 <li>
                                     <button onClick={() => setActiveSection("report1")} 
                                             className="flex items-center w-full text-left text-gray-300 transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
