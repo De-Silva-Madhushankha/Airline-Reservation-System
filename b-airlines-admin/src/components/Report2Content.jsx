@@ -65,7 +65,7 @@ export default function Report2Content() {
         </h1>
 
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-gray-800 dark:text-gray-300 mb-2">
             Select Destination
           </label>
           <Select 
@@ -89,7 +89,7 @@ export default function Report2Content() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-gray-800 dark:text-gray-300 mb-2">
             Select Period
           </label>
           <RangePicker 
