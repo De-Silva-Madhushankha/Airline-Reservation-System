@@ -119,7 +119,7 @@ export default function Report4Content() {
 
     {/* Date Range Picker */}
     <div className="mb-4">
-      <label className="block mb-2 text-gray-500">Select Date Range</label>
+      <label className="block mb-2 text-gray-800">Select Date Range</label>
       <RangePicker
         className="w-full"
         onChange={(dates) => setDateRange(dates)}
@@ -129,7 +129,7 @@ export default function Report4Content() {
 
     {/* Route Selection */}
     <div className="mb-4">
-      <label className="block mb-2 text-gray-500">Select a Route</label>
+      <label className="block mb-2 text-gray-800">Select a Route</label>
       <Select
         placeholder="Select a route"
         className="w-full"
