@@ -19,7 +19,7 @@ export default function Report2Content() {
     try {
 
       const [startDate, endDate] = dateRange;
-      console.log(startDate);
+
       const response = await axios.get('/admin/user-count-destination', {
         params: {
           destinationCode,
@@ -60,7 +60,7 @@ export default function Report2Content() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <h1 className="text-gray-800 dark:text-white text-center text-xl mb-8">
+        <h1 className="text-gray-800 dark:text-white text-center text-2xl mb-8 font-bold">
           Passenger Count by Destination
         </h1>
 
@@ -102,7 +102,7 @@ export default function Report2Content() {
 
         <button 
           type="button" 
-          className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          className="w-full text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           onClick={handleSubmit}
         >
           Submit
