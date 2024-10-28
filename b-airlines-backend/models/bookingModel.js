@@ -78,10 +78,10 @@ const Booking = {
     },
     
 
-    deleteBooking: async (booking_id) => {
-        const [result] = await db.query('DELETE FROM Booking WHERE booking_id = ?', [booking_id]);
-        return result.affectedRows;
-    },
+    // deleteBooking: async (booking_id) => {
+    //     const [result] = await db.query('DELETE FROM Booking WHERE booking_id = ?', [booking_id]);
+    //     return result.affectedRows;
+    // },
 
     getRevenue: async (aircraft_id) =>{
         const [rows] = await db.query(`
@@ -128,13 +128,17 @@ const Booking = {
         return rows
     },
 
-    deleteBooking: async (booking_id) => {
-        const [result] = await db.query('DELETE FROM Booking WHERE booking_id = ?', [booking_id]);
-        return result.affectedRows;
+    // deleteBooking: async (booking_id) => {
+    //     const [result] = await db.query('DELETE FROM Booking WHERE booking_id = ?', [booking_id]);
+    //     return result.affectedRows;
     }
 
-
-
-}
-
+    deleteBooking: async (booking_id) => {
+        deleteBooking: async (booking_id) => {
+            const [result] = await db.query('UPDATE Booking SET payment_status = ? WHERE booking_id = ?', ['Cancelled', booking_id]);
+            return result.affectedRows;
+        }
+    }
+        
+    
 export default Booking;
