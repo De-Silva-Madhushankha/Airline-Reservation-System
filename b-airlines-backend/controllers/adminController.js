@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, getPastFlightModel, updateFlightStatus, getRevenueByAircraftType} from '../models/adminModel.js';
+import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, getPastFlightModel, updateFlightStatus, getRevenueByAircraftType , loadChartData} from '../models/adminModel.js';
 
 
   
@@ -130,6 +130,16 @@ import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, ge
   export const getRevenueByType = async (req, res) => {
     try {
       const counts = await getRevenueByAircraftType();
+      res.status(200).json(counts);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching counts', error });
+    }
+  };
+
+
+  export const getChartData = async (req, res) => {
+    try {
+      const counts = await loadChartData();
       res.status(200).json(counts);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching counts', error });
