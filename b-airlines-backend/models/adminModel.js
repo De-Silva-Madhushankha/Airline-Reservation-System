@@ -141,3 +141,22 @@ export const getCountsByDestination = async (destinationCode, startDate, endDate
     throw error;
   }
 };
+
+
+
+
+export const loadChartData = async () => {
+  try {
+    const [passengers] = await db.query('SELECT COUNT(*) as count FROM Passenger');
+    const [users] = await db.query('SELECT COUNT(*) as count FROM User');
+    const [bookings] = await db.query('SELECT COUNT(*) as count FROM Booking');
+
+    return {
+      passengers: passengers[0].count,
+      users: users[0].count,
+      bookings: bookings[0].count,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
