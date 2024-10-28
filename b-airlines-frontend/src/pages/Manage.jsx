@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Container, Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Button, Card, CardContent, Container, Grid, List, ListItem, ListItemText, Typography, Box } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -157,6 +157,9 @@ const Manage = () => {
             </Card>
           </Grid>
         </Grid>
+
+        {/* Add space between the last card and the footer */}
+        <Box sx={{ mt: 5 }} /> {/* Adjust the mt value for more or less space */}
       </Container>
       <Footer />
     </>
