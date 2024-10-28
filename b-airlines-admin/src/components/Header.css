@@ -1,0 +1,45 @@
+.common-header {
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%); 
+  position: flex; 
+  top: 0; 
+  width: 100%; 
+  z-index: 1000; 
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  height: 80px; 
+}
+
+.fa-typo3 {
+  margin-left: 0.5rem;
+  font-size: 1.8rem;
+}
+
+.header-navbar-logo {
+  color: #fff;
+  justify-self: start;
+  margin-left: 20px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+}
+.header-navbar-logo:hover {
+  color: #fff; 
+}
+
+.header-navbar-logo i {
+  margin-left: 8px;
+}
+
+@media screen and (max-width: 960px) {
+  .common-header {
+    padding: 0 16px;
+    height: 60px; /* Adjust height for smaller screens */
+  }
+
+  .header-navbar-logo {
+    font-size: 1.5rem;
+  }
+}

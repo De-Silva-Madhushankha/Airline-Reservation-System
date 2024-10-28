@@ -32,8 +32,8 @@ traveler class (Economy, Business or Platinum).
 
 ## Features
 
-- Light/dark mode toggle
-- Live previews
+- Flight Booking
+- Exclusive Loyalty Offers
 - Fullscreen mode
 
 
@@ -47,50 +47,114 @@ traveler class (Economy, Business or Platinum).
 
 ## Getting Started
 
-First, you’ll need to clone the repo to your machine.
+## Prerequisites
 
-In the root directory of the project...
+Before you begin, ensure you have the following installed:
 
-1. Install node modules using command `yarn install` or `npm install`.
+- [Node.js](https://nodejs.org/) (v14.x or higher)
+- [MySQL](https://www.mysql.com/) (v5.7 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
-Install the node modules in frontend, backend, and admin directories following the above process...
+## Project Setup
 
-## Next Steps
+1. **Clone the repository**
 
-Next you have to create a .env file in the backend directory and include the following
+   ```bash
+   git clone https://github.com/De-Silva-Madhushankha/Airline-Reservation-System.git
+   ```
 
-```
-MYSQL_HOST='127.0.0.1'
-MYSQL_USER='root'
-MYSQL_PASSWORD='enter your password here'
-MYSQL_DATABASE='bairways'
-PORT=3001
-SECRET_KEY='talkischeapshowmethecode';
-```
+2. **Install dependencies**
+   
+   Run the following command in following 4 directories to install the necessary dependencies:
 
-replace MYSQL_PASSWORD to your localhost password  
+   First navigate to the root directory `Airline Reservation System` and then run
+   ```bash
+    npm install
+   ```
+   Change the directories and install required dependencies.
+  
+    ```bash
+    cd .\b-airlines-backend\
+    npm install
+   ```
+   
+   ```bash
+    cd ..
+    cd .\b-airlines-admin\  
+    npm install
+   ```
+   
+   ```bash
+    cd ..
+    cd .\b-airlines-frontend\  
+    npm install
+   ```
 
-## Creating Database
 
-to load database, open mysql in terminal in b-airlines-backend\database directory and give `source make` command
+2. **Navigate to the backend directory**
 
-## Starting the web app
+   ```bash
+   cd ..
+   cd .\b-airlines-backend\
+   ```
 
-Switch to the root directory and Start development server `yarn start` or `npm start`.
+4. **Set up the environment file**
 
-## File Structure
+   Create a `.env` file in the `b-airlines-backend` directory with the following content:
 
-The front-end is served on http://localhost:3000/ and the back-end on http://localhost:3001/ and the admin-end on http://localhost:5174/.
+   ```bash
+    MYSQL_HOST='127.0.0.1'
+    MYSQL_USER='root'
+    MYSQL_PORT='3306'
+    MYSQL_PASSWORD='your_password'
+    MYSQL_DATABASE='bairways'
+    PORT=3001
+    SECRET_KEY='talkischeapshowmethecode'
+    TZ='Asia/Colombo'
+   ```
+
+   Replace `your_password` with your actual MySQL password.
+
+5. **Run the SQL script**
+
+   Run the following command in `database` directory in the `b-airlines-backend` to create the database:
+
+   ```bash
+   cd .\database\
+   mysql -u root -p
+   ```
+   Enter your MySQL password when prompted.
+
+   ```bash
+   source make
+   ```
+
+7. **Run the application**
+
+   To start the application navigate to the root directory `Airline Reservation System`, run the following comman:
+
+   ```bash
+   npm start
+   ```
+
+   This command will concurrently start the back-end server, front-end and admin-end.
+   The server will start on the port `3000` defined in the `server.js` file. Make sure the port is `3000`.
+   The frontend will start on the port `3001`.
+   The adminend will start on the port `5174`
+
+
+## Project Structure
 
 ```
 .
-├── backend/ - Express server that provides API routes and serves front-end
+├── b-airlines-backend/ - Express server that provides API routes and serves front-end
 │ ├── routes/ - API routes
 │ ├── model/ - Handles the query logics connecting the database
 │ ├── controller/ - Handles API calls for routes
 │ ├── middleware/ - Adds middleware to the express server
 │ └── server.js - Configures Port and HTTP Server
-├── frontend/  - React front-end
+├── b-airlines-admin/
+├── b-airlines-frontend/  - React front-end
 │ ├── src
 │ | ├── components - React components for each page
 | | ├── pages -  each page
@@ -116,8 +180,8 @@ Any additional information goes here
 
 If you have any feedback, please reach out to us at bawantha.22@cse.mrt.ac.lk
 
-
-## Authors
+## Team Members (Group 25)
+DE SILVA S.M.B.M. 220102L desilvasmbm.22@uom.lk
 
 
 
