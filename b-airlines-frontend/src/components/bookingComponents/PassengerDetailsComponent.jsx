@@ -21,24 +21,33 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
   const validatePhoneNumber = (_, value) => {
     const phoneNumberPattern = /^[0-9]{7,14}$/; //7 to 14 digits only
     if (value && phoneNumberPattern.test(value)) {
-      return Promise.resolve(); // Validation passed
+      return Promise.resolve();
     }
     return Promise.reject('Please enter a valid phone number (7-14 digits)');
   };
 
-  const handleNext = () => {
+  const validatePassengerDetails = () => {
     const { firstName, lastName, age, phoneNumber, passport, email } = passengers[currentIndex];
-
-    if (firstName === '' || lastName === '' || passport === ''|| age === ''|| phoneNumber === '' || email === '') {
+  
+    if (!firstName || !lastName || !age || !phoneNumber || !passport || !email) {
       message.error('Please fill out all fields.');
-      return;
+      return false;
     }
-
+  
     // if (!validatePassport(passport)) {
     //   message.error('Please enter a valid passport number (6-9 alphanumeric characters).');
-    //   return;
+    //   return false;
     // }
+  
+    return true;
+  };
+  
 
+  const handleNext = () => {
+    if (!validatePassengerDetails()) {
+      return;
+    }
+  
     if (currentIndex < passengers.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -55,15 +64,31 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
   };
 
   const handleAddPassenger = () => {
-    const updatedPassengers = [...passengers, { firstName: '', lastName: '', age: '', phoneNumber: '', passport: '' , email: ''}];
+    if (!validatePassengerDetails()) {
+      return;
+    }
+  
+    const updatedPassengers = [
+      ...passengers,
+      { firstName: '', lastName: '', age: '', phoneNumber: '', passport: '', email: '' }
+    ];
     setPassengers(updatedPassengers);
     setCurrentIndex(updatedPassengers.length - 1);
     setViewMode(false);
   };
+  
 
   const handleEditPassenger = (index) => {
     setCurrentIndex(index);
     setViewMode(false);
+  };
+
+  const handleDeletePassenger = () => {
+    if (passengers.length > 1) {
+      const updatedPassengers = passengers.filter((_, index) => index !== currentIndex);
+      setPassengers(updatedPassengers);
+      setCurrentIndex(Math.max(0, currentIndex - 1));
+    }
   };
 
   // Render view mode if passenger details have been confirmed
@@ -84,6 +109,29 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               </List.Item>
             )}
           />
+          <br />
+          <div style={{ display: 'flex', justifyContent: currentIndex > 0 ? 'space-between' : 'center', marginTop: '20px' }}>
+            {currentIndex > 0 && (
+              <Button onClick={handlePrev} style={{ marginRight: 10 }}>
+                Previous
+              </Button>
+            )}
+            {currentIndex < passengers.length - 1 ? (
+              <Button type="primary" onClick={handleNext}>
+                Next
+              </Button>
+            ) : (
+              <Button type="primary" onClick={handleAddPassenger}>
+                Add Another Passenger
+              </Button>
+            )}
+          </div>
+          <br />
+          <div>
+            <Button type="primary" onClick={handleNext} className="add-passenger-btn" style={{ marginTop: 20 }}>
+              Confirm Details
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -101,7 +149,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               <Form.Item label="First Name" required>
                 <Input
                   placeholder="Enter first name"
-                  value={passengers[currentIndex]?.firstName} // Use optional chaining
+                  value={passengers[currentIndex]?.firstName}
                   onChange={(e) => handlePassengerChange('firstName', e.target.value)}
                 />
               </Form.Item>
@@ -110,7 +158,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               <Form.Item label="Last Name" required>
                 <Input
                   placeholder="Enter last name"
-                  value={passengers[currentIndex]?.lastName} // Use optional chaining
+                  value={passengers[currentIndex]?.lastName}
                   onChange={(e) => handlePassengerChange('lastName', e.target.value)}
                 />
               </Form.Item>
@@ -122,16 +170,16 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               <Form.Item label="Age" required>
                 <Input
                   placeholder="Enter age"
-                  value={passengers[currentIndex]?.age} // Use optional chaining
+                  value={passengers[currentIndex]?.age}
                   onChange={(e) => handlePassengerChange('age', e.target.value)}
                 />
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Phone Number"  required>
+              <Form.Item label="Phone Number" required>
                 <Input
                   placeholder="Enter phone number"
-                  value={passengers[currentIndex]?.phoneNumber} // Use optional chaining
+                  value={passengers[currentIndex]?.phoneNumber}
                   onChange={(e) => handlePassengerChange('phoneNumber', e.target.value)}
                 />
               </Form.Item>
@@ -142,7 +190,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
           <Form.Item label="Passport Number" required>
             <Input
               placeholder="Enter passport number"
-              value={passengers[currentIndex]?.passport} // Use optional chaining
+              value={passengers[currentIndex]?.passport} 
               onChange={(e) => handlePassengerChange('passport', e.target.value)}
             />
           </Form.Item>
@@ -150,25 +198,30 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
           <Form.Item label="Email" required>
             <Input
               placeholder="Enter your email"
-              value={passengers[currentIndex]?.email} // Use optional chaining
+              value={passengers[currentIndex]?.email} 
               onChange={(e) => handlePassengerChange('email', e.target.value)}
             />
           </Form.Item>
         </Form>
 
         {/* Button Container */}
-        <div style={{ display: 'flex', justifyContent: currentIndex > 0 ? 'space-between' : 'center', marginTop: '20px' }}>
+        <div className="button-container">
           {currentIndex > 0 && (
-            <Button onClick={handlePrev} style={{ marginRight: 10 }}>
+            <Button onClick={handlePrev} className="action-button">
               Previous
             </Button>
           )}
+          {passengers.length > 1 && (
+            <Button danger onClick={handleDeletePassenger} className="action-button">
+              Delete This Passenger
+            </Button>
+          )}
           {currentIndex < passengers.length - 1 ? (
-            <Button type="primary" onClick={handleNext}>
+            <Button type="primary" onClick={handleNext} className="action-button">
               Next
             </Button>
           ) : (
-            <Button type="primary" onClick={handleAddPassenger}>
+            <Button type="primary" onClick={handleAddPassenger} className="action-button">
               Add Another Passenger
             </Button>
           )}
