@@ -1,8 +1,8 @@
+import { Button, Card, CardContent, Container, Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
 import React from 'react';
-import { Container, Grid, Card, CardContent, Typography, Button, List, ListItem, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const Manage = () => {
   const navigate = useNavigate();
@@ -21,13 +21,8 @@ const Manage = () => {
               sx={{
                 backgroundColor: '#f9f9f9',
                 color: '#000000',
-                // boxShadow: '0 10px 30px rgba(0, 123, 255, 0.3)',
                 borderRadius: '16px',
                 padding: 3,
-                // transition: 'transform 0.3s',
-                '&:hover': {
-                  // transform: 'scale(1.02)',
-                },
               }}
             >
               <CardContent>
@@ -56,48 +51,6 @@ const Manage = () => {
                   >
                     <ListItemText
                       primary="Cancel Your Booking"
-                      sx={{ fontSize: '1rem', fontWeight: '600', '&:hover': { color: '#1976d2' } }}
-                    />
-                  </ListItem>
-                  <ListItem
-                    button
-                    onClick={() => handleNavigation('/manage/change-booking')}
-                    sx={{
-                      backgroundColor: '#e0e0e0',
-                      '&:hover': {
-                        backgroundColor: '#bdbdbd',
-                        color: '#000',
-                        '& .MuiTypography-root': {
-                          color: '#1976d2', // Change text color to blue on hover
-                        },
-                      },
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
-                  >
-                    <ListItemText
-                      primary="Change Your Booking"
-                      sx={{ fontSize: '1rem', fontWeight: '600', '&:hover': { color: '#1976d2' } }}
-                    />
-                  </ListItem>
-                  <ListItem
-                    button
-                    onClick={() => handleNavigation('/manage/change-seat')}
-                    sx={{
-                      backgroundColor: '#e0e0e0',
-                      '&:hover': {
-                        backgroundColor: '#bdbdbd',
-                        color: '#000',
-                        '& .MuiTypography-root': {
-                          color: '#1976d2', // Change text color to blue on hover
-                        },
-                      },
-                      borderRadius: '8px',
-                      mb: 1,
-                    }}
-                  >
-                    <ListItemText
-                      primary="Choose Your Seat"
                       sx={{ fontSize: '1rem', fontWeight: '600', '&:hover': { color: '#1976d2' } }}
                     />
                   </ListItem>
