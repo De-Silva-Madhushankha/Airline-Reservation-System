@@ -56,19 +56,7 @@ export default function Report4Content() {
     }
   };
 
-  const handleChangeStatus = async (flightId, newStatus) => {
-    try {
-      await axios.post(`http://localhost:3001/api/admin/update-flight-status`, {
-        flight_id: flightId,
-        status: newStatus,
-      });
-      message.success('Flight status updated successfully');
-      fetchReportData();
-    } catch (error) {
-      console.error('Failed to update flight status:', error);
-      message.error('Failed to update flight status');
-    }
-  };
+
 
   const columns = [
     {
@@ -119,20 +107,7 @@ export default function Report4Content() {
       key: 'passenger_count',
       render: (count) => count || 0,
     },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Select
-          value={record.status} // Use value instead of defaultValue
-          onChange={(newStatus) => handleChangeStatus(record.flight_id, newStatus)}
-          style={{ width: 120 }}
-        >
-          <Option value="On Time">On Time</Option>
-          <Option value="Delayed">Delayed</Option>
-        </Select>
-      ),
-    },
+    
   ];
 
   return (

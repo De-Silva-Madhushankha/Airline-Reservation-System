@@ -19,32 +19,7 @@ export const getCounts = async () => {
 };
 
 
-// export const getCountsByDestination = async (destinationCode, startDate, endDate) => {
-//   try {
-//     // Query to get passenger count
-//     const [rows] = await db.query(
-//       'SELECT COUNT(DISTINCT passenger_id) AS passenger_count FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
-//       [destinationCode, startDate, endDate]
-//     );
-    
-//     // Query to get passenger details (name, age)
-//     const [result] = await db.query(
-//       'SELECT passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
-//       [destinationCode, startDate, endDate]
-//     );
-    
-//     // Access the count from the first row
-//     const passengerCount = rows[0]?.passenger_count || 0; // Handle if there are no rows
 
-//     // Return the count and passenger details
-//     return {
-//       passenger_count: passengerCount,
-//       passenger_details: result
-//     };
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 
 
@@ -90,42 +65,21 @@ export const getCountsByAge = async (flightNumber) => {
 export const getPastFlightModel = async (originCode, destinationCode, startDate, endDate) => {
   try {
     const [flights] = await db.query(`
-      SELECT 
-        f.flight_id,
-        f.aircraft_id,
-        r.origin_code,
-        r.destination_code,
-        f.departure,
-        f.arrival,
-        CASE 
-            WHEN f.delay = TRUE THEN 'Delayed'
-            ELSE 'On Time'
-        END AS status,
-        COUNT(b.passenger_id) AS passenger_count
-      FROM 
-        Flight f
-      JOIN 
-        Route r ON f.route_id = r.route_id
-      LEFT JOIN 
-        Booking b ON f.flight_id = b.flight_id
-      WHERE 
-        r.origin_code = ? 
-        AND r.destination_code = ? 
-        AND f.departure BETWEEN ? AND ?
-      GROUP BY 
-        f.flight_id, f.aircraft_id, r.origin_code, r.destination_code, f.departure, f.arrival, f.delay
-      ORDER BY 
-        f.departure DESC;
+      SELECT * FROM PastFlightsAndPassengerCountView 
+      WHERE origin_code = ? 
+        AND destination_code = ? 
+        AND departure BETWEEN ? AND ?;
     `, [originCode, destinationCode, startDate, endDate]);
 
-    return {
-      flights,  // Return the fetched flight data
-    };
+    return { flights };
   } catch (error) {
     console.error('Error fetching past flight data:', error);
     throw error;
   }
 };
+
+
+
 
 
 export const updateFlightStatus = async (flight_id, status) => {
@@ -174,7 +128,7 @@ export const getCountsByDestination = async (destinationCode, startDate, endDate
     
     // Query to get passenger details (name, age)
     const [result] = await db.query(
-      'SELECT distinct passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
+      'SELECT passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
       [destinationCode, startDate, endDate]
     );
     

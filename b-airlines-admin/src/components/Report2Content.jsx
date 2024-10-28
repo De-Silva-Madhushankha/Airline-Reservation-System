@@ -19,7 +19,7 @@ export default function Report2Content() {
     try {
 
       const [startDate, endDate] = dateRange;
-      console.log(startDate);
+
       const response = await axios.get('/admin/user-count-destination', {
         params: {
           destinationCode,
