@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { DatePicker, message, Progress, Row, Col, Input } from 'antd';
-
+import { DatePicker, Input, message , Flex, Progress, Row, Col} from 'antd';
 import axios from '../axiosConfig.js';
+
 
 const { RangePicker } = DatePicker;
 

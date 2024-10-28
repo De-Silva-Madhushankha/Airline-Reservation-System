@@ -97,9 +97,6 @@ DELIMITER ;
 
 DELIMITER //
 
-
-DELIMITER //
-
 CREATE PROCEDURE GetReservedSeatCountsByClassAndDateRange(
     IN startDate TIMESTAMP,
     IN endDate TIMESTAMP
@@ -113,12 +110,6 @@ BEGIN
     AND f.departure BETWEEN startDate AND endDate
     GROUP BY sc.seat_class_name;
 END //
-
-DELIMITER ;
-
-
-
-
 
 DELIMITER ;
 

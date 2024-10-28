@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Select, message, Table, Progress, Typography, DatePicker, Input, message  } from 'antd';
+import { Select, message, Table, Progress, Typography, DatePicker, Input } from 'antd';
 import axios from '../axiosConfig.js';
 import dayjs from 'dayjs';
+
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -34,6 +35,7 @@ const Report1Content = () => {
     setPassengerCount(null);  // Reset passenger count when selecting a new flight
 
     try {
+
       const response = await axios.get('/admin/user-count-age', {
         params: { flightNumber: flightId },
 
