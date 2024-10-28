@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Avatar, Typography, Divider, Button, Progress, Input, Form, Spin, Alert } from 'antd';
 import { EditOutlined, UploadOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import axios from '../../axiosConfig.js';
 import { useNavigate } from 'react-router-dom';
 import './ProfileCard.css';
 
@@ -48,7 +48,7 @@ const ProfileCard = ({ title, firstName, lastName, email, loyaltyPoints, country
       }
 
       try {
-        const response = await axios.put('http://localhost:3001/api/user/update', profileData, {
+        const response = await axios.put('/user/update', profileData, {
           headers: {
             Authorization: `Bearer ${token}`, // Pass token in the Authorization header
           },
