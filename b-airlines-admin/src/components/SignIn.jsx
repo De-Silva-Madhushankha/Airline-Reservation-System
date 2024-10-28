@@ -3,6 +3,9 @@ import { Form, Input, Button, Checkbox, Alert, Row, Col } from 'antd';
 import axios from '../axiosConfig.js';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { Header } from 'antd/es/layout/layout.js';
+import Head from './Header';
+
 
 const CustomCheckbox = styled(Checkbox)`
   .ant-checkbox-inner {
@@ -70,13 +73,16 @@ const SignIn = () => {
   };
 
   return (
-    <div style={{ 
+    <div>
+      <Head/>
+      <div style={{ 
       height: '100vh', 
       backgroundColor: 'white', 
       display: 'flex', 
       justifyContent: 'center', 
       alignItems: 'center' 
     }}>
+      
       <div style={{ 
         width: '100%', 
         maxWidth: '400px', 
@@ -131,6 +137,8 @@ const SignIn = () => {
         
       </div>
     </div>
+    </div>
+    
   );
 };
 
