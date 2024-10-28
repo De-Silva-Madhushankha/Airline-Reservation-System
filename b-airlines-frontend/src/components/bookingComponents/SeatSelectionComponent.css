@@ -3,24 +3,29 @@
   text-align: center;
   max-width: 90%;
   margin: 0 auto;
-  overflow-x: auto; /* Allow horizontal scrolling if content overflows */
+  overflow-x: auto;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .seat-map {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 20px 0;
-  padding: 0 20px; /* Add padding to the sides for better visibility */
+  padding: 0 20px;
   width: 100%;
-  overflow-x: auto; /* Enable horizontal scrolling for small screens */
+  overflow-x: auto;
 }
 
 .seat-row {
   display: flex;
   justify-content: center;
   margin-bottom: 15px;
-  white-space: nowrap; /* Prevent row from breaking into multiple lines */
+  white-space: nowrap;
 }
 
 .seat {
@@ -44,16 +49,15 @@
 
 button {
   font-size: 18px;
+  transition: all 0.3s ease;
 }
 
 .seat-class-title {
-  font-size: 24px; /* Adjust font size if needed */
-  margin-top: 20px;
-  margin-bottom: 20px; /* Space between class name and seat rows */
-  font-weight: bold; /* Make class name bold */
+  font-size: 24px;
+  margin: 20px 0;
+  font-weight: bold;
 }
 
-/* Responsive Styles */
 @media (max-width: 1024px) {
   .seat {
     width: 70px;
@@ -77,6 +81,11 @@ button {
   button {
     font-size: 14px;
   }
+
+  .seat-selection-layout {
+    padding: 30px;
+    max-width: 90%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -95,4 +104,10 @@ button {
     padding: 20px;
     max-width: 95%;
   }
+}
+
+.action-button {
+  width: 85%; 
+  height: 40px;
+  font-size: 16px;
 }

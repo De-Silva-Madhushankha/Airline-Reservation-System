@@ -5,7 +5,7 @@ import axios from '../../axiosConfig.js';
 
 const { Option } = Select;
 
-const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSelected, passengerSeats, globalSelectedSeats, setGlobalSelectedSeats, setPassengerSeats }) => { // Accept global states and functions as props
+const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSelected, passengerSeats, globalSelectedSeats, setGlobalSelectedSeats, setPassengerSeats, prevPage }) => { // Accept global states and functions as props
   const [occupiedSeats, setOccupiedSeats] = useState([]);
   const [lockedSeats, setLockedSeats] = useState([]);
   const [columns, setColumns] = useState(0);
@@ -19,13 +19,13 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     const fetchOccupiedSeats = async () => {
       try {
         if (!flight_id) return;
-  
+
         console.log('Fetching occupied seats for flight_id:', flight_id);
         const response = await axios.get(`/seat/occupied/${flight_id}`);
 
         const seatTuples = response.data.occupiedSeats.map(seat => [seat.row, seat.column]);
         const lockedSeatTuples = response.data.lockedSeats.map(seat => [seat.row, seat.column]);
-        
+
 
         setOccupiedSeats(seatTuples);
         setLockedSeats(lockedSeatTuples);
@@ -35,10 +35,10 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
         console.error(error);
       }
     };
-    
+
     fetchOccupiedSeats();
   }, [flight_id]);
-  
+
   useEffect(() => {
     const fetchModels = async () => {
       try {
@@ -59,7 +59,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
 
   useEffect(() => {
     const fetchModelDetails = async () => {
-      if (!model) return; 
+      if (!model) return;
 
       try {
         const response = await axios.get(`/model/${model}`); // Fetch model
@@ -78,7 +78,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
   }, [aircraft_id, model]);
 
   const handleSeatClick = (rowIndex, columnIndex, className) => {
-    const seatPair = { row: rowIndex + 1, column: columnIndex + 1, className};
+    const seatPair = { row: rowIndex + 1, column: columnIndex + 1, className };
 
     // Check if the seat is already selected globally
     const seatLabel = `R${seatPair.row}C${seatPair.column}`;
@@ -129,12 +129,12 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
     };
     console.log('passengers seats', passengerSeats)
     try {
-        const response = await axios.post('/seat/lock', seatData);
-        onSeatsSelected(passengerSeats);
-        message.success('Seats selected successfully!');
+      const response = await axios.post('/seat/lock', seatData);
+      onSeatsSelected(passengerSeats);
+      message.success('Seats selected successfully!');
     } catch (error) {
-        console.error('Failed to lock seats:', error.message);
-        message.error(error.response.data.error);
+      console.error('Failed to lock seats:', error.message);
+      message.error(error.response.data.error);
     }
   };
 
@@ -159,10 +159,10 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
                 key={columnIndex}
                 className={`seat ${isSelected ? 'selected' : ''} ${isOccupied ? 'occupied' : ''} ${isLocked ? 'locked' : ''} ${isGlobalSelected ? 'global-selected' : ''}`}
                 onClick={() => handleSeatClick(startRow + rowIndex, columnIndex, className)}
-                disabled={(isOccupied || isLocked) && !isSelected} // Disable button if occupied (but allow selection for the current passenger)
+                disabled={(isOccupied || isLocked) && !isSelected}
                 style={{
-                  backgroundColor: isOccupied ? '#ff4d4d' : isLocked ? 'gray':  (isGlobalSelected ? 'lightgreen' : ''), // Set color for occupied seats
-                  color: isOccupied || isLocked ? '#a9a9a9' : '', // Change text color for occupied seats
+                  backgroundColor: isOccupied ? '#ff4d4d' : isLocked ? 'gray' : (isGlobalSelected ? 'lightgreen' : ''), 
+                  color: isOccupied || isLocked ? '#a9a9a9' : '', 
                 }}
               >
                 {seatLabel} {/* Seat Label */}
@@ -176,30 +176,43 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
 
   return (
     <div className="seat-selection-layout">
-      <h1 className="title">Select Your Seats</h1>
+      <div className="seat-selection-background">
+        <h1 className="title">Select Your Seats</h1>
 
-      {/* Passenger Selector */}
-      <Select
-        value={selectedPassenger}
-        onChange={setSelectedPassenger}
-        style={{ marginBottom: 20, width: 200 }}
-      >
-        {passengers.map((passenger, index) => (
-          <Option key={index} value={passenger.passport}>
-            {`${passenger.firstName} ${passenger.lastName}`}
-          </Option>
-        ))}
-      </Select>
+        {/* Passenger Selector */}
+        <Select
+          value={selectedPassenger}
+          onChange={setSelectedPassenger}
+          style={{ width: 200 }}
+        >
+          {passengers.map((passenger, index) => (
+            <Option key={index} value={passenger.passport}>
+              {`${passenger.firstName} ${passenger.lastName}`}
+            </Option>
+          ))}
+        </Select>
 
-      <div className="seat-map">
-        {renderSeats(0, economyRows, 'Economy')}
-        {renderSeats(economyRows, businessRows, 'Business')}
-        {renderSeats(economyRows + businessRows, platinumRows, 'Platinum')}
+        <div className="seat-map">
+          {renderSeats(0, economyRows, 'Economy')}
+          {renderSeats(economyRows, businessRows, 'Business')}
+          {renderSeats(economyRows + businessRows, platinumRows, 'Platinum')}
+        </div>
+
+        <Button
+          type="primary"
+          onClick={handleConfirmSelection}
+          className="action-button"
+        >
+          Confirm Seat Selection
+        </Button>
+        <br></br>
+        <Button
+          onClick={prevPage}
+          className="action-button"
+        >
+          Previous Page
+        </Button>
       </div>
-
-      <Button type="primary" onClick={handleConfirmSelection} style={{ marginTop: 20 }}>
-        Confirm Seat Selection
-      </Button>
     </div>
   );
 };
