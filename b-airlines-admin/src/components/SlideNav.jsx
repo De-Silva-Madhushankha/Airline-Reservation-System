@@ -15,14 +15,14 @@ export default function SideNav({ setActiveSection }) {
                     <ul className="space-y-2 font-medium">
                         <li>
                             <button onClick={() => setActiveSection("dashboard")} 
-                                    className="flex items-center p-2 text-gray-100 rounded-lg hover:bg-gray-700 group">
+                                    className="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
                                 <RxDashboard />
                                 <span className="ms-3">Dashboard</span>
                             </button>
                         </li>
                         <li className="group">
                             <button type="button" 
-                                    className="flex items-center w-full p-2 text-gray-100 transition duration-75 rounded-lg group hover:bg-gray-700" 
+                                    className="flex items-center w-full p-2 text-white transition duration-75 rounded-lg group hover:bg-gray-700" 
                                     aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                                 <AiFillFileZip />
                                 <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Reports</span>
@@ -31,31 +31,31 @@ export default function SideNav({ setActiveSection }) {
                             <ul id="dropdown-example" className="group-hover:block space-y-1 text-sm">
                                 <li>
                                     <button onClick={() => setActiveSection("report1")} 
-                                            className="flex items-center w-full text-left text-gray-300 transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
+                                            className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
                                         Below/Over age 18
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report2")} 
-                                            className="flex items-center w-full text-left text-gray-300 transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
+                                            className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
                                         Num of passenger Travel to given destination
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report3")} 
-                                            className="flex items-center w-full text-left text-gray-300 transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
+                                            className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
                                         Num of Booking By passenger Types
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report4")} 
-                                            className="flex items-center w-full text-left text-gray-300 transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
+                                            className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
                                         Passenger Count and manage Delay
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report5")} 
-                                            className="flex items-center w-full text-left text-gray-300 transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
+                                            className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
                                         Revenues By Aircrafts
                                     </button>
                                 </li>
@@ -63,21 +63,21 @@ export default function SideNav({ setActiveSection }) {
                         </li>
                         <li>
                             <button onClick={() => setActiveSection("addFlights")} 
-                                    className="flex items-center p-2 text-gray-100 rounded-lg hover:bg-gray-700 group">
+                                    className="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
                                 <MdOutlineAddRoad />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Add Flights</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => setActiveSection("users")} 
-                                    className="flex items-center p-2 text-gray-100 rounded-lg hover:bg-gray-700 group">
+                                    className="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
                                 <FaUsers />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
                             </button>
                         </li>
                         <li>
                             <button onClick={() => setActiveSection("addAircraft")} 
-                                    className="flex items-center p-2 text-gray-100 rounded-lg hover:bg-gray-700 group">
+                                    className="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
                                 <MdFlight />
                                 <span className="flex-1 ms-3 whitespace-nowrap">Add Aircrafts</span>
                             </button>
@@ -88,10 +88,10 @@ export default function SideNav({ setActiveSection }) {
                                     // Add any logout logic here (e.g., clearing tokens)
                                     navigate('/');
                                 }}
-                                className="flex items-center p-2 text-gray-100 rounded-lg hover:bg-gray-700 group"
+                                className="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
                             >
                                 <MdLogout />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Log out</span>
+                                <span className="flex-1 ms-3 whitespace-nowrap text-white">Log out</span>
                             </button>
                         </li>
                     </ul>
