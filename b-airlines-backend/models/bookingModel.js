@@ -3,6 +3,15 @@ import db from '../database/db.js'
 
 const Booking = {  
 
+    getBookingPassengerByUserId: async (user_id) => {
+        const [rows] = await db.query(`
+            SELECT * 
+            FROM bairways.v_booking_details 
+            WHERE booked_by_user_id = ?;
+        `, [user_id]);
+        return rows;
+    },
+
       // Method to calculate seat price using stored function in the database
     calculateSeatPrice: async (flight_id, row, column) => {
         const query = 'SELECT calculate_seat_price(?, ?, ?) AS price';
