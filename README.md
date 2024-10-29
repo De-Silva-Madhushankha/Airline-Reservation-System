@@ -69,25 +69,25 @@ Before you begin, ensure you have the following installed:
 
    First navigate to the root directory `Airline Reservation System` and then run
    ```bash
-    npm install
+   npm install
    ```
    Change the directories and install required dependencies.
   
-    ```bash
-    cd .\b-airlines-backend\
-    npm install
+   ```bash
+   cd .\b-airlines-backend\
+   npm install
    ```
    
    ```bash
-    cd ..
-    cd .\b-airlines-admin\  
-    npm install
+   cd ..
+   cd .\b-airlines-admin\  
+   npm install
    ```
    
    ```bash
-    cd ..
-    cd .\b-airlines-frontend\  
-    npm install
+   cd ..
+   cd .\b-airlines-frontend\  
+   npm install
    ```
 
 
@@ -103,14 +103,14 @@ Before you begin, ensure you have the following installed:
    Create a `.env` file in the `b-airlines-backend` directory with the following content:
 
    ```bash
-    MYSQL_HOST='127.0.0.1'
-    MYSQL_USER='root'
-    MYSQL_PORT='3306'
-    MYSQL_PASSWORD='your_password'
-    MYSQL_DATABASE='bairways'
-    PORT=3001
-    SECRET_KEY='talkischeapshowmethecode'
-    TZ='Asia/Colombo'
+   MYSQL_HOST='127.0.0.1'
+   MYSQL_USER='root'
+   MYSQL_PORT='3306'
+   MYSQL_PASSWORD='your_password'
+   MYSQL_DATABASE='bairways'
+   PORT=3001
+   SECRET_KEY='talkischeapshowmethecode'
+   TZ='Asia/Colombo'
    ```
 
    Replace `your_password` with your actual MySQL password.
