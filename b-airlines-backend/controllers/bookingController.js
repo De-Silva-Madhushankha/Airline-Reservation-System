@@ -208,19 +208,3 @@ export const getPassengerTypeCount = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
-
-export const getPassengerBooking = async (req, res) => {
-    const id = req.user.id;
-    try {
-        const bookings = await Booking.getBookingPassengerByUserId(id);
-        //console.log(bookings);
-        if (bookings.length > 0) {
-            res.json(bookings);
-        } else {
-            res.status(404).json({ message: 'No bookings found for this passenger' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
