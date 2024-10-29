@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
 import axios from '../axiosConfig.js';
 import {
+  Button,
   Container,
+  Paper,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Button,
   Typography,
-  Paper,
-  TableContainer,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -116,13 +117,16 @@ const CancelBooking = () => {
                       <TableCell align="center">${booking.total_amount}</TableCell>
                       <TableCell align="center">{booking.payment_status}</TableCell>
                       <TableCell align="center">
-                        <Button
+                        {
+                          booking.payment_status !==  "Paid" &
+                          <Button
                           variant="contained"
                           color="secondary"
                           onClick={() => handleDelete(booking.booking_id)}
                         >
                           Cancel Booking
                         </Button>
+                        }
                       </TableCell>
                     </StyledTableRow>
                   ))}
