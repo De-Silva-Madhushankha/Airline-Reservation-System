@@ -6,7 +6,6 @@ import {
     updateBooking,
     deleteBooking,
     getBookingsByUserId,
-    getPassengerBooking,
     getBookingsByFlightId,
     getFlightRevenue,
     getRevenueByDateRange,
@@ -32,8 +31,6 @@ router.post("/cost", getBookingCost);
 router.post("/create",verifyToken, createBookingController);
 
 router.put('/bookings/:id/change', verifyToken, changeBooking);
-
-router.get('/bookings-passengers', verifyToken, getPassengerBooking);
 
 
 export default router;
