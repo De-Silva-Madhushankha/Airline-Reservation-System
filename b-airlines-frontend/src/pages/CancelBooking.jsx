@@ -158,19 +158,25 @@ const CancelBooking = () => {
                         <TableCell align="center">${booking.total_amount}</TableCell>
                         <TableCell align="center">{booking.payment_status}</TableCell>
                         <TableCell align="center">
-                          <Button
-                            variant="contained"
-                            color="error"
-                            size="small"
-                            onClick={() => handleDelete(booking.booking_id)}
-                            sx={{
-                              minWidth: '120px',
-                              fontSize: '0.875rem',
-                              fontWeight: 'bold',
-                            }}
-                          >
-                            Cancel Booking
-                          </Button>
+                          {booking.payment_status === 'Paid' ? (
+                            <Button
+                              variant="contained"
+                              color="error"
+                              size="small"
+                              onClick={() => handleDelete(booking.booking_id)}
+                              sx={{
+                                minWidth: '120px',
+                                fontSize: '0.875rem',
+                                fontWeight: 'bold',
+                              }}
+                            >
+                              Cancel Booking
+                            </Button>
+                          ) : (
+                            <Typography variant="body2" color="textSecondary">
+                              {booking.payment_status}
+                            </Typography>
+                          )}
                         </TableCell>
                       </StyledTableRow>
                     ))
