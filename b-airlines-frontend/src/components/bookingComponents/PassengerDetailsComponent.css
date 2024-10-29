@@ -1,5 +1,4 @@
 .passenger-details-layout {
-  /* min-height: 100vh; */
   background: #f0f2f5;
   display: flex;
   justify-content: center;
@@ -17,7 +16,7 @@
 }
 
 .passenger-title {
-  font-size: 32px; /* Matches flight search title font size */
+  font-size: 32px;
   font-weight: 600;
   color: #1a1a1a;
   text-align: center;
@@ -25,7 +24,7 @@
 }
 
 .passenger-subtitle {
-  font-size: 18px; /* Matches flight search subtitle font size */
+  font-size: 18px;
   color: #555;
   margin-bottom: 30px;
   text-align: center;
@@ -41,9 +40,31 @@
   color: #333;
 }
 
-.add-passenger-btn {
+/* Button Styles */
+.button-container, .flex-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px; 
   width: 100%;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.flex-buttons {
+  /* gap: 10px; */
+}
+
+/* Individual Buttons */
+.add-passenger-btn, .previous-button, .submit-btn, .action-button {
+  flex: 1;
+  min-width: 120px;
   margin-bottom: 20px;
+}
+
+.add-passenger-btn {
   background-color: black;
   border-color: black;
 }
@@ -54,7 +75,7 @@
 }
 
 .submit-btn {
-  background-color: #4caf50; 
+  background-color: #4caf50;
   border-color: #4caf50;
 }
 
@@ -62,40 +83,39 @@
   background-color: #45a049;
 }
 
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  gap: 10px; /* Space between buttons when they wrap */
-}
+.previous-button {
+  background-color: #f0f0f0;
+  color: #000;
 
-.action-button {
-  flex: 1; /* Allows buttons to take equal space */
-  min-width: 120px; /* Minimum width for consistency */
-  padding: 0 16px; /* Padding for more space around text */
 }
 
 @media (max-width: 768px) {
-  .button-container {
-    justify-content: center; /* Center buttons on smaller screens */
+  .flex-buttons, .button-container {
+    flex-direction: column; /* Stack buttons vertically */
+    justify-content: center; /* Center buttons when stacked */
+    gap: 10px;
   }
-  .action-button {
-    width: 100%; /* Full-width buttons on smaller screens */
-    max-width: none;
-  }
-}
 
-@media (max-width: 768px) {
+  .action-button, .add-passenger-btn, .previous-button, .submit-btn {
+    width: 100%;
+  }
+
   .passenger-details-background {
     padding: 20px;
   }
 
   .passenger-title {
-    font-size: 28px; 
+    font-size: 28px;
   }
 
   .passenger-subtitle {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .flex-buttons {
+    flex-direction: column; 
+    gap: 10px;
   }
 }
