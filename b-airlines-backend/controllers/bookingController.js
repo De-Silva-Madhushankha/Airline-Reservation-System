@@ -136,12 +136,15 @@ export const deleteBooking = async (req, res) => {
     console.log('Delete booking:',id);
     try {
         const affectedRows = await Booking.deleteBooking(id); // Updated method call
+        console.log("--------------------------------",affectedRows)
         if (affectedRows) {
             res.json({ message: 'Booking deleted successfully' });
         } else {
             res.status(404).json({ message: 'Booking not found' });
         }
     } catch (error) {
+        console.log("--------------------------------")
+
         res.status(500).json({ error: error.message });
     }
 };
