@@ -16,15 +16,14 @@ const { Step } = Steps;
 
 const BookingPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [flightResults, setFlightResults] = useState([]); // Initialize as empty array
+  const [flightResults, setFlightResults] = useState([]);
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [passengers, setPassengers] = useState([{ firstName: '', lastName: '', passport: '' }]); // Initialize passengers state here
-  const [selectedSeats, setSelectedSeats] = useState({}); // Store selected seats and their corresponding passengers
-  const [isPassengerConfirmed, setIsPassengerConfirmed] = useState(false); // Track if passengers are confirmed
-  const [globalSelectedSeats, setGlobalSelectedSeats] = useState({}); // Store globally selected seats
-  const [passengerSeats, setPassengerSeats] = useState({}); // Store selected seats for each passenger
-  const [passengerCosts, setPassengerCosts] = useState({}); // Store costs for each passenger
-  const [totalCost, setTotalCost] = useState(0); // Total cost of booking
+  const [selectedSeats, setSelectedSeats] = useState({});
+  const [isPassengerConfirmed, setIsPassengerConfirmed] = useState(false);
+  const [globalSelectedSeats, setGlobalSelectedSeats] = useState({});
+  const [passengerSeats, setPassengerSeats] = useState({});
+  const [passengerCosts, setPassengerCosts] = useState({});
 
   const steps = [
     { title: 'Flights' },
@@ -47,12 +46,11 @@ const BookingPage = () => {
   };
 
   const handleFlightSelect = (flight) => {
-    // Check if the new flight is different from the currently selected one
     if (selectedFlight?.id !== flight.id) {
       // console.log(selectedFlight.id, flight.id);
-      setGlobalSelectedSeats({}); // Reset global selected seats only if flight changes
-      setPassengerSeats({}); // Reset passenger seats only if flight changes
-      setPassengerCosts({}); // Reset passenger costs
+      setGlobalSelectedSeats({});
+      setPassengerSeats({});
+      setPassengerCosts({});
     }
     setSelectedFlight(flight);
     nextStep();
@@ -60,7 +58,7 @@ const BookingPage = () => {
 
   const handlePassengers = (passengerDetails) => {
     setPassengers(passengerDetails);
-    setIsPassengerConfirmed(true); // Mark passengers as confirmed
+    setIsPassengerConfirmed(true);
     nextStep();
   };
 
@@ -71,7 +69,7 @@ const BookingPage = () => {
 
   const handleConfirmBooking = () => {
     message.success('Booking confirmed successfully!');
-    setCurrentStep(currentStep + 1); // Move to the confirmation step
+    setCurrentStep(currentStep + 1);
   };
 
   return (
@@ -97,7 +95,7 @@ const BookingPage = () => {
         <div style={{ marginTop: '20px' }}>
           {currentStep === 0 && (
             <>
-              <FlightSearch onSearch={handleSearchResults}/>
+              <FlightSearch onSearch={handleSearchResults} />
               {flightResults.length > 0 && (
                 <FlightSchedule flights={flightResults} onFlightSelect={handleFlightSelect} />
               )}
@@ -105,41 +103,45 @@ const BookingPage = () => {
           )}
 
           {currentStep === 1 && (
-            <PassengerDetailsComponent 
-              passengers={passengers} 
-              setPassengers={setPassengers} // Pass the function to update passengers
+            <PassengerDetailsComponent
+              passengers={passengers}
+              setPassengers={setPassengers}
               onNextStep={handlePassengers}
-              isConfirmed={isPassengerConfirmed}  // Pass confirmation status to PassengerDetailsComponent
+              isConfirmed={isPassengerConfirmed}
+              prevPage={prevStep}
             />
           )}
 
           {currentStep === 2 && (
-            <SeatSelectionComponent 
-              passengers={passengers} 
-              onSeatsSelected={handleSeatsSelected} 
-              aircraft_id={selectedFlight?.aircraft_id} // Pass the aircraft_id here
+            <SeatSelectionComponent
+              passengers={passengers}
+              onSeatsSelected={handleSeatsSelected}
+              aircraft_id={selectedFlight?.aircraft_id}
               flight_id={selectedFlight?.flight_id}
-              passengerSeats={passengerSeats} // Pass passenger seats
-              globalSelectedSeats={globalSelectedSeats} // Pass globally selected seats
-              setGlobalSelectedSeats={setGlobalSelectedSeats} // Pass function to update global selected seats
-              setPassengerSeats={setPassengerSeats} // Pass function to update passenger seats
+              passengerSeats={passengerSeats}
+              globalSelectedSeats={globalSelectedSeats}
+              setGlobalSelectedSeats={setGlobalSelectedSeats}
+              setPassengerSeats={setPassengerSeats}
+              prevPage={prevStep}
             />
           )}
 
-          {currentStep === 3 && <PaymentComponent />}
+          {currentStep === 3 && <PaymentComponent
+            nextPage={nextStep
+            } />}
 
           {currentStep === 4 && (
-            <BookingConfirmationComponent 
+            <BookingConfirmationComponent
               selectedFlight={selectedFlight}
               passengers={passengers}
               passengerSeats={passengerSeats}
               setPassengerCosts={setPassengerCosts}
-          />
+            />
           )}
         </div>
 
 
-        <div style={{ marginTop: '20px' }}>
+        {/* <div style={{ marginTop: '20px' }}>
           {currentStep > 0 && <Button onClick={prevStep}>Previous</Button>}
           {0 < currentStep && currentStep < steps.length - 1 && (
             <Button type="primary" onClick={nextStep} disabled={currentStep === 1 && !isPassengerConfirmed}>
@@ -151,7 +153,7 @@ const BookingPage = () => {
               Confirm Booking
             </Button>
           )}
-        </div>
+        </div> */}
       </Content>
       <Footer style={{ textAlign: 'center' }}>B Airways ©2024 Created by Madhushankha De Silva</Footer>
     </Layout>

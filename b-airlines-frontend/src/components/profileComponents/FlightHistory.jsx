@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Table, Card, Modal, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Table, Card, Modal, Button, message } from 'antd';
+import axios from '../../axiosConfig.js';
 import TicketDetails from './TicketDetails';
 import './FlightHistory.css';
 
 const FlightHistory = ({ flights }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedFlight, setSelectedFlight] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const columns = [
     {
@@ -45,9 +47,31 @@ const FlightHistory = ({ flights }) => {
     },
   ];
 
-  const handleRowClick = (record) => {
-    setSelectedFlight(record);
-    setIsModalVisible(true);
+  const handleRowClick = async (record) => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+      if (!token) {
+        message.error('User is not authenticated');
+        setLoading(false);
+        return;
+      }
+
+      const response = await axios.get('/booking/bookings-passengers', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const bookingDetails = response.data.find((booking) => booking.booking_id === record.booking_id);
+      setSelectedFlight(bookingDetails);
+      setIsModalVisible(true);
+    } catch (error) {
+      message.error('Failed to fetch booking details');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCloseModal = () => {
@@ -64,6 +88,7 @@ const FlightHistory = ({ flights }) => {
         onRow={(record) => ({
           onClick: () => handleRowClick(record),
         })}
+        loading={loading}
       />
       <Modal
         title="Ticket Details"

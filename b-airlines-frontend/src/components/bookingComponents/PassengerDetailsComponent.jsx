@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Row, Col, List } from 'antd';
 import './PassengerDetailsComponent.css';
 
-const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isConfirmed }) => {
+const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isConfirmed, prevPage }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [viewMode, setViewMode] = useState(isConfirmed);
 
@@ -28,26 +28,26 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
 
   const validatePassengerDetails = () => {
     const { firstName, lastName, age, phoneNumber, passport, email } = passengers[currentIndex];
-  
+
     if (!firstName || !lastName || !age || !phoneNumber || !passport || !email) {
       message.error('Please fill out all fields.');
       return false;
     }
-  
+
     // if (!validatePassport(passport)) {
     //   message.error('Please enter a valid passport number (6-9 alphanumeric characters).');
     //   return false;
     // }
-  
+
     return true;
   };
-  
+
 
   const handleNext = () => {
     if (!validatePassengerDetails()) {
       return;
     }
-  
+
     if (currentIndex < passengers.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
@@ -67,7 +67,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
     if (!validatePassengerDetails()) {
       return;
     }
-  
+
     const updatedPassengers = [
       ...passengers,
       { firstName: '', lastName: '', age: '', phoneNumber: '', passport: '', email: '' }
@@ -76,7 +76,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
     setCurrentIndex(updatedPassengers.length - 1);
     setViewMode(false);
   };
-  
+
 
   const handleEditPassenger = (index) => {
     setCurrentIndex(index);
@@ -109,26 +109,20 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
               </List.Item>
             )}
           />
-          <br />
-          <div style={{ display: 'flex', justifyContent: currentIndex > 0 ? 'space-between' : 'center', marginTop: '20px' }}>
-            {currentIndex > 0 && (
-              <Button onClick={handlePrev} style={{ marginRight: 10 }}>
-                Previous
-              </Button>
-            )}
-            {currentIndex < passengers.length - 1 ? (
-              <Button type="primary" onClick={handleNext}>
-                Next
-              </Button>
-            ) : (
-              <Button type="primary" onClick={handleAddPassenger}>
+          {/* <br /> */}
+          <div className="button-container">
+            {(
+              <Button type="primary" onClick={handleAddPassenger} className="action-button">
                 Add Another Passenger
               </Button>
             )}
           </div>
-          <br />
-          <div>
-            <Button type="primary" onClick={handleNext} className="add-passenger-btn" style={{ marginTop: 20 }}>
+          {/* <br /> */}
+          <div className="flex-buttons">
+            <Button onClick={prevPage} className={`action-button previous-button`}>
+              Previous Page
+            </Button>
+            <Button type="primary" onClick={handleNext} className="add-passenger-btn">
               Confirm Details
             </Button>
           </div>
@@ -190,7 +184,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
           <Form.Item label="Passport Number" required>
             <Input
               placeholder="Enter passport number"
-              value={passengers[currentIndex]?.passport} 
+              value={passengers[currentIndex]?.passport}
               onChange={(e) => handlePassengerChange('passport', e.target.value)}
             />
           </Form.Item>
@@ -198,17 +192,17 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
           <Form.Item label="Email" required>
             <Input
               placeholder="Enter your email"
-              value={passengers[currentIndex]?.email} 
+              value={passengers[currentIndex]?.email}
               onChange={(e) => handlePassengerChange('email', e.target.value)}
             />
           </Form.Item>
         </Form>
-
+        {/* <br /> */}
         {/* Button Container */}
         <div className="button-container">
           {currentIndex > 0 && (
             <Button onClick={handlePrev} className="action-button">
-              Previous
+              Previous Passenger
             </Button>
           )}
           {passengers.length > 1 && (
@@ -218,7 +212,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
           )}
           {currentIndex < passengers.length - 1 ? (
             <Button type="primary" onClick={handleNext} className="action-button">
-              Next
+              Next Passenger
             </Button>
           ) : (
             <Button type="primary" onClick={handleAddPassenger} className="action-button">
@@ -226,10 +220,15 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
             </Button>
           )}
         </div>
-        <br />
-        <Button type="primary" onClick={handleNext} className="add-passenger-btn" style={{ marginTop: 20 }}>
-          Confirm Details
-        </Button>
+        {/* <br /> */}
+        <div className="flex-buttons">
+          <Button onClick={prevPage} className="previous-button">
+            Previous Page
+          </Button>
+          <Button type="primary" onClick={handleNext} className="add-passenger-btn">
+            Confirm Details
+          </Button>
+        </div>
       </div>
     </div>
   );

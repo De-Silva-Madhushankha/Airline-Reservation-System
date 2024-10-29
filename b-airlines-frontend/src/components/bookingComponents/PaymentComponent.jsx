@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Card, Row, Col, message } from 'antd';
 import './PaymentComponent.css'; 
 
-const PaymentComponent = () => {
+const PaymentComponent = ({ nextPage }) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     cardName: '',
@@ -20,6 +20,7 @@ const PaymentComponent = () => {
       setLoading(false);
       message.destroy();
       message.success('Payment processed successfully!', 2);
+      nextPage(); 
     }, 2000);
   };
 

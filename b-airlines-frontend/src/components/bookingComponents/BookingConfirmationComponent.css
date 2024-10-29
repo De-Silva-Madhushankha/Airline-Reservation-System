@@ -13,26 +13,25 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Booking Title */
 .booking-title {
   text-align: center;
   font-weight: bold;
   margin-bottom: 20px;
-  font-size: 28px; /* Default font size for larger screens */
+  font-size: 28px;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
   .booking-title {
-    font-size: 22px; /* Smaller font size for medium screens */
-    margin-bottom: 15px; /* Reduced bottom margin */
+    font-size: 22px;
+    margin-bottom: 15px;
   }
 }
 
 @media (max-width: 480px) {
   .booking-title {
-    font-size: 20px; /* Even smaller font size for small screens */
-    margin-bottom: 10px; /* Further reduced bottom margin */
+    font-size: 20px; 
+    margin-bottom: 10px;
   }
 }
 
@@ -47,7 +46,6 @@
   align-items: center;
 }
 
-/* Passenger details */
 .passenger-name {
   font-size: 18px;
   font-weight: bold;
@@ -76,13 +74,11 @@
   border-radius: 4px;
 }
 
-/* Cost column */
 .cost-text {
   font-size: 16px;
   font-weight: bold;
 }
 
-/* Subtotal card */
 .subtotal-card {
   margin-top: 20px;
   background-color: #fafafa;
@@ -91,13 +87,14 @@
   border: 1px solid #ddd;
 }
 
-/* Button Container */
 .button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   margin-top: 20px;
-  text-align: center;
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
   .confirmation-card, .passenger-card {
     padding: 10px;
