@@ -1,33 +1,61 @@
-.ticket-card {
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #556087, #928dab);
-    color: #ffffff;
-    font-family: 'Roboto', sans-serif;
+.ticket-details {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.ticket-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #1890ff;
+  margin-bottom: 20px;
+}
+
+.ticket-descriptions .ant-descriptions-item-label {
+  font-weight: bold;
+  color: #333;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.ticket-descriptions .ant-descriptions-item-content {
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ticket-descriptions .ant-descriptions-bordered .ant-descriptions-item-label {
+  background-color: #e8f4ff;
+}
+
+.ticket-descriptions .ant-descriptions-bordered .ant-descriptions-item-content {
+  background-color: #ffffff;
+}
+
+.ticket-descriptions {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .ticket-details {
+    padding: 15px;
   }
-  
-  .ticket-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+
+  .ticket-title {
+    font-size: 20px;
   }
-  
-  .ticket-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
+
+  .ticket-descriptions .ant-descriptions-item-label,
+  .ticket-descriptions .ant-descriptions-item-content {
+    font-size: 14px;
   }
-  
-  .ticket-body p {
-    margin: 0;
-    padding: 5px 0;
-    font-size: 1rem;
-  }
-  
-  .text-right {
-    text-align: right;
-  }
-  
-  .ticket-body p strong {
-    color: #04021d;
-  }
+}
