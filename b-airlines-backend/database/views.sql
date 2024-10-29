@@ -13,8 +13,18 @@ CREATE VIEW user_info AS
     FROM User;
 
 CREATE VIEW user_bookings AS
-    SELECT Booking.user_id, Booking.booking_id, Booking.flight_id, Booking.seat_id, Booking.booking_date, Booking.total_amount, Booking.payment_status
-    FROM Booking;
+    SELECT Booking.user_id, 
+           Booking.booking_id, 
+           Booking.flight_id, 
+           Booking.seat_id, 
+           Booking.booking_date, 
+           Booking.total_amount, 
+           Booking.payment_status,
+           Passenger.first_name, 
+           Passenger.last_name
+    FROM Booking
+    JOIN Passenger ON Booking.passenger_id = Passenger.passenger_id;
+
 
 -- comprehensive booking details
 
