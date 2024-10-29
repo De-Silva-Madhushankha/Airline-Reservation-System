@@ -213,3 +213,42 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE CancelBooking(IN booking_id CHAR(36))
+BEGIN
+    DECLARE loyalty_points_deduction INT DEFAULT 0;
+    DECLARE user_id CHAR(36);
+
+    -- Calculate loyalty points deduction based on Config table
+    SELECT total_amount * config_value INTO loyalty_points_deduction
+    FROM Booking, Config
+    WHERE booking_id = booking_id AND config_key = 'cancellation_penalty_rate';
+
+    -- Retrieve user_id from the Booking
+    SELECT user_id INTO user_id
+    FROM Booking
+    WHERE booking_id = booking_id;
+
+    -- Update payment_status to 'Cancelled' in Booking table for the given booking_id
+    UPDATE Booking
+    SET payment_status = 'Cancelled'
+    WHERE booking_id = booking_id;
+
+    -- Update is_reserved to TRUE in Seat table where seat_id matches the booking's seat_id
+    UPDATE Seat
+    SET is_reserved = TRUE
+    WHERE seat_id = (
+        SELECT seat_id
+        FROM Booking
+        WHERE booking_id = booking_id
+    );
+
+    -- Deduct loyalty points from the User based on the calculated deduction
+    UPDATE User
+    SET loyalty_points = GREATEST(loyalty_points - loyalty_points_deduction, 0)
+    WHERE user_id = user_id;
+END //
+
+DELIMITER ;
