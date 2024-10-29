@@ -95,7 +95,7 @@ const BookingPage = () => {
         <div style={{ marginTop: '20px' }}>
           {currentStep === 0 && (
             <>
-              <FlightSearch onSearch={handleSearchResults}/>
+              <FlightSearch onSearch={handleSearchResults} />
               {flightResults.length > 0 && (
                 <FlightSchedule flights={flightResults} onFlightSelect={handleFlightSelect} />
               )}
@@ -103,8 +103,8 @@ const BookingPage = () => {
           )}
 
           {currentStep === 1 && (
-            <PassengerDetailsComponent 
-              passengers={passengers} 
+            <PassengerDetailsComponent
+              passengers={passengers}
               setPassengers={setPassengers}
               onNextStep={handlePassengers}
               isConfirmed={isPassengerConfirmed}
@@ -113,28 +113,30 @@ const BookingPage = () => {
           )}
 
           {currentStep === 2 && (
-            <SeatSelectionComponent 
-              passengers={passengers} 
-              onSeatsSelected={handleSeatsSelected} 
+            <SeatSelectionComponent
+              passengers={passengers}
+              onSeatsSelected={handleSeatsSelected}
               aircraft_id={selectedFlight?.aircraft_id}
               flight_id={selectedFlight?.flight_id}
               passengerSeats={passengerSeats}
               globalSelectedSeats={globalSelectedSeats}
               setGlobalSelectedSeats={setGlobalSelectedSeats}
-              setPassengerSeats={setPassengerSeats} 
+              setPassengerSeats={setPassengerSeats}
               prevPage={prevStep}
             />
           )}
 
-          {currentStep === 3 && <PaymentComponent />}
+          {currentStep === 3 && <PaymentComponent
+            nextPage={nextStep
+            } />}
 
           {currentStep === 4 && (
-            <BookingConfirmationComponent 
+            <BookingConfirmationComponent
               selectedFlight={selectedFlight}
               passengers={passengers}
               passengerSeats={passengerSeats}
               setPassengerCosts={setPassengerCosts}
-          />
+            />
           )}
         </div>
 

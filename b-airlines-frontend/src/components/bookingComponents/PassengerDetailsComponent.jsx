@@ -222,7 +222,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
         </div>
         {/* <br /> */}
         <div className="flex-buttons">
-          <Button onClick={prevPage} className={`action-button previous-button`}>
+          <Button onClick={prevPage} className="previous-button">
             Previous Page
           </Button>
           <Button type="primary" onClick={handleNext} className="add-passenger-btn">
