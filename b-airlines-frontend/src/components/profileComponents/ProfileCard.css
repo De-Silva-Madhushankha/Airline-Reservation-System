@@ -25,6 +25,16 @@
     gap: 5px;
   }
   
+  .profile-card .profile-text {
+    color: #000000; 
+    font-size: 20px; 
+  }
+  
+
+  .profile-card .loyalty-points {
+    color: #0b0b0b;
+    font-weight: bold; 
+  }
   .profile-info {
     padding: 20px;
   }
@@ -41,24 +51,48 @@
   .profile-info .ant-progress {
     margin-top: 10px;
   }
-
+  
+  .profile-card .ant-typography {
+    color: #000000; 
+  }
+  
+  .profile-card .ant-divider {
+    border-color: #ccc; 
+  }
+  
+  .profile-card .ant-btn-link {
+    color: #040404; 
+  }
+  
+  .profile-card .ant-btn-primary {
+    background-color: #090909; 
+    border-color: #0c0c0c; 
+  }
+  
+  .profile-card .ant-progress-inner {
+    background-color: #f0f0f0; 
+  }
+  
+  .profile-card .ant-progress-bg {
+    background-color: #1890ff; 
+  }
 
 .ant-form-item-label > label {
-    color: #171717; /* Change label color */
+    color: #171717; 
   }
   
   .ant-input {
-    border-color: #007bff; /* Change input border color */
-    color: #060606; /* Change input text color */
+    border-color: #000000; 
+    color: #060606; 
   }
   
   .ant-input:focus, .ant-input:hover {
-    border-color: #0056b3; /* Change input border color on focus and hover */
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); /* Add shadow on focus */
+    border-color: #090909; 
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); 
   }
   
   .ant-form-item {
-    margin-bottom: 16px; /* Adjust margin between form items */
+    margin-bottom: 16px; 
   }
   
   @media (max-width: 768px) {
