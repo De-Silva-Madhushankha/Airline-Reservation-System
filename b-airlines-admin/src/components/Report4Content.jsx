@@ -24,7 +24,7 @@ export default function Report4Content() {
       setRoutes(response.data);
     } catch (error) {
       message.error('Failed to fetch routes');
-      console.error('Error fetching routes:', error); // More detailed logging
+      console.error('Error fetching routes:', error); 
     }
   };
 

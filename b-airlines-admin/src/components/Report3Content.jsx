@@ -24,7 +24,7 @@ export default function Report3Content() {
         },
       });
 
-      // Extract data from the API response
+      
       const result = response.data.passengerCount.result[0]; // The seat class data
       const counts = { Type1: 0, Type2: 0, Type3: 0 }; // Initialize default counts
       
@@ -35,7 +35,7 @@ export default function Report3Content() {
         } else if (row.seat_class_name === 'Business') {
           counts.Type2 = row.reserved_seat_count;
         } else if (row.seat_class_name === 'Platinum') {
-          counts.Type3 = row.reserved_seat_count; // Add Type3 if needed
+          counts.Type3 = row.reserved_seat_count; 
         }
       });
 

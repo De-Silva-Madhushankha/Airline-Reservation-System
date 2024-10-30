@@ -114,7 +114,7 @@ export default function Report2Content() {
           </div>
         )}
 
-        {/* Render passenger details table if there are any details */}
+        
         {passengerDetails.length > 0 && (
           <Table 
             dataSource={passengerDetails} 
