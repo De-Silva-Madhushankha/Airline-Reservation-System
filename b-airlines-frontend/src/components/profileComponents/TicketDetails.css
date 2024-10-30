@@ -1,61 +1,94 @@
-.ticket-details {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
+.card {
+  max-width: 100%;            
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   font-family: Arial, sans-serif;
 }
 
-.ticket-title {
+.card-header {
+  padding: 16px;
+  background-color: #e0f2ff;
   text-align: center;
-  font-size: 24px;
+}
+
+.card-title {
+  font-size: 1.5rem;         
   font-weight: bold;
-  color: #1890ff;
-  margin-bottom: 20px;
+  color: #1d4ed8;
+  margin: 0;
 }
 
-.ticket-descriptions .ant-descriptions-item-label {
-  font-weight: bold;
-  color: #333;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+
+.card-content {
+  padding: 0;
 }
 
-.ticket-descriptions .ant-descriptions-item-content {
-  color: #555;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+.ticket-row {
+  display: flex;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.3s;
+  flex-direction: row;
+  align-items: center;
 }
 
-.ticket-descriptions .ant-descriptions-bordered .ant-descriptions-item-label {
-  background-color: #e8f4ff;
+.ticket-row:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
 }
 
-.ticket-descriptions .ant-descriptions-bordered .ant-descriptions-item-content {
-  background-color: #ffffff;
+.ticket-label {
+  flex: 1;
+  font-size: 0.875rem;      
+  font-weight: 500;
+  color: #6b7280;
 }
 
-.ticket-descriptions {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  overflow: hidden;
+.ticket-value {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #111827;
 }
+
+
+.status-paid, .seat-class {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.75rem;        
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+.status-paid {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.seat-class {
+  background-color: #bfdbfe;
+  color: #1e40af;
+}
+
 
 @media (max-width: 768px) {
-  .ticket-details {
-    padding: 15px;
+  .card {
+    max-width: 95%;          
   }
 
-  .ticket-title {
-    font-size: 20px;
+  .ticket-row {
+    flex-direction: column;  
+    padding: 8px 12px;       
   }
 
-  .ticket-descriptions .ant-descriptions-item-label,
-  .ticket-descriptions .ant-descriptions-item-content {
-    font-size: 14px;
+  .ticket-label, .ticket-value {
+    font-size: 0.875rem;     
+  }
+
+  .card-title {
+    font-size: 1.25rem;      
   }
 }
