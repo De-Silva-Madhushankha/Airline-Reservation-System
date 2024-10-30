@@ -54,7 +54,6 @@ const StatisticsCharts = () => {
 
 
   useEffect(() => {
-    // Practical data for the current year
     const currentYear = new Date().getFullYear();
     setPassengerGrowth([
       { date: `${currentYear}-01-01`, passengers: 1200 },

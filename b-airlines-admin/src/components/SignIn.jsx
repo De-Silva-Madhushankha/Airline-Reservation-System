@@ -49,11 +49,10 @@ const SignIn = () => {
       const { success, token, message } = response.data;
 
       if (success) {
-        // Store token based on "Keep me logged in" option
         if (values.remember) {
-          localStorage.setItem('token', token);  // Store in localStorage for persistence
+          localStorage.setItem('token', token);  
         } else {
-          sessionStorage.setItem('token', token); // Store in sessionStorage for single session
+          sessionStorage.setItem('token', token);
         }
 
         navigate('/Adminhome');

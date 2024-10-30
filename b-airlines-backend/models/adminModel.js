@@ -20,9 +20,6 @@ export const getCounts = async () => {
 
 
 
-
-
-
 export const getCountsByTime = async (startDate, endDate) => {
   try {
     const [result] = await db.query(
@@ -84,21 +81,19 @@ export const getPastFlightModel = async (originCode, destinationCode, startDate,
 
 export const updateFlightStatus = async (flight_id, status) => {
   try {
-    // Map the status to 1 or 0
     const delayValue = status === 'Delayed' ? 1 : 0;
 
-    // Update the delay status based on the provided status string
     const [result] = await db.query(
       'UPDATE Flight SET delay = ? WHERE flight_id = ?',
       [delayValue, flight_id]
+
     );
 
-    // Check if any rows were affected (optional)
     if (result.affectedRows === 0) {
       throw new Error('No flight found with the provided flight_id');
     }
 
-    return result; // Return the result of the update operation
+    return result; 
   } catch (error) {
     throw error;
   }
@@ -110,7 +105,7 @@ export const getRevenueByAircraftType = async () => {
     const [result] = await db.query(
       'SELECT * FROM RevenueByAircraftType'
     );
-    return result; // Return the revenue data
+    return result;
   } catch (error) {
     throw error;
   }
@@ -120,21 +115,18 @@ export const getRevenueByAircraftType = async () => {
 
 export const getCountsByDestination = async (destinationCode, startDate, endDate) => {
   try {
-    // Call the stored procedure
     const [rows] = await db.query(
       `SELECT COUNT(DISTINCT passenger_id) AS passenger_count FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?`,
       [destinationCode, startDate, endDate]
     );
     
-    // Query to get passenger details (name, age)
     const [result] = await db.query(
       'SELECT passenger_name, passenger_age FROM passenger_details_by_destination_view WHERE destination_code = ? AND departure BETWEEN ? AND ?',
       [destinationCode, startDate, endDate]
     );
     
-    // Return the count and passenger details
     return {
-      passenger_count: rows[0]?.passenger_count || 0, // Access the count from the first row or default to 0 if not found
+      passenger_count: rows[0]?.passenger_count || 0,
       passenger_details: result
     };
   } catch (error) {

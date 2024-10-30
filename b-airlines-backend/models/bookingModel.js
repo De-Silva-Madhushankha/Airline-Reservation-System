@@ -12,12 +12,13 @@ const Booking = {
         return rows;
     },
 
+
     getBookingPassenger: async () => {
         const [rows] = await db.query(` SELECT * FROM v_booking_details;`);
         return rows;
     },
 
-      // Method to calculate seat price using stored function in the database
+     // Method to calculate seat price using stored function in the database
     calculateSeatPrice: async (flight_id, row, column) => {
         const query = 'SELECT calculate_seat_price(?, ?, ?) AS price';
         const [rows] = await db.execute(query, [flight_id, row, column]);
