@@ -63,12 +63,11 @@ export const getAllBookings = async (req, res) => {
 
 export const getBookingById = async (req, res) => {
     const id = req.user.id;
-    console.log( id);
+    // console.log( id);
     try {
-        const [booking] = await Booking.getBookingByUserId(id);
-        console.log(booking);
+        const booking = await Booking.getBookingByUserId(id);
         if (booking) {
-            res.json([booking]);
+            res.json(booking);
         } else {
             res.status(404).json({ message: 'booking not found' });
         }
@@ -96,25 +95,23 @@ export const changeBooking = async (req, res) => {
     const { booking_id, new_plane_type, new_booking_date } = req.body;
 
     try {
-        // Fetch the current booking details
+ 
         const [currentBooking] = await Booking.getBooking(booking_id);
         if (!currentBooking) {
             return res.status(404).json({ message: 'Booking not found' });
         }
 
-        // Check if there's a change in plane type or booking date
         let extraFee = 0;
         if (currentBooking.plane_type !== new_plane_type) {
-            extraFee += 100; // $100 for changing plane type
+            extraFee += 100; 
         }
         if (currentBooking.booking_date !== new_booking_date) {
-            extraFee += 50; // $50 for changing date
+            extraFee += 50; 
         }
 
-        // Calculate new total amount (existing total + extra fee)
         const newTotalAmount = currentBooking.total_amount + extraFee;
 
-        // Update the booking in the database
+
         const updatedRows = await Booking.updateBookingDetails(
             booking_id, 
             new_plane_type, 
@@ -142,7 +139,7 @@ export const deleteBooking = async (req, res) => {
     const { id } = req.params;
     console.log('Delete booking:',id);
     try {
-        const affectedRows = await Booking.deleteBooking(id); // Updated method call
+        const affectedRows = await Booking.deleteBooking(id); 
         if (affectedRows) {
             res.json({ message: 'Booking deleted successfully' });
         } else {
@@ -153,13 +150,15 @@ export const deleteBooking = async (req, res) => {
     }
 };
 
-// Function to get all bookings for a specific user (passenger)
+
 export const getBookingsByUserId = async (req, res) => {
-    const { id } = req.params;  // `id` is the passenger_id in this case
+    const { id } = req.params;  
     try {
-        const bookings = await Booking.getBookingByPassengerId(id);  // Updated method call
+        const bookings = await Booking.getBookingByPassengerId(id); 
         if (bookings.length > 0) {
+            console.log("fffffffffffff",bookings);
             res.json(bookings);
+            
         } else {
             res.status(404).json({ message: 'No bookings found for this user' });
         }
@@ -168,11 +167,11 @@ export const getBookingsByUserId = async (req, res) => {
     }
 };
 
-// Function to get all bookings for a specific flight
+
 export const getBookingsByFlightId = async (req, res) => {
     const { id } = req.params;
     try {
-        const bookings = await Booking.getBookingByFlightId(id);  // Updated method call
+        const bookings = await Booking.getBookingByFlightId(id);  
         if (bookings.length > 0) {
             res.json(bookings);
         } else {
@@ -183,7 +182,7 @@ export const getBookingsByFlightId = async (req, res) => {
     }
 };
 
-// Function to get the total revenue for a specific flight
+
 export const getFlightRevenue = async (req, res) => {
     const { id } = req.params;
     try {
@@ -194,7 +193,7 @@ export const getFlightRevenue = async (req, res) => {
     }
 };
 
-// Function to get the total revenue for date range
+
 export const getRevenueByDateRange = async (req, res) => {
     const { startDate, endDate } = req.params;
     try {
@@ -205,7 +204,7 @@ export const getRevenueByDateRange = async (req, res) => {
     }
 };
 
-// Function to get number of bookings by each passenger type given date range
+
 export const getPassengerTypeCount = async (req, res) => {
     const { startDate, endDate } = req.params;
     try {
