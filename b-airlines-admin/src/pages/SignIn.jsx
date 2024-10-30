@@ -1,1 +1,13 @@
-import SignIn from "../components/SignIn";
+import React from 'react'
+import SignIn from '../components/SignIn'
+
+function SignIn() {
+  return (
+    <div>
+      <SignIn/>
+    
+    </div>
+  )
+}
+
+export default SignIn

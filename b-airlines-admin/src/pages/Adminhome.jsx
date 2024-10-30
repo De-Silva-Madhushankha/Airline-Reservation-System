@@ -15,7 +15,6 @@ import AddFlightContent from "../components/AddFlightContent";
 const Adminhome = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
 
-  // Function to render content based on active section
   const renderContent = () => {
     switch (activeSection) {
       case "dashboard":

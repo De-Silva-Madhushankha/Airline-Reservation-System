@@ -85,7 +85,6 @@ export default function SideNav({ setActiveSection }) {
                         <li>
                             <button
                                 onClick={() => {
-                                    // Add any logout logic here (e.g., clearing tokens)
                                     navigate('/');
                                 }}
                                 className="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"

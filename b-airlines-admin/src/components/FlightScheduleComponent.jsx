@@ -31,7 +31,7 @@ const FlightSchedule = ({ flights, onFlightSelect }) => {
             className={`flight-item flex flex-col md:flex-row justify-between items-center p-6 border-b transition duration-300 ${
               index % 2 === 0 ? 'bg-gray-900 text-white' : 'bg-white text-gray-800'
             } hover:bg-gray-800 hover:text-white`}
-            onClick={() => onFlightSelect(flight)} // Call onFlightSelect when a flight is clicked
+            onClick={() => onFlightSelect(flight)}
           >
             
             <div className="flex items-center mb-4 md:mb-0 md:flex-1">

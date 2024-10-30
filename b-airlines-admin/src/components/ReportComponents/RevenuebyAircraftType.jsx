@@ -51,7 +51,6 @@ export default function RevenuebyAircraftType() {
       </div>
 
       <div className="flex mt-8 justify-around">
-        {/* Bar Chart */}
         <ResponsiveContainer width="45%" height={400}>
           <BarChart 
             data={revenueData}  
@@ -66,7 +65,6 @@ export default function RevenuebyAircraftType() {
           </BarChart>
         </ResponsiveContainer>
 
-        {/* Pie Chart */}
         <ResponsiveContainer width="60%" height={400}>
           <PieChart>
             <Pie 
