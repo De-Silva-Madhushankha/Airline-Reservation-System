@@ -58,10 +58,10 @@ export const getBookingById = async (req, res) => {
     const id = req.user.id;
     console.log( id);
     try {
-        const [booking] = await Booking.getBookingByUserId(id);
-        console.log(booking);
+        const booking = await Booking.getBookingByUserId(id);
+        console.log("jjjjjjjjjjjjjjjjjjjjjjjjj",booking);
         if (booking) {
-            res.json([booking]);
+            res.json(booking);
         } else {
             res.status(404).json({ message: 'booking not found' });
         }
@@ -152,7 +152,9 @@ export const getBookingsByUserId = async (req, res) => {
     try {
         const bookings = await Booking.getBookingByPassengerId(id);  // Updated method call
         if (bookings.length > 0) {
+            console.log("fffffffffffff",bookings);
             res.json(bookings);
+            
         } else {
             res.status(404).json({ message: 'No bookings found for this user' });
         }
