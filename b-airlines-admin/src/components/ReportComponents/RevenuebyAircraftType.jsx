@@ -9,7 +9,7 @@ export default function RevenuebyAircraftType() {
   useEffect(() => {
     const fetchRevenueData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/admin/revenue-by-aircraft-type');
+        const response = await axios.get('/admin/revenue-by-aircraft-type');
         setRevenueData(response.data); 
       } catch (err) {
         console.error("Error fetching revenue data:", err);

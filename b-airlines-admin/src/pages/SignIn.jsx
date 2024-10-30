@@ -1,13 +1,14 @@
-import React from 'react'
-import SignIn from '../components/SignIn'
+import SignIn from "../components/SignIn";
+import CommonHeader from "../components/Header";
 
-function SignIn() {
+
+const SignInPage = () => {
   return (
-    <div>
-      <SignIn/>
-    
-    </div>
-  )
-}
+    <>
+      <CommonHeader/>
+      <SignIn />
+    </>
+  );
+};
 
-export default SignIn
+export default SignInPage;
