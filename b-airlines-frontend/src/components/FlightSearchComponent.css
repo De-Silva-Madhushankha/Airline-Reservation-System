@@ -1,5 +1,5 @@
 .flight-search-layout {
-    min-height: 100vh;
+    min-height: 80vh;
 }
 
 .flight-search-header {
@@ -21,7 +21,7 @@
 
 .flight-search-content {
   background: #f0f2f5;
-  padding: 50px 20px;
+  padding: 30px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
