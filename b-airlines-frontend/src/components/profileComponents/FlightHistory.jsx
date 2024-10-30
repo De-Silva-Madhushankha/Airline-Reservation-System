@@ -92,7 +92,7 @@ const FlightHistory = ({ flights }) => {
       />
       <Modal
         title="Ticket Details"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCloseModal}
         footer={[
           <Button key="close" onClick={handleCloseModal}>

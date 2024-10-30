@@ -113,7 +113,7 @@ const Booking = {
 
     getBookingByUserId: async (id) => {
         console.log('hey',id)
-        const [rows] = await db.query(`SELECT * FROM Booking WHERE user_id = ?`, [id])
+        const [rows] = await db.query(`SELECT * FROM user_bookings WHERE user_id = ?`, [id])
         console.log(rows)
         return rows;
     },  
@@ -144,7 +144,7 @@ const Booking = {
     },
   
     deleteBooking: async (booking_id) => {
-            const [result] = await db.query('UPDATE Booking SET payment_status = ? WHERE booking_id = ?', ['Cancelled', booking_id]);
+            const [result] = await db.query('CALL CancelBooking(?)', [booking_id]);
             return result.affectedRows;
         }
 }
