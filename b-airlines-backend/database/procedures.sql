@@ -1,32 +1,3 @@
--- report -   Given a date range, number of bookings by each passenger type
-
--- DELIMITER #
-
--- CREATE PROCEDURE booking_count_by_passenger_type_proc (
---     IN start_date DATE,
---     IN end_date DATE
--- )
--- BEGIN
---     SELECT
---         CASE
---             WHEN p.is_registered = TRUE THEN 'Registered'
---             ELSE 'Non-Registered'
---         END AS passenger_type,
---         COUNT(b.booking_id) AS total_bookings
---     FROM
---         Booking b
---     JOIN
---         Passenger p ON b.passenger_id = p.passenger_id
---     JOIN
---         Flight f ON b.flight_id = f.flight_id
---     WHERE
---         f.departure BETWEEN start_date AND end_date
---     GROUP BY
---         passenger_type;
--- END #
-
--- DELIMITER ;
-
 -- report - Given origin and destination, all past flights, states, passenger counts data
 
 DELIMITER $$
@@ -133,7 +104,7 @@ BEGIN
     DECLARE p_total_amount DECIMAL(10, 2);
     DECLARE new_booking_id CHAR(36);
 
-    -- is this transaction really needed
+   
     START TRANSACTION;
 
     CALL AddOrGetPassenger(p_firstName, p_lastName, p_passport, p_age, p_phoneNumber, p_email);
@@ -142,7 +113,7 @@ BEGIN
 
     SET p_seat_id = (SELECT seat_id AS p_seat_id FROM Seat WHERE flight_id = p_flight_id AND seat_row = p_seatRow AND seat_column = p_seatColumn);
 
-    -- we assume seat is not taken, # manage that
+    
     UPDATE Seat SET is_reserved = 1 WHERE seat_id = p_seat_id;
 
     SET p_total_amount = (SELECT calculate_seat_price(p_flight_id, p_seatRow, p_seatColumn));
@@ -252,3 +223,33 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+-- report -   Given a date range, number of bookings by each passenger type
+
+-- DELIMITER #
+
+-- CREATE PROCEDURE booking_count_by_passenger_type_proc (
+--     IN start_date DATE,
+--     IN end_date DATE
+-- )
+-- BEGIN
+--     SELECT
+--         CASE
+--             WHEN p.is_registered = TRUE THEN 'Registered'
+--             ELSE 'Non-Registered'
+--         END AS passenger_type,
+--         COUNT(b.booking_id) AS total_bookings
+--     FROM
+--         Booking b
+--     JOIN
+--         Passenger p ON b.passenger_id = p.passenger_id
+--     JOIN
+--         Flight f ON b.flight_id = f.flight_id
+--     WHERE
+--         f.departure BETWEEN start_date AND end_date
+--     GROUP BY
+--         passenger_type;
+-- END #
+
+-- DELIMITER ;

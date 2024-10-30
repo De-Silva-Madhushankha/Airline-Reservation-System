@@ -28,7 +28,7 @@ export const getAircraftById = async (req, res) => {
   try {
     const aircraft = await Aircraft.getAircraftById(id);
     if (aircraft.length > 0) {
-      res.json(aircraft[0]); // Assuming you're returning an array, send the first item
+      res.json(aircraft[0]); 
     } else {
       res.status(404).json({ message: 'Aircraft not found' });
     }
@@ -38,11 +38,11 @@ export const getAircraftById = async (req, res) => {
 };
 
 export const getModelById = async (req, res) => {
-  const { aircraft_id } = req.params; // Correct destructuring
+  const { aircraft_id } = req.params; 
   console.log(aircraft_id);
   console.log("Requesting model with id: ", aircraft_id); // Log the correct id
   try {
-    const model = await Aircraft.getModelById(aircraft_id); // Assuming Aircraft is your model or database query method
+    const model = await Aircraft.getModelById(aircraft_id); 
     if (model.length > 0) {
       res.json(model[0]); // Send the first item if found
     } else {

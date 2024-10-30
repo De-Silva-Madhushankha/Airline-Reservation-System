@@ -72,8 +72,6 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   const id = req.user.id;
   const updates = req.body;
-  //console.log(updates);
-  //console.log(id);
   try {
     const affectedRows = await User.updateProfile(updates.firstName, updates.lastName, updates.country, updates.mobileNumber, id);
     if (affectedRows) {
@@ -118,9 +116,7 @@ export const getUserProfile = async (req, res) => {
     const user_info = await User.findById(req.user.id);
     const user_flights = await User.getUserFlights(req.user.id);
 
-    // Log the fetched user info
-    //console.log('Fetched User Info:', user_info);
-    //console.log('Fetched User Flights:', user_flights);
+    
 
     if (!user_info) {
       return res.status(404).json({ message: 'User not found' });
@@ -138,8 +134,6 @@ export const getUserProfile = async (req, res) => {
       flights: user_flights ? user_flights : [],
     };
 
-    // Log the response data
-    //console.log('Response Data:', JSON.stringify(responseData, null, 2));
     
     return res.json(responseData);
 

@@ -34,7 +34,7 @@ export const lockSeats = async (req, res) => {
 
 export const getOccupiedByFlightId = async (req, res) => {
     try {
-        const { flight_id } = req.params;  // Assuming flight_id is passed as a route parameter
+        const { flight_id } = req.params;  
         const seats = await Seat.getOccupiedByFlightId(flight_id);
         res.json(seats);
     } catch (error) {

@@ -110,7 +110,7 @@ import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, ge
   };
   
   export const updateStatus = async (req, res) => {
-    const { flight_id, status } = req.body; // Expect flight_id and status in the request body
+    const { flight_id, status } = req.body; 
   
     // Validate the input
     if (!flight_id || !status) {

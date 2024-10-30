@@ -1,4 +1,3 @@
-// models/passengerModel.js
 import db from '../database/db.js'
 
 const Passenger = {

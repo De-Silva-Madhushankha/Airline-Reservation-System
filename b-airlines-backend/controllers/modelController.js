@@ -11,7 +11,7 @@ export const getModels = async (req, res) => {
 };
 
 export const getModelDetails = async (req, res) => {
-    const { model } = req.params; // Change to 'model'
+    const { model } = req.params; 
     try {
         console.log('incontroller', model);
         const result = await Model.getModelDetails(model); // Update method call
