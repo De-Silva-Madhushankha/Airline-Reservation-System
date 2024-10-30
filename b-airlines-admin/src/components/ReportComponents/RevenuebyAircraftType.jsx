@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, message } from 'antd'; 
-import axios from 'axios';
+import axios from '../../axiosConfig.js';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'; // Import chart components
 
 export default function RevenuebyAircraftType() {
