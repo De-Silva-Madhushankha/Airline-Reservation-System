@@ -9,47 +9,55 @@ const { Title, Text } = Typography;
 const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlight, setPassengerCosts }) => {
   const [totalCost, setTotalCost] = useState(0);
   const [passengerCosts, setLocalPassengerCosts] = useState({});
+  const [discount, setDiscount] = useState(0); // Initialize discount as a single value
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchPassengerCosts = async () => {
       try {
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        if (!token) {
+          message.error('User is not authenticated');
+          return;
+        }
 
         const passengerSeatsData = passengers.map(passenger => ({
-          // passengerSeats - { passport, seat } , seat - { row, column}
           passport: passenger.passport,
           seat: passengerSeats[passenger.passport],
         }));
-  
+
         const response = await axios.post('/booking/cost', {
           flight_id: selectedFlight.flight_id,
           passengerSeats: passengerSeatsData,
+        },{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
-  
-        const { costs, totalCost } = response.data;
-  
+
+        const { costs, totalCost, discount } = response.data;
+
         setLocalPassengerCosts(costs);
         setPassengerCosts(costs);
         setTotalCost(totalCost);
+        setDiscount(discount); // Set the overall discount
       } catch (error) {
         message.error('Failed to retrieve booking costs');
         console.error(error);
       }
     };
-  
+
     fetchPassengerCosts();
-  }, [passengers, passengerSeats, selectedFlight, setPassengerCosts]);  
+  }, [passengers, passengerSeats, selectedFlight, setPassengerCosts]);
 
   const handleConfirmBooking = async () => {
     try {
       const token = localStorage.getItem('token') || sessionStorage.getItem('token');
       if (!token) {
-        setError('User is not authenticated');
-        setLoading(false);
+        message.error('User is not authenticated');
         return;
       }
-      
+
       const bookingData = {
         flight_id: selectedFlight.flight_id,
         passengers: passengers.map(passenger => ({
@@ -63,17 +71,17 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
           seatColumn: passengerSeats[passenger.passport].column,
         })),
       };
-      
+
       const response = await axios.post('/booking/create', bookingData, {
         headers: {
-          Authorization: `Bearer ${token}`, //Authorization header
+          Authorization: `Bearer ${token}`,
         },
       });
-      
+
       if (response.data.success) {
-        message.success('Booking confirmed successfully!', 1); 
+        message.success('Booking confirmed successfully!', 1);
         setTimeout(() => {
-          navigate('/'); // Navigate to home
+          navigate('/');
         }, 2000);
       } else {
         message.error('Failed to confirm booking. Please try again.');
@@ -84,6 +92,7 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
     }
   };
 
+  const discountedTotal = totalCost - (totalCost * discount / 100); // Apply discount to the total cost
 
   return (
     <div className="booking-confirmation-layout">
@@ -101,7 +110,6 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
             return (
               <Card className="passenger-card" key={passenger.passport}>
                 <Row className="passenger-info" gutter={[16, 16]}>
-                  
                   {/* Column 1: Name, Origin-Destination, Seat Class */}
                   <Col xs={24} sm={16}>
                     <Text strong className="passenger-name">{`${passenger.firstName} ${passenger.lastName}`}</Text><br/>
@@ -117,7 +125,7 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
 
                   {/* Passenger Cost */}
                   <Col xs={24} sm={8} className="cost-column" style={{ textAlign: 'right' }}>
-                    <Text className="cost-text">Cost: ${cost}</Text>
+                    <Text className="cost-text">Cost: ${cost}</Text><br/>
                   </Col>
                 </Row>
               </Card>
@@ -125,14 +133,15 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
           }}
         />
 
-        
         <Card className="subtotal-card">
           <Row gutter={[16, 16]} align="middle">
             <Col xs={24} sm={12} style={{ textAlign: 'left' }}>
               <Title level={4}>Flight Subtotal</Title>
             </Col>
             <Col xs={24} sm={12} className="cost-column" style={{ textAlign: 'right' }}>
-              <Title level={4}>${totalCost}</Title>
+              <Title level={4}>{`Subtotal: $${totalCost.toFixed(2)}`}</Title>
+              <Title level={4} className="discount-text">{`Discount: ${discount}%`}</Title>
+              <Title level={4}>{`Total after discount: $${discountedTotal.toFixed(2)}`}</Title>
             </Col>
           </Row>
         </Card>

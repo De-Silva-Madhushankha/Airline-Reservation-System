@@ -12,6 +12,12 @@ const User = {
     }
   },
 
+  getUserDiscount: async (user_id) => {
+    const query = 'SELECT lp.discount FROM User u JOIN Loyalty_program lp ON u.program_id = lp.program_id WHERE u.user_id = ?';
+    const [rows] = await db.execute(query, [user_id]);
+    return rows.length > 0 ? rows[0].discount : null;
+}, 
+
   create: async (title, first_name, last_name, email, password, date_of_birth, country, mobile_number ) => {
     try {
       const [result] = await db.query(

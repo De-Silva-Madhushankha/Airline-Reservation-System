@@ -1,13 +1,20 @@
 import Booking from '../models/bookingModel.js';
 import Passenger from '../models/passengerModel.js';
 import Seat from '../models/seatModel.js';
-
+import User from '../models/userModel.js';
 
 export const getBookingCost = async (req, res) => {
     try {
-        const { flight_id, passengerSeats } = req.body; 
+        const user_id = req.user.id;
+
+        const { flight_id, passengerSeats } = req.body; // passengerSeats - { passport, seat } , seat - { row, column}
         let totalCost = 0;
         const costs = {};
+        
+        const discount = await User.getUserDiscount(user_id);
+        if (discount === null) {
+            return res.status(400).json({ message: `Unable to retrieve discount for user ID ${user_id}` });
+        }
 
         for (const passenger of passengerSeats) {
             const { passport, seat } = passenger;
@@ -23,8 +30,8 @@ export const getBookingCost = async (req, res) => {
             totalCost += seatCost;
         }
 
-        res.status(200).json({ costs, totalCost });
-        
+        res.status(200).json({ costs, totalCost, discount });
+         
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
