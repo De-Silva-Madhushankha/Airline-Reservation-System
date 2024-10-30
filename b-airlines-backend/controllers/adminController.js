@@ -2,7 +2,7 @@ import User from '../models/userModel.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, getPastFlightModel, updateFlightStatus, getRevenueByAircraftType , loadChartData} from '../models/adminModel.js';
-
+import Booking from '../models/bookingModel.js';
 
   
   export const loginAdmin = async (req, res) => {
@@ -145,3 +145,18 @@ import { getCounts, getCountsByDestination , getCountsByAge, getCountsByTime, ge
       res.status(500).json({ message: 'Error fetching counts', error });
     }
   };
+
+  export const getUserBookings = async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const bookings = await Booking.getBookingPassengerByUserId(userId);
+      if (bookings.length > 0) {
+        res.json(bookings);
+      } else {
+        res.status(404).json({ message: 'No bookings found for this user' });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  

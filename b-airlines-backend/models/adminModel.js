@@ -85,7 +85,8 @@ export const updateFlightStatus = async (flight_id, status) => {
 
     const [result] = await db.query(
       'UPDATE Flight SET delay = ? WHERE flight_id = ?',
-      [delayValue, flight_id] 
+      [delayValue, flight_id]
+
     );
 
     if (result.affectedRows === 0) {
@@ -94,7 +95,7 @@ export const updateFlightStatus = async (flight_id, status) => {
 
     return result; 
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 

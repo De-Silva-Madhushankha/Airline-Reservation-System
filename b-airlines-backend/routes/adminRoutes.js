@@ -2,7 +2,7 @@ import express from 'express';
 import { getAllAircrafts } from '../controllers/aircraftController.js';
 import { getAllUsers } from '../controllers/userController.js';
 import { getModels, createModel } from '../controllers/modelController.js';
-import { loginAdmin , loadInitialData , getCountbyDestination , getCountbyTime, getCountbyAge, getPastFlights, updateStatus , getRevenueByType ,getChartData} from '../controllers/adminController.js';
+import { loginAdmin , loadInitialData , getUserBookings, getCountbyDestination , getCountbyTime, getCountbyAge, getPastFlights, updateStatus , getRevenueByType ,getChartData} from '../controllers/adminController.js';
 
 const router = express.Router();
 
@@ -19,5 +19,6 @@ router.get('/past-flights-report', getPastFlights);
 router.post('/update-flight-status', updateStatus);
 router.get('/revenue-by-aircraft-type', getRevenueByType);
 router.get('/load-charts', getChartData);
+router.get('/users/:userId/bookings', getUserBookings);
 
 export default router;
