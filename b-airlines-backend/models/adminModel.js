@@ -90,7 +90,7 @@ export const updateFlightStatus = async (flight_id, status) => {
     // Update the delay status based on the provided status string
     const [result] = await db.query(
       'UPDATE Flight SET delay = ? WHERE flight_id = ?',
-      [delayValue, flight_id] // Use the integer value (1 or 0)
+      [delayValue, flight_id]
     );
 
     // Check if any rows were affected (optional)
@@ -100,7 +100,7 @@ export const updateFlightStatus = async (flight_id, status) => {
 
     return result; // Return the result of the update operation
   } catch (error) {
-    throw error; // Propagate error
+    throw error;
   }
 };
 

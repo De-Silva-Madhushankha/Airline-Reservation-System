@@ -4,7 +4,6 @@ const Route = {
 
     getRoutes : async () => {
         const [rows] = await db.query("SELECT * FROM Route")
-        //console.log(rows)
         return rows
     },
 

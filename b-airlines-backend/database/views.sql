@@ -28,7 +28,6 @@ CREATE VIEW user_bookings AS
 
 -- comprehensive booking details
 
-
 CREATE VIEW v_booking_details AS
 SELECT 
     b.booking_id,
