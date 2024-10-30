@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ChevronRight, Plane } from 'lucide-react';
-import { message, Empty } from 'antd';
+import { message, Empty, Tag } from 'antd';
 import './FlightScheduleComponent.css';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
@@ -75,6 +75,12 @@ const FlightSchedule = ({ flights, onFlightSelect }) => {
 
             <div className="duration flex items-center md:flex-1 justify-end text-sm">
               Duration: {calculateDuration(flight.departure, flight.dep_time, flight.arrival, flight.arr_time)}
+            </div>
+
+            <div className="delay flex items-center md:flex-1 justify-end text-sm">
+              <Tag color={flight.delay ? 'red' : 'green'}>
+                {flight.delay ? 'Delayed' : 'On Time'}
+              </Tag>
             </div>
           </div>
         ))}

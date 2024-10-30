@@ -25,7 +25,7 @@ const FlightSearch = ({ onSearch }) => {
 
     try {
       const response = await axios.post('/flight/flight-search', values);
-      console.log("Search results: ", response.data);
+      //console.log("Search results: ", response.data);
 
       if (response.data.flights && response.data.flights.length > 0) {
         message.success("Flights found!");
