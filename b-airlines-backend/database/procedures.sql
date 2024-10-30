@@ -128,6 +128,7 @@ BEGIN
     DECLARE p_total_amount DECIMAL(10, 2);
     DECLARE new_booking_id CHAR(36);
     DECLARE current_points INT;
+    DECLARE p_discount INT;
 
 
     START TRANSACTION;
@@ -141,7 +142,9 @@ BEGIN
     
     UPDATE Seat SET is_reserved = 1, lock_until = NULL WHERE seat_id = p_seat_id;
 
-    SET p_total_amount = (SELECT calculate_seat_price(p_flight_id, p_seatRow, p_seatColumn));
+    set p_discount = (SELECT lp.discount FROM User u JOIN Loyalty_program lp ON u.program_id = lp.program_id WHERE u.user_id = p_user_id);
+
+    SET p_total_amount = (SELECT calculate_seat_price(p_flight_id, p_seatRow, p_seatColumn)) * (100 - p_discount) / 100;
 
     SET new_booking_id = UUID();
 
