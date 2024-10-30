@@ -180,12 +180,12 @@ Any additional information goes here
 
 If you have any feedback, please reach out to us at bawantha.22@cse.mrt.ac.lk
 
-## Team Members (Group 25)
-DE SILVA S.M.B.M. 220102L desilvasmbm.22@uom.lk
-
-
-
-
+## Team Members (Group 23)
+- DE SILVA S.M.B.M.   220102L    desilvasmbm.22@uom.lk
+- DE SILVA D.L.P.H.   220099F    desilvadlph.22@uom.lk
+- SANJULA N.G.K.      220578A    sanjulangk.22@uom.lk
+- SHALIKA T.K.T.      220604D    shalikatkt.22@uom.lk
+- VITHURSANAA.N.      220671D    vithursanaan.22@uom.lk
 
 ## License
 

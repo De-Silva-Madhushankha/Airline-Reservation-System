@@ -1,12 +1,12 @@
 .help-container {
     position: flex;
-    max-width: 64rem; /* 4xl in Tailwind */
+    max-width: 64rem; 
     margin: 0 auto;
     padding-top: 200px;
-    top: '80px'; /* Adjust this value based on the height of your header */
+    top: '80px'; 
     padding: '10px 50px';
     padding-top: 60px;
-    background-color: #f9fafb; /* gray-50 in Tailwind */
+    background-color: #f9fafb; 
   }
   
   @media (min-width: 640px) {
@@ -25,12 +25,12 @@
     font-size: 1.875rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #1f2937; /* gray-800 in Tailwind */
+    color: #1f2937; 
   }
   
   .help-description {
     font-size: 1.125rem;
-    color: #4b5563; /* gray-600 in Tailwind */
+    color: #4b5563;
     margin-bottom: 2rem;
   }
   
@@ -45,13 +45,13 @@
   
   .ant-collapse-item {
     margin-bottom: 1rem;
-    border: 1px solid #e5e7eb; /* gray-200 in Tailwind */
+    border: 1px solid #e5e7eb; 
     border-radius: 0.5rem;
     transition: border-color 0.3s ease;
   }
   
   .ant-collapse-item:hover {
-    border-color: #d1d5db; /* gray-300 in Tailwind */
+    border-color: #d1d5db; 
   }
   
   .ant-collapse-header {
@@ -61,12 +61,12 @@
   .ant-collapse-header-text {
     font-size: 1.125rem;
     font-weight: 500;
-    color: #374151; /* gray-700 in Tailwind */
+    color: #374151; 
   }
   
   .ant-collapse-content-box {
     padding: 1rem !important;
-    color: #4b5563; /* gray-600 in Tailwind */
+    color: #4b5563; 
   }
   
   /* Contact Section Styles */
@@ -78,12 +78,12 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #1f2937; /* gray-800 in Tailwind */
+    color: #1f2937;
   }
   
   .contact-list .ant-list-item {
     padding: 1rem 0;
-    border-bottom: 1px solid #e5e7eb; /* gray-200 in Tailwind */
+    border-bottom: 1px solid #e5e7eb; 
   }
   
   .contact-list .ant-list-item:last-child {
@@ -91,7 +91,7 @@
   }
   
   .contact-icon {
-    background-color: #dbeafe; /* blue-100 in Tailwind */
+    background-color: #dbeafe;
     padding: 0.75rem;
     border-radius: 9999px;
     margin-right: 1rem;
@@ -99,20 +99,20 @@
   
   .contact-icon .anticon {
     font-size: 1.25rem;
-    color: #3b82f6; /* blue-500 in Tailwind */
+    color: #3b82f6; 
   }
   
   .contact-list .ant-list-item-meta-title {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #1f2937; /* gray-800 in Tailwind */
+    color: #1f2937; 
   }
   
   .contact-list .ant-list-item-meta-description {
-    color: #6b7280; /* gray-500 in Tailwind */
+    color: #6b7280; 
   }
   
   .contact-info {
     font-weight: 500;
-    color: #2563eb; /* blue-600 in Tailwind */
+    color: #2563eb; 
   }

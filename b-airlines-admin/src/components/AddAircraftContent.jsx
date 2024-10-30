@@ -43,7 +43,7 @@ const AddAircraftContent = () => {
       await axios.post('/admin/create-model', values);
       message.success('Model added successfully');
       modelForm.resetFields();
-      fetchModels(); // Refresh the models list
+      fetchModels(); 
     } catch (error) {
       message.error('Failed to add model');
     }

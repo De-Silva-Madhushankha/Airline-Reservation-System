@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import axios from '../axiosConfig.js'; 
+import axios from '../../axiosConfig.js'; 
 import { DatePicker, Input, message, Select, Table } from 'antd';
 
 const { RangePicker } = DatePicker;
 
-export default function Report2Content() {
+export default function PaassengerCountToDestination() {
   const [destinationCode, setDestinationCode] = useState('');
   const [dateRange, setDateRange] = useState([]);
   const [passengerCount, setPassengerCount] = useState(null);
-  const [passengerDetails, setPassengerDetails] = useState([]); // State for passenger details
+  const [passengerDetails, setPassengerDetails] = useState([]); 
 
   const handleSubmit = async () => {
     if (!destinationCode || dateRange.length === 0) {
@@ -28,11 +28,9 @@ export default function Report2Content() {
         },
       });
 
-      // Access the passenger count and details from the response
       const passengerCount = response.data.passengerCount;
       const passengerDetails = response.data.passengerDetails;
 
-      // Update the state with the passenger count and details
       setPassengerCount(passengerCount);
       setPassengerDetails(passengerDetails);
     } catch (err) {
@@ -41,7 +39,6 @@ export default function Report2Content() {
     }
   };
 
-  // Define columns for the passenger details table
   const columns = [
     {
       title: 'Passenger Name',
@@ -61,11 +58,10 @@ export default function Report2Content() {
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <h1 className="text-gray-800 dark:text-white text-center text-2xl mb-8 font-bold">
-          Passenger Count by Destination
-        </h1>
+            Passenger Traffic to Destination        </h1>
 
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-gray-800 dark:text-gray-300 mb-2">
             Select Destination
           </label>
           <Select 
@@ -89,7 +85,7 @@ export default function Report2Content() {
         </div>
 
         <div className="mb-4">
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-gray-800 dark:text-gray-300 mb-2">
             Select Period
           </label>
           <RangePicker 
@@ -102,7 +98,7 @@ export default function Report2Content() {
 
         <button 
           type="button" 
-          className="w-full text-white bg-gray-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          className="w-full text-white bg-black hover:bg-gray-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
           onClick={handleSubmit}
         >
           Submit
@@ -114,13 +110,12 @@ export default function Report2Content() {
           </div>
         )}
 
-        {/* Render passenger details table if there are any details */}
         {passengerDetails.length > 0 && (
           <Table 
             dataSource={passengerDetails} 
             columns={columns} 
-            rowKey="passenger_name" // Set a unique key for each row
-            pagination={false} // Disable pagination if not needed
+            rowKey="passenger_name" 
+            pagination={false} 
             className="mt-4"
           />
         )}

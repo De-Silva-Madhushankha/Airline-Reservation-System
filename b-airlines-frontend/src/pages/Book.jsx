@@ -155,7 +155,7 @@ const BookingPage = () => {
           )}
         </div> */}
       </Content>
-      <Footer style={{ textAlign: 'center' }}>B Airways ©2024 Created by Madhushankha De Silva</Footer>
+      <Footer style={{ textAlign: 'center' }}>B Airways ©2024 Created by Team 23</Footer>
     </Layout>
   );
 };

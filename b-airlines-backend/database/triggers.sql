@@ -37,9 +37,9 @@ BEGIN
     SET r = 1;
     WHILE r <= economy_rows DO
         SET c = 1; -- Reset column for each new row
-        WHILE c <= columns DO -- Assuming 4 columns for economy
+        WHILE c <= columns DO
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class_id, is_reserved, model, flight_id)
-            -- 1 here shows economy
+            --  economy
             VALUES (UUID(), r, c, 1, FALSE, model_name, NEW.flight_id);
             SET c = c + 1;
         END WHILE;
@@ -50,7 +50,7 @@ BEGIN
     SET r = 1; -- Reset row for business seats
     WHILE r <= business_rows DO
         SET c = 1; -- Reset column for each new row
-        WHILE c <= columns DO -- Assuming 4 columns for business
+        WHILE c <= columns DO 
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class_id, is_reserved, model, flight_id)
             VALUES (UUID(), economy_rows + r, c, 2, FALSE, model_name, NEW.flight_id);
             SET c = c + 1;
@@ -62,7 +62,7 @@ BEGIN
     SET r = 1; -- Reset row for platinum seats
     WHILE r <= platinum_rows DO
         SET c = 1; -- Reset column for each new row
-        WHILE c <= columns DO -- Assuming 4 columns for platinum
+        WHILE c <= columns DO 
             INSERT INTO Seat (seat_id, seat_row, seat_column, seat_class_id, is_reserved, model, flight_id)
             VALUES (UUID(), economy_rows + business_rows + r, c, 3, FALSE, model_name, NEW.flight_id);
             SET c = c + 1;

@@ -122,7 +122,7 @@ CREATE TABLE Seat (
     is_reserved BOOLEAN DEFAULT false,
     model VARCHAR(50),
     flight_id CHAR(36) NOT NULL,
-    seat_class_id INT NOT NULL,  -- Foreign key to SeatClass
+    seat_class_id INT NOT NULL,  
     lock_until DATETIME DEFAULT NULL,
     FOREIGN KEY (seat_class_id) REFERENCES Seat_class(seat_class_id) ON DELETE CASCADE,
     FOREIGN KEY (model) REFERENCES Model(model) ON DELETE CASCADE,
@@ -144,14 +144,14 @@ CREATE TABLE Booking (
     FOREIGN KEY (user_id) REFERENCES User(user_id) ON UPDATE CASCADE
 );
 
--- must add privileged access
+-- added privileged access
 CREATE TABLE Config (
     config_key VARCHAR(50) PRIMARY KEY,  -- Unique key to identify the constant
     config_value DOUBLE NOT NULL,        -- Value of the constant
     description VARCHAR(100)             -- Description of what the constant is for
 );
 
--- added here this doesnt belong outer scope
+-- this doesnt belong outer scope
 -- privileged
 INSERT INTO Config (config_key, config_value, description)
 VALUES

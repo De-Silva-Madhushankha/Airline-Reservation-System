@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Card, Input, Space, Button, Tag, Avatar, Modal } from 'antd';
+import { Table, Card, Input, Space, Button, Tag, Avatar, Modal, Descriptions, message } from 'antd';
 import { SearchOutlined, UserOutlined, EditOutlined } from '@ant-design/icons';
 import axios from '../axiosConfig.js';
 
@@ -7,7 +7,7 @@ const UserContent = () => {
   const [searchText, setSearchText] = useState('');
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
@@ -109,12 +109,18 @@ const UserContent = () => {
 
   const handleRowClick = async (record) => {
     try {
-      const response = await axios.get(`/admin/users/${record.user_id}`);
+      const response = await axios.get(`/admin/users/${record.user_id}/bookings`);
+      console.log('Fetched user details:', response.data);
       setUserDetails(response.data);
       setSelectedUser(record);
       setIsModalVisible(true);
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      if (error.response && error.response.status === 404) {
+        message.info("No bookings found for this user.");
+      } else {
+        console.error('Error fetching user details:', error);
+        message.error("An error occurred while fetching user details.");
+      }
     }
   };
 
@@ -152,7 +158,7 @@ const UserContent = () => {
         onCancel={() => setIsModalVisible(false)}
         footer={null}
       >
-        {userDetails && (
+        {userDetails.length > 0 && (
           <div>
             <h3>{`${selectedUser.title} ${selectedUser.first_name} ${selectedUser.last_name}`}</h3>
             <p>Email: {selectedUser.email}</p>
@@ -160,17 +166,18 @@ const UserContent = () => {
             <p>Country: {selectedUser.country}</p>
             <h4>Bookings:</h4>
             <ul>
-              {userDetails.bookings.map(booking => (
+              {userDetails.map(booking => (
                 <li key={booking.booking_id}>
-                  Booking ID: {booking.booking_id}, Date: {booking.date}
-                </li>
-              ))}
-            </ul>
-            <h4>Passengers:</h4>
-            <ul>
-              {userDetails.passengers.map(passenger => (
-                <li key={passenger.passenger_id}>
-                  {passenger.first_name} {passenger.last_name}
+                  <strong>Booking ID:</strong> {booking.booking_id}<br />
+                  <strong>Date:</strong> {new Date(booking.booking_date).toLocaleDateString()}<br />
+                  <strong>Flight:</strong> {booking.flight_id}<br />
+                  <strong>Seat:</strong> Row {booking.seat_row}, Column {booking.seat_column}<br />
+                  <strong>Passenger:</strong>
+                  <ul>
+                    <li key={booking.passenger_id}>
+                      {booking.passenger_first_name} {booking.passenger_last_name}
+                    </li>
+                  </ul>
                 </li>
               ))}
             </ul>

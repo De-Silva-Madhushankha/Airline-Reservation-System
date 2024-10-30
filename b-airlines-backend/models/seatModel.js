@@ -108,7 +108,7 @@ const Seat = {
                     results.push(result);
 
                 } catch (innerError) {
-                    // console.error('Error locking seat:', innerError.message);
+                    
                     await connection.rollback();
                     throw new Error(`Failed to lock seat at row ${row}, column ${column}: ${innerError.message}`);
                 }

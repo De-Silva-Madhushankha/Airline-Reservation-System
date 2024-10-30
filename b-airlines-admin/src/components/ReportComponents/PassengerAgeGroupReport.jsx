@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Select, message, Table, Progress, Typography, DatePicker, Input } from 'antd';
-import axios from '../axiosConfig.js';
+import { Select, message, Table, Progress, Typography, Button } from 'antd';
+import axios from '../../axiosConfig.js';
 import dayjs from 'dayjs';
-
 
 const { Title } = Typography;
 const { Option } = Select;
 
-const Report1Content = () => {
+const PassengerAgeGroupReport = () => {
   const [flights, setFlights] = useState([]);
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [passengerCount, setPassengerCount] = useState(null);
 
-  // Fetch all flights on component mount
   const fetchFlights = async () => {
     try {
       const response = await axios.get('/flight/flights');
@@ -28,28 +26,31 @@ const Report1Content = () => {
     fetchFlights();
   }, []);
 
-  // Handle flight selection and fetch passenger count for selected flight
-  const handleFlightSelect = async (flightId) => {
+  const handleFlightSelect = (flightId) => {
     const flight = flights.find(f => f.flight_id === flightId);
     setSelectedFlight(flight);
-    setPassengerCount(null);  // Reset passenger count when selecting a new flight
+    setPassengerCount(null);  
+  };
 
-    try {
-
-      const response = await axios.get('/admin/user-count-age', {
-        params: { flightNumber: flightId },
-
-      });
-      
-      // Check if the response data has the expected structure
-      if (response.data && response.data.passengerCount) {
-        setPassengerCount(response.data.passengerCount);
-      } else {
-        message.error("No passenger count data available.");
+  const handleGenerateReport = async () => {
+    if (selectedFlight) {
+      try {
+        const response = await axios.get('/admin/user-count-age', {
+          params: { flightNumber: selectedFlight.flight_id },
+        });
+        
+        if (response.data && response.data.passengerCount) {
+          setPassengerCount(response.data.passengerCount);
+          message.success("Report generated successfully!");
+        } else {
+          message.error("No passenger count data available.");
+        }
+      } catch (err) {
+        console.error("Error fetching passenger count:", err);
+        message.error("Failed to fetch passenger count");
       }
-    } catch (err) {
-      console.error("Error fetching passenger count:", err);
-      message.error("Failed to fetch passenger count");
+    } else {
+      message.error("Please select a flight before generating the report.");
     }
   };
 
@@ -63,10 +64,10 @@ const Report1Content = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-0">
       <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-      <h1 className='text-black text-2xl mb-5 font-bold'> Above 18 / Below 18</h1>
+        <h1 className='text-black text-2xl mb-5 font-bold'> Passenger Demographics by Age</h1>
 
         <div className="mb-4">
-          <label className="block  text-gray-400 mb-2">Select Flight For Report</label>
+          <label className="block text-gray-800 mb-2">Select Flight For Report</label>
           <Select
             className="w-full"
             placeholder="Select a flight"
@@ -81,6 +82,16 @@ const Report1Content = () => {
           </Select>
         </div>
 
+        <Button 
+        type="default"
+        onClick={handleGenerateReport} 
+        className="w-full mb-4"
+        style={{ backgroundColor: 'black', color: 'white', fontWeight: 'bold' }}
+        >
+          Generate Report
+        </Button>
+
+         
         {selectedFlight && passengerCount && (
           <div className="mt-4 text-center text-black dark:text-gray-800 bg-white rounded-lg flex flex-col items-center">
             <div className="flex flex-row gap-24 mt-4">
@@ -119,4 +130,4 @@ const Report1Content = () => {
   );
 };
 
-export default Report1Content;
+export default PassengerAgeGroupReport;

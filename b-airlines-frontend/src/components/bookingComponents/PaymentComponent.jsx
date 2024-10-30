@@ -59,7 +59,7 @@ const PaymentComponent = ({ nextPage }) => {
   return (
     <div className="payment-container">
       <Row gutter={[16, 16]} justify="center">
-        {/* Payment Form */}
+        
         <Col xs={24} md={12} lg={10}>
           <Card title="Payment Details" bordered={false} className="payment-card">
             <Form layout="vertical" onFinish={handlePayment}>
@@ -127,7 +127,7 @@ const PaymentComponent = ({ nextPage }) => {
           </Card>
         </Col>
 
-        {/* Card Preview */}
+        
         <Col xs={24} md={12} lg={8}>
           <Card bordered={false} className="card-preview">
             <div className="card-mockup">

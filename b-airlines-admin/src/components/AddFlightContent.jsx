@@ -86,7 +86,7 @@ const AddFlightContent = () => {
       ...values,
       departure: dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'),
       arrival: dayjs(values.arrival).format('YYYY-MM-DD HH:mm:ss'),
-      delay: false, // Default value
+      delay: false, 
     };
 
     if (checkForConflicts(flightData)) {
@@ -99,7 +99,7 @@ const AddFlightContent = () => {
       await axios.post('/flight/create-flight', flightData);
       message.success('Flight added successfully');
       form.resetFields();
-      fetchFlights(); // Refresh the flights list
+      fetchFlights(); 
     } catch (error) {
       message.error('Failed to add flight');
     }
@@ -110,7 +110,7 @@ const AddFlightContent = () => {
       ...values,
       departure: dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'),
       arrival: dayjs(values.arrival).format('YYYY-MM-DD HH:mm:ss'),
-      delay: values.delay || false, // Ensure delay is included
+      delay: values.delay || false, 
     };
 
     if (!flightData.delay && checkForConflicts(flightData)) {
@@ -123,7 +123,7 @@ const AddFlightContent = () => {
       await axios.put(`/flight/update-flight/${selectedFlight.flight_id}`, flightData);
       message.success('Flight updated successfully');
       setIsModalVisible(false);
-      fetchFlights(); // Refresh the flights list
+      fetchFlights(); 
     } catch (error) {
       message.error('Failed to update flight');
     }
@@ -277,7 +277,7 @@ const AddFlightContent = () => {
           open={isModalVisible}
           onCancel={() => setIsModalVisible(false)}
           footer={null}
-          width={800} // Set the width of the modal
+          width={800}
         >
           <Form
             form={editForm}
