@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DatePicker, Select, Table, message } from 'antd';
-import axios from 'axios';
-import moment from 'moment';
+import axios from '../axiosConfig.js';
+import dayjs from 'dayjs';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -20,7 +20,7 @@ export default function Report4Content() {
 
   const fetchRoutes = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/route/routes');
+      const response = await axios.get('/route/routes');
       setRoutes(response.data);
     } catch (error) {
       message.error('Failed to fetch routes');
@@ -37,7 +37,7 @@ export default function Report4Content() {
     try {
       setLoading(true); // Start loading when fetching data
       const [startDate, endDate] = dateRange;
-      const response = await axios.get('http://localhost:3001/api/admin/past-flights-report', {
+      const response = await axios.get('/admin/past-flights-report', {
         params: {
           originCode,
           destinationCode,
@@ -83,13 +83,13 @@ export default function Report4Content() {
       title: 'Departure Time',
       dataIndex: 'departure',
       key: 'departure',
-      render: (departure) => moment(departure).format('MMM Do, YYYY h:mm A'),
+      render: (departure) => dayjs(departure).format('MMM Do, YYYY h:mm A'),
     },
     {
       title: 'Arrival Time',
       dataIndex: 'arrival',
       key: 'arrival',
-      render: (arrival) => moment(arrival).format('MMM Do, YYYY h:mm A'),
+      render: (arrival) => dayjs(arrival).format('MMM Do, YYYY h:mm A'),
     },
     {
       title: 'Status',
@@ -113,21 +113,21 @@ export default function Report4Content() {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 px-4 sm:px-0">
 
-  {/* Input Form */}
+  
   <div className="w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
     <h1 className="text-center text-2xl mb-8 text-black font-bold">Admin Flight Report</h1>
 
-    {/* Date Range Picker */}
+    
     <div className="mb-4">
       <label className="block mb-2 text-gray-500">Select Date Range</label>
       <RangePicker
         className="w-full"
         onChange={(dates) => setDateRange(dates)}
-        format="YYYY-MM-DD" // Optional: set a specific format for consistency
+        format="YYYY-MM-DD" 
       />
     </div>
 
-    {/* Route Selection */}
+    
     <div className="mb-4">
       <label className="block mb-2 text-gray-500">Select a Route</label>
       <Select
@@ -149,7 +149,7 @@ export default function Report4Content() {
       </Select>
     </div>
 
-    {/* Submit Button */}
+    
     <button
       type="button"
       className="w-full bg-gray-700 text-white py-2 rounded"
@@ -159,7 +159,7 @@ export default function Report4Content() {
     </button>
   </div>
 
-  {/* Conditionally render the table below the form */}
+  
   {reportData.length > 0 && (
     <div className="mt-8 w-full max-w-5xl">
       <Table columns={columns} dataSource={reportData} rowKey="flight_id" loading={loading} />
