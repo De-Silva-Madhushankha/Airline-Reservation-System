@@ -12,11 +12,7 @@ console.log("Starting server setup...");
 
 
 //middleware
-app.use(cors({
-    origin: 'https://bairwaysindonesia.netlify.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // if you need to include cookies in the requests
-}));
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

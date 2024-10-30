@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 const axios = Axios.create({
-  baseURL: 'https://airline-reservation-system-production.up.railway.app/api/', // API server
+  baseURL: 'http://localhost:3001/api', // API server
 });
 
 export default axios;
