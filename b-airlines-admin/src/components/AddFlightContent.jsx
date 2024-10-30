@@ -89,6 +89,8 @@ const AddFlightContent = () => {
       delay: false, 
     };
 
+    console.log(dayjs(values.departure).format('YYYY-MM-DD HH:mm:ss'))
+
     if (checkForConflicts(flightData)) {
       message.error('Conflict detected: The aircraft is already scheduled for another flight during this time.');
       return;
