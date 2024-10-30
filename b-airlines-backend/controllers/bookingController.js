@@ -56,10 +56,9 @@ export const getAllBookings = async (req, res) => {
 
 export const getBookingById = async (req, res) => {
     const id = req.user.id;
-    console.log( id);
+    // console.log( id);
     try {
         const booking = await Booking.getBookingByUserId(id);
-        console.log("jjjjjjjjjjjjjjjjjjjjjjjjj",booking);
         if (booking) {
             res.json(booking);
         } else {
