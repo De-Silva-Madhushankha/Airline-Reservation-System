@@ -86,6 +86,30 @@ DELIMITER ;
 
 DELIMITER //
 
+CREATE PROCEDURE update_loyalty_program_for_user(
+    IN p_user_id CHAR(36),
+    IN p_loyalty_points INT
+)
+BEGIN
+    DECLARE new_program_id INT;
+
+    SELECT program_id INTO new_program_id
+    FROM Loyalty_program
+    WHERE p_loyalty_points BETWEEN min_points AND max_points
+    LIMIT 1;
+
+    IF new_program_id IS NOT NULL THEN
+        UPDATE User
+        SET program_id = new_program_id
+        WHERE user_id = p_user_id;
+    END IF;
+END;
+//
+
+DELIMITER ;
+
+DELIMITER //
+
 CREATE PROCEDURE createBooking(
     IN p_flight_id CHAR(36),
     IN p_firstName VARCHAR(50),
@@ -103,8 +127,9 @@ BEGIN
     DECLARE p_seat_id CHAR(36);
     DECLARE p_total_amount DECIMAL(10, 2);
     DECLARE new_booking_id CHAR(36);
+    DECLARE current_points INT;
 
-   
+
     START TRANSACTION;
 
     CALL AddOrGetPassenger(p_firstName, p_lastName, p_passport, p_age, p_phoneNumber, p_email);
@@ -114,7 +139,7 @@ BEGIN
     SET p_seat_id = (SELECT seat_id AS p_seat_id FROM Seat WHERE flight_id = p_flight_id AND seat_row = p_seatRow AND seat_column = p_seatColumn);
 
     
-    UPDATE Seat SET is_reserved = 1 WHERE seat_id = p_seat_id;
+    UPDATE Seat SET is_reserved = 1, lock_until = NULL WHERE seat_id = p_seat_id;
 
     SET p_total_amount = (SELECT calculate_seat_price(p_flight_id, p_seatRow, p_seatColumn));
 
@@ -122,6 +147,12 @@ BEGIN
 
     INSERT INTO Booking (booking_id, flight_id, passenger_id, seat_id, user_id, total_amount, payment_status)
     VALUES (new_booking_id, p_flight_id, p_passenger_id, p_seat_id, p_user_id, p_total_amount, 'Paid');
+    
+    SELECT loyalty_points INTO current_points
+    FROM User
+    WHERE user_id = p_user_id;
+
+    CALL update_loyalty_program_for_user(p_user_id, current_points);
 
     COMMIT;
 
@@ -185,15 +216,20 @@ END //
 
 DELIMITER ;
 
+
 DELIMITER //
 
-CREATE PROCEDURE CancelBooking(IN p_booking_id CHAR(36))
+CREATE PROCEDURE CancelBooking(
+    IN p_booking_id CHAR(36)
+)
 BEGIN
     DECLARE refund_value double DEFAULT 0;
     DECLARE p_user_id CHAR(36);
     declare refund_factor float;
     declare p_loyalty_points int;
-	
+    DECLARE current_points INT;
+
+	start TRANSACTION;
     select config_value into refund_factor
     from Config
     where config_key = 'refund_factor';
@@ -219,78 +255,14 @@ BEGIN
     UPDATE User
     SET loyalty_points = loyalty_points - 1
     WHERE user_id = p_user_id;
+
+    SELECT loyalty_points INTO current_points
+    FROM User
+    WHERE user_id = p_user_id;
+
+    CALL update_loyalty_program_for_user(p_user_id, current_points);
+    COMMIT;
+
 END //
 
 DELIMITER ;
-
-
--- report -   Given a date range, number of bookings by each passenger type
-
--- DELIMITER #
-
--- CREATE PROCEDURE booking_count_by_passenger_type_proc (
---     IN start_date DATE,
---     IN end_date DATE
--- )
--- BEGIN
---     SELECT
---         CASE
---             WHEN p.is_registered = TRUE THEN 'Registered'
---             ELSE 'Non-Registered'
---         END AS passenger_type,
---         COUNT(b.booking_id) AS total_bookings
---     FROM
---         Booking b
---     JOIN
---         Passenger p ON b.passenger_id = p.passenger_id
---     JOIN
---         Flight f ON b.flight_id = f.flight_id
---     WHERE
---         f.departure BETWEEN start_date AND end_date
---     GROUP BY
---         passenger_type;
--- END #
-
--- DELIMITER ;
-
-
--- BEGIN
---     DECLARE refund_value double DEFAULT 0;
---     DECLARE p_user_id CHAR(36);
---     declare refund_factor float;
---     declare p_loyalty_points int;
-	
---     select config_value into refund_factor
---     from Config
---     where config_key = 'refund_factor';
-    
---     SELECT total_amount * refund factor INTO refund_value
---     FROM Booking
---     WHERE booking_id = p_booking_id;
-
-
---     SELECT user_id INTO p_user_id
---     FROM Booking
---     WHERE booking_id = p_booking_id;
-
-    
---     UPDATE Booking
---     SET payment_status = 'Cancelled'
---     WHERE booking_id = p_booking_id;
-
-    
---     UPDATE Seat
---     SET is_reserved = TRUE
---     WHERE seat_id = (
---         SELECT seat_id
---         FROM Booking
---         WHERE booking_id = p_booking_id
---     );
-
---     select loyalty_points into p_loyalty_points
---     WHERE user_id = p_user_id;
-    
---     UPDATE User
---     SET loyalty_points = p_loyalty_points - 1
---     WHERE user_id = p_user_id;
--- END
