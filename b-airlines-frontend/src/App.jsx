@@ -28,7 +28,6 @@ function App() {
   return (
       <Router>
         <Routes>
-          {/* Existing Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/not-found" element={<NotFound />} />
           <Route path="/sign-up" element={<SignUp />} />
@@ -39,7 +38,7 @@ function App() {
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/user-profile" element={<Profile />} />
 
-          {/* New Pages for Manage Section */}
+          
           <Route path="/manage" element={<Manage />} />
           <Route path="/manage/before-you-fly" element={<BeforeYouFly />} />
           <Route path="/manage/baggage" element={<Baggage />} />
@@ -49,7 +48,7 @@ function App() {
           <Route path="/manage/change-seat" element={<ChooseSeat />} />
 
 
-          {/* Catch-all Route */}
+          
           <Route path="*" element={<Home />} />
         </Routes>
       </Router>
