@@ -42,7 +42,7 @@ const Manage = () => {
                         backgroundColor: '#bdbdbd',
                         color: '#000',
                         '& .MuiTypography-root': {
-                          color: '#1976d2', // Change text color to blue on hover
+                          color: '#1976d2', 
                         },
                       },
                       borderRadius: '8px',
@@ -158,8 +158,8 @@ const Manage = () => {
           </Grid>
         </Grid>
 
-        {/* Add space between the last card and the footer */}
-        <Box sx={{ mt: 5 }} /> {/* Adjust the mt value for more or less space */}
+        
+        <Box sx={{ mt: 5 }} /> 
       </Container>
       <Footer />
     </>

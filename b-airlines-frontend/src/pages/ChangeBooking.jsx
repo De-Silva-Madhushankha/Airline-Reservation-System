@@ -58,7 +58,7 @@ const ChangeBooking = () => {
         },
       });
 
-      setBookings(response.data); // Set bookings data from response
+      setBookings(response.data); 
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('Unauthorized: Please login again.');
@@ -83,7 +83,7 @@ const ChangeBooking = () => {
     setSelectedDate(event.target.value);
   };
 
-  // Handle booking update (PUT request)
+  
   const handleUpdateBooking = async (bookingId) => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) {

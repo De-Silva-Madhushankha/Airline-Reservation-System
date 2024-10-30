@@ -40,7 +40,7 @@
   color: #333;
 }
 
-/* Button Styles */
+
 .button-container, .flex-buttons {
   display: flex;
   justify-content: space-between;

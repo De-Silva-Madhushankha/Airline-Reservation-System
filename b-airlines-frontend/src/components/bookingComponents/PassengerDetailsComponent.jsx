@@ -34,10 +34,10 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
       return false;
     }
 
-    // if (!validatePassport(passport)) {
-    //   message.error('Please enter a valid passport number (6-9 alphanumeric characters).');
-    //   return false;
-    // }
+    if (!validatePassport(passport)) {
+      message.error('Please enter a valid passport number (6-9 alphanumeric characters).');
+      return false;
+    }
 
     return true;
   };
@@ -198,7 +198,7 @@ const PassengerDetailsComponent = ({ passengers, setPassengers, onNextStep, isCo
           </Form.Item>
         </Form>
         {/* <br /> */}
-        {/* Button Container */}
+        
         <div className="button-container">
           {currentIndex > 0 && (
             <Button onClick={handlePrev} className="action-button">

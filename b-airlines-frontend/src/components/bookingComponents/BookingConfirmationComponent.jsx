@@ -125,7 +125,7 @@ const BookingConfirmationComponent = ({ passengers, passengerSeats, selectedFlig
           }}
         />
 
-        {/* Total Cost Section in a Separate AntD Component */}
+        
         <Card className="subtotal-card">
           <Row gutter={[16, 16]} align="middle">
             <Col xs={24} sm={12} style={{ textAlign: 'left' }}>
