@@ -187,39 +187,38 @@ DELIMITER ;
 
 DELIMITER //
 
-CREATE PROCEDURE CancelBooking(IN booking_id CHAR(36))
+CREATE PROCEDURE CancelBooking(IN p_booking_id CHAR(36))
 BEGIN
-    DECLARE loyalty_points_deduction INT DEFAULT 0;
-    DECLARE user_id CHAR(36);
-
-    -- Calculate loyalty points deduction based on Config table
-    SELECT total_amount * config_value INTO loyalty_points_deduction
-    FROM Booking, Config
-    WHERE booking_id = booking_id AND config_key = 'cancellation_penalty_rate';
-
-    -- Retrieve user_id from the Booking
-    SELECT user_id INTO user_id
-    FROM Booking
-    WHERE booking_id = booking_id;
-
-    -- Update payment_status to 'Cancelled' in Booking table for the given booking_id
+    DECLARE refund_value double DEFAULT 0;
+    DECLARE p_user_id CHAR(36);
+    declare refund_factor float;
+    declare p_loyalty_points int;
+	
+    select config_value into refund_factor
+    from Config
+    where config_key = 'refund_factor';
+    
+	SELECT total_amount * refund_factor, user_id 
+	INTO refund_value, p_user_id
+	FROM Booking
+	WHERE booking_id = p_booking_id;
+    
     UPDATE Booking
     SET payment_status = 'Cancelled'
-    WHERE booking_id = booking_id;
+    WHERE booking_id = p_booking_id;
 
-    -- Update is_reserved to TRUE in Seat table where seat_id matches the booking's seat_id
     UPDATE Seat
-    SET is_reserved = TRUE
+    SET is_reserved = 0,
+        lock_until = NULL
     WHERE seat_id = (
         SELECT seat_id
         FROM Booking
-        WHERE booking_id = booking_id
+        WHERE booking_id = p_booking_id
     );
 
-    -- Deduct loyalty points from the User based on the calculated deduction
     UPDATE User
-    SET loyalty_points = GREATEST(loyalty_points - loyalty_points_deduction, 0)
-    WHERE user_id = user_id;
+    SET loyalty_points = loyalty_points - 1
+    WHERE user_id = p_user_id;
 END //
 
 DELIMITER ;
@@ -253,3 +252,45 @@ DELIMITER ;
 -- END #
 
 -- DELIMITER ;
+
+
+-- BEGIN
+--     DECLARE refund_value double DEFAULT 0;
+--     DECLARE p_user_id CHAR(36);
+--     declare refund_factor float;
+--     declare p_loyalty_points int;
+	
+--     select config_value into refund_factor
+--     from Config
+--     where config_key = 'refund_factor';
+    
+--     SELECT total_amount * refund factor INTO refund_value
+--     FROM Booking
+--     WHERE booking_id = p_booking_id;
+
+
+--     SELECT user_id INTO p_user_id
+--     FROM Booking
+--     WHERE booking_id = p_booking_id;
+
+    
+--     UPDATE Booking
+--     SET payment_status = 'Cancelled'
+--     WHERE booking_id = p_booking_id;
+
+    
+--     UPDATE Seat
+--     SET is_reserved = TRUE
+--     WHERE seat_id = (
+--         SELECT seat_id
+--         FROM Booking
+--         WHERE booking_id = p_booking_id
+--     );
+
+--     select loyalty_points into p_loyalty_points
+--     WHERE user_id = p_user_id;
+    
+--     UPDATE User
+--     SET loyalty_points = p_loyalty_points - 1
+--     WHERE user_id = p_user_id;
+-- END

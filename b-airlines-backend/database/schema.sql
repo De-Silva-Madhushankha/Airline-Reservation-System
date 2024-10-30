@@ -156,4 +156,6 @@ CREATE TABLE Config (
 INSERT INTO Config (config_key, config_value, description)
 VALUES
 ('base_price', 100.0, 'Base price for flight seat calculations'),
-('route_factor', 1.2, 'Multiplier based on route distance for price adjustments');
+('route_factor', 1.2, 'Multiplier based on route distance for price adjustments'),
+('refund_factor', 0.6, 'When refunding, returning the this amout of total price')
+;

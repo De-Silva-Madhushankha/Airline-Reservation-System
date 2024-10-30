@@ -144,7 +144,7 @@ const Booking = {
     },
   
     deleteBooking: async (booking_id) => {
-            const [result] = await db.query('UPDATE Booking SET payment_status = ? WHERE booking_id = ?', ['Cancelled', booking_id]);
+            const [result] = await db.query('CALL CancelBooking(?)', [booking_id]);
             return result.affectedRows;
         }
 }
