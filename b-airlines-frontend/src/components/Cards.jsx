@@ -11,7 +11,7 @@ function Cards() {
         <div className='cards__wrapper'>
           <ul className='cards__items'>
             <CardItem
-              src='../../public/images/galle.jpeg'
+              src='/images/galle.jpeg'
               text='Explore Sri Lanka: Endless Beaches, Timeless Ruins, Welcoming Hearts'
               label='Adventure'
               path='/sign-up'
@@ -21,7 +21,7 @@ function Cards() {
 
             />
             <CardItem
-              src='../../public/images/BALI.jpg'
+              src='/images/BALI.jpg'
               text='Travel through the Islands of Bali'
               label='Luxury'
               path='/sign-up'
@@ -32,7 +32,7 @@ function Cards() {
           </ul>
           <ul className='cards__items'>
             <CardItem
-              src='../../public/images/thailand.jpeg'
+              src='/images/thailand.jpeg'
               text='Now even more amazing Thailand has it all'
               label='Adventure'
               path='/sign-up'
@@ -41,7 +41,7 @@ function Cards() {
               }}
             />
             <CardItem
-              src='../../public/images/india.jpg'
+              src='/images/india.jpg'
               text='Discover the Hidden Gems of India - A Place of Endless Splendor!'
               label='Culture'
               path='/sign-up'
@@ -50,7 +50,7 @@ function Cards() {
               }}
             />
             <CardItem
-              src='../../public/images/singapore-01.jpg'
+              src='/images/singapore-01.jpg'
               text='Experience the Future in Singapore'
               label='Luxury'
               path='/sign-up'
