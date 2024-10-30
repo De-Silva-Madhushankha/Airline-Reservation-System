@@ -62,6 +62,7 @@ const CancelBooking = () => {
         },
       });
       setBookings(response.data);
+      setError(null); 
     } catch (err) {
       console.error('Error fetching bookings:', err);
       setError(err.response?.data?.message || 'Error fetching bookings');
@@ -87,7 +88,7 @@ const CancelBooking = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setBookings(bookings.filter((booking) => booking.booking_id !== bookingId));
+      await fetchBookings();
     } catch (err) {
       console.error('Error deleting booking:', err);
       setError(err.response?.data?.message || 'Error deleting booking');
