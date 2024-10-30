@@ -32,31 +32,31 @@ export default function SideNav({ setActiveSection }) {
                                 <li>
                                     <button onClick={() => setActiveSection("report1")} 
                                             className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
-                                        Below/Over age 18
+                                        Passenger Age Group Report
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report2")} 
                                             className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
-                                        Num of passenger Travel to given destination
+                                        Destination Passenger Count
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report3")} 
                                             className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
-                                        Num of Booking By passenger Types
+                                        Bookings by Passenger Type
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report4")} 
                                             className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
-                                        Passenger Count and manage Delay
+                                        Past Flights & Passenger Data
                                     </button>
                                 </li>
                                 <li>
                                     <button onClick={() => setActiveSection("report5")} 
                                             className="flex items-center w-full text-left text-white transition duration-75 rounded-lg pl-4 py-2 hover:bg-gray-700">
-                                        Revenues By Aircrafts
+                                        Revenue by Aircraft Type
                                     </button>
                                 </li>
                             </ul>
