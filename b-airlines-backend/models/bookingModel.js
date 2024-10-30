@@ -23,7 +23,7 @@ const Booking = {
         const query = 'SELECT calculate_seat_price(?, ?, ?) AS price';
         const [rows] = await db.execute(query, [flight_id, row, column]);
         return rows.length > 0 ? rows[0].price : null;
-    },
+    },   
 
     getBooking: async (booking_id) =>{
         const [rows] = await db.query(`SELECT * FROM Booking WHERE booking_id = ?`, [booking_id])

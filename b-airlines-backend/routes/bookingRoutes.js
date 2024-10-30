@@ -28,7 +28,7 @@ router.put('/bookings/:id', updateBooking);
 // Route to delete a booking by ID
 router.delete('/bookings/:id', deleteBooking);
 
-router.post("/cost", getBookingCost);
+router.post("/cost", verifyToken, getBookingCost);
 router.post("/create",verifyToken, createBookingController);
 
 router.put('/bookings/:id/change', verifyToken, changeBooking);
