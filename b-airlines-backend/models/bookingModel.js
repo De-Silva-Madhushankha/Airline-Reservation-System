@@ -112,7 +112,6 @@ const Booking = {
     },
 
     getBookingByUserId: async (id) => {
-        // console.log('hey',id)
         const [rows] = await db.query(`SELECT * FROM user_bookings WHERE user_id = ?`, [id])
         console.log(rows)
         return rows;

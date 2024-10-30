@@ -6,11 +6,12 @@ import DashboardContent from "../components/Dashboard";
 import UsersContent from "../components/UserContent";
 import AddAircraftContent from "../components/AddAircraftContent";
 import PassengerAgeGroupReport from "../components/ReportComponents/PassengerAgeGroupReport";
-import Report2Content from "../components/ReportComponents/PaassengerCountToDestination";
-import Report3Content from "../components/ReportComponents/BookingByPassengerType";
-import Report4Content from "../components/ReportComponents/PastFlightsPassengerData";
-import Report5Content from "../components/ReportComponents/RevenuebyAircraftType";
+import PaassengerCountToDestination from "../components/ReportComponents/PaassengerCountToDestination";
+import BookingByPassengerType from "../components/ReportComponents/BookingByPassengerType";
+import PastFlightsPassengerData from "../components/ReportComponents/PastFlightsPassengerData";
+import RevenuebyAircraftType from "../components/ReportComponents/RevenuebyAircraftType";
 import AddFlightContent from "../components/AddFlightContent";
+
 
 const Adminhome = () => {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -22,13 +23,13 @@ const Adminhome = () => {
       case "report1":
         return <PassengerAgeGroupReport />;
       case "report2":
-        return <Report2Content/>
+        return <PaassengerCountToDestination/>
       case "report3":
-        return <Report3Content/>
+        return <BookingByPassengerType/>
       case "report4":
-        return <Report4Content/>
+        return <PastFlightsPassengerData/>
       case "report5":
-        return <Report5Content/>
+        return <RevenuebyAircraftType/>
       case "addFlights":
         return <AddFlightContent />;
       case "users":

@@ -1,64 +1,58 @@
 import React from 'react';
-import './TicketDetails.css'; // Import the CSS file for custom styles
+import { 
+  Card, 
+  CardHeader, 
+  CardContent, 
+  Typography
+} from '@mui/material';
+import './TicketDetails.css';
 
-const TicketDetails = () => {
-  const ticketData = {
-    booking_id: '3e6cf004-9...',
-    booking_date: '10/30/2024',
-    total_amount: 4182.00,
-    payment_status: 'Paid',
-    passenger_name: 'virat shammi',
-    passport_id: '1298712429...',
-    flight_id: 'e531742c-9...',
-    seat: 'Row 8, Column 1',
-    seat_class: 'Economy',
-    departure: 'CGK - 11/2/2024, 10:00:00 AM',
-    arrival: 'BIA - 11/2/2024, 1:00:00 PM'
-  };
-
-  const TicketRow = ({ label, value }) => (
-    <div className="ticket-row">
-      <div className="ticket-label">{label}</div>
-      <div className="ticket-value">{value}</div>
-    </div>
-  );
+const TicketDetails = ({ flight }) => {
+  // Helper function to truncate long IDs
+  const truncateID = (id) => (id.length > 10 ? `${id.slice(0, 10)}...` : id);
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <h2 className="card-title">B Airways E-Ticket</h2>
-      </div>
-      <div className="card-content">
-        <TicketRow label="Booking ID" value={ticketData.booking_id} />
-        <TicketRow label="Booking Date" value={ticketData.booking_date} />
-        <TicketRow 
-          label="Total Amount" 
-          value={`$${ticketData.total_amount.toFixed(2)}`} 
-        />
-        <TicketRow 
-          label="Payment Status" 
-          value={
-            <span className="status-paid">
-              {ticketData.payment_status}
-            </span>
-          } 
-        />
-        <TicketRow label="Passenger Name" value={ticketData.passenger_name} />
-        <TicketRow label="Passport ID" value={ticketData.passport_id} />
-        <TicketRow label="Flight ID" value={ticketData.flight_id} />
-        <TicketRow label="Seat" value={ticketData.seat} />
-        <TicketRow 
-          label="Seat Class" 
-          value={
-            <span className="seat-class">
-              {ticketData.seat_class}
-            </span>
-          } 
-        />
-        <TicketRow label="Departure" value={ticketData.departure} />
-        <TicketRow label="Arrival" value={ticketData.arrival} />
-      </div>
-    </div>
+    <Card sx={{ maxWidth: 600 }}>
+      <CardHeader
+        title="B Airways E-Ticket"
+        sx={{ backgroundColor: 'primary.main', color: 'white' }}
+      />
+      <CardContent>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Booking ID:</span> {truncateID(flight.booking_id)}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Booking Date:</span> {new Date(flight.booking_date).toLocaleDateString()}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Total Amount:</span> ${flight.total_amount.toFixed(2)}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Payment Status:</span> {flight.payment_status}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Passenger Name:</span> {`${flight.passenger_first_name} ${flight.passenger_last_name}`}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Passport ID:</span> {truncateID(flight.passport_id)}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Flight ID:</span> {truncateID(flight.flight_id)}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Seat:</span> Row {flight.seat_row}, Column {flight.seat_column}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Seat Class:</span> {flight.seat_class_name}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Departure:</span> {`${flight.origin_code} - ${new Date(flight.departure).toLocaleString()}`}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          <span className="font-medium">Arrival:</span> {`${flight.destination_code} - ${new Date(flight.arrival).toLocaleString()}`}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
