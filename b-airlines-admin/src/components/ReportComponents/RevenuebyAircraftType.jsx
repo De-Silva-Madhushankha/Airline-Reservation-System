@@ -4,6 +4,15 @@ import axios from '../../axiosConfig.js';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'; // Import chart components
 
 export default function RevenuebyAircraftType() {
+  const GRAYSCALE_COLORS = [
+    '#333333', 
+    '#666666',
+    '#999999', 
+    '#CCCCCC', 
+    '#E6E6E6', 
+  ];
+
+
   const [revenueData, setRevenueData] = useState([]);
 
   useEffect(() => {
@@ -65,7 +74,7 @@ export default function RevenuebyAircraftType() {
           </BarChart>
         </ResponsiveContainer>
 
-        <ResponsiveContainer width="60%" height={400}>
+          <ResponsiveContainer width="60%" height={400}>
           <PieChart>
             <Pie 
               data={revenueData} 
@@ -77,12 +86,12 @@ export default function RevenuebyAircraftType() {
               label={(entry) => `$${entry.total_revenue.toFixed(2)}`}
             >
               {revenueData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell key={`cell-${index}`} fill={GRAYSCALE_COLORS[index % GRAYSCALE_COLORS.length]} />
               ))}
             </Pie>
             <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
             <Legend />
-          </PieChart>
+        </PieChart>
         </ResponsiveContainer>
       </div>
     </div>

@@ -3,10 +3,8 @@ import { AiFillAccountBook, AiFillFileZip } from "react-icons/ai";
 import { MdOutlineKeyboardArrowDown, MdFlight, MdLogout, MdOutlineAddRoad } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
 import { FaUsers } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
 
-export default function SideNav({ setActiveSection }) {
-    const navigate = useNavigate();
+export default function SlideNav({ setActiveSection }) {
 
     return (
         <div>
