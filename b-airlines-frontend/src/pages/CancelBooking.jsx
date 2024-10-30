@@ -62,6 +62,7 @@ const CancelBooking = () => {
         },
       });
       setBookings(response.data);
+      console.log("aaaaaaaaaaaaaaaaaaaaaa",response.data);
     } catch (err) {
       console.error('Error fetching bookings:', err);
       setError(err.response?.data?.message || 'Error fetching bookings');
