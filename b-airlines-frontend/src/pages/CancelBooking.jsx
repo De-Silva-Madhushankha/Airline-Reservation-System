@@ -56,7 +56,7 @@ const CancelBooking = () => {
 
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3001/api/booking/bookings', {
+      const response = await axios.get('/booking/bookings', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -82,7 +82,7 @@ const CancelBooking = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:3001/api/booking/bookings/${bookingId}`, {
+      await axios.delete(`/booking/bookings/${bookingId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

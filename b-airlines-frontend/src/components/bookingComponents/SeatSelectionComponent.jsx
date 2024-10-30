@@ -165,7 +165,7 @@ const SeatSelectionComponent = ({ passengers, aircraft_id, flight_id, onSeatsSel
                   color: isOccupied || isLocked ? '#a9a9a9' : '', 
                 }}
               >
-                {seatLabel} {/* Seat Label */}
+                {seatLabel} 
               </Button>
             );
           })}
